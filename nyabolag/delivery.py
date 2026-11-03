@@ -5,11 +5,12 @@ import csv
 import io
 import re
 import sqlite3
-from datetime import datetime, timedelta, timezone
+from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 
 from .config import Config
 from .db import ACTIVE_STATUSES, get_filters, now_iso, tx
+from .emails import weekly_email
 from .mailer import send_mail
 
 DEFAULT_FORMS = ["AB"]
@@ -29,7 +30,9 @@ def normalise_filters(raw: dict) -> dict:
     prefixes = sorted({re.sub(r"\D", "", p) for p in as_list(raw.get("postcode_prefixes"))} - {""})
     prefixes = [p[:5] for p in prefixes]
     forms = sorted({f.upper() for f in as_list(raw.get("forms"))} - {"EF", "E"}) or DEFAULT_FORMS
+    label = " ".join(str(raw.get("label") or "").split())[:80]
     return {
+        **({"label": label} if label else {}),
         "postcode_prefixes": prefixes,
         "cities": sorted({c.lower() for c in as_list(raw.get("cities"))}),
         "forms": forms,
@@ -75,7 +78,7 @@ def new_companies_since(conn: sqlite3.Connection, after_snapshot_id: int, upto_s
     else:
         join, extra, params = "JOIN", "AND r.checked_at >= ? ", (verified_since,)
     return conn.execute(
-        f"SELECT c.*, r.blocked AS rs_blocked, r.checked_at AS rs_checked_at FROM companies c "
+        f"SELECT c.*, r.blocked AS rs_blocked, r.checked_at AS rs_checked_at, r.source AS rs_source FROM companies c "
         f"{join} reklamsparr r ON r.orgnr = c.orgnr "
         f"WHERE c.is_new = 1 AND c.is_shelf = 0 AND COALESCE(r.blocked, 0) = 0 {extra}"
         "AND c.first_snapshot_id > ? AND c.first_snapshot_id <= ? ORDER BY c.reg_date DESC, c.name",
@@ -83,12 +86,20 @@ def new_companies_since(conn: sqlite3.Connection, after_snapshot_id: int, upto_s
     ).fetchall()
 
 
-def _rs_label(r) -> str:
+def _get(r, key):
     try:
-        checked = r["rs_checked_at"]
+        return r[key]
     except (IndexError, KeyError):
-        checked = None
-    return f"Nej (kontrollerad {checked[:10]})" if checked else "Ej kontrollerad"
+        return None
+
+
+def _rs_label(r) -> str:
+    checked, source = _get(r, "rs_checked_at"), _get(r, "rs_source") or ""
+    if not checked:
+        return "Ej kontrollerad"
+    if source.upper().startswith("DEMO"):
+        return "DEMO – fiktiv kontroll"
+    return f"Nej (kontrollerad {checked[:10]})"
 
 
 _FORMULA_START = ("=", "+", "-", "@", "\t", "\r")
@@ -112,6 +123,43 @@ def to_csv(rows: list) -> bytes:
             _rs_label(r),
         )])
     return ("﻿" + buf.getvalue()).encode("utf-8")  # BOM so Excel detects UTF-8
+
+
+XLSX_COLUMNS = CSV_COLUMNS
+XLSX_WIDTHS = [15, 38, 10, 14, 32, 11, 16, 70, 24]
+
+
+def to_xlsx(rows: list, title: str = "Nya bolag") -> bytes:
+    """Excel workbook (iPhone/Outlook preview it natively; CSV with ';' does not)."""
+    from openpyxl import Workbook
+    from openpyxl.styles import Alignment, Font, PatternFill
+    from openpyxl.utils import get_column_letter
+
+    wb = Workbook()
+    ws = wb.active
+    ws.title = title[:31]
+    ws.append(XLSX_COLUMNS)
+    for c in ws[1]:
+        c.font = Font(bold=True, color="FFFFFF")
+        c.fill = PatternFill("solid", fgColor="123A5A")
+    for r in rows:
+        pc = r["postcode"] or ""
+        values = [f"{r['orgnr'][:6]}-{r['orgnr'][6:]}", r["name"], r["form"], r["reg_date"] or "",
+                  r["street"] or "", f"{pc[:3]} {pc[3:]}" if len(pc) == 5 else pc, r["city"] or "",
+                  r["description"] or "", _rs_label(r)]
+        ws.append(["" if v is None else str(v) for v in values])  # forced to text below
+    for i, w in enumerate(XLSX_WIDTHS, start=1):
+        ws.column_dimensions[get_column_letter(i)].width = w
+    for row in ws.iter_rows(min_row=2):
+        for c in row:
+            c.data_type = "s"  # never a formula, even if text starts with '='
+            c.alignment = Alignment(vertical="top", wrap_text=(c.column == 8))
+    ws.freeze_panes = "A2"
+    ws.auto_filter.ref = ws.dimensions
+    import io as _io
+    buf = _io.BytesIO()
+    wb.save(buf)
+    return buf.getvalue()
 
 
 def preview(conn: sqlite3.Connection, filters: dict, last_n_snapshots: int = 4,
@@ -144,20 +192,23 @@ def deliver_all(conn: sqlite3.Connection, cfg: Config) -> list[dict]:
         if last is None:
             # New customer: start from the previous snapshot so the first mail has one week of data.
             last = latest_id - 1
+        if cfg.test_mode and cust["email"].lower() not in cfg.test_recipients:
+            results.append({"customer_id": cust["id"], "skipped": "test mode: not in TEST_RECIPIENTS"})
+            continue
         filters = get_filters(cust)
         rows = [r for r in new_companies_since(conn, last, latest_id, verified_cutoff(cfg))
                 if matches(r, filters)]
-        data = to_csv(rows)
+        demo = any((_get(r, "rs_source") or "").upper().startswith("DEMO") for r in rows)
+        stem = f"nya-bolag-v{date.today().isocalendar()[1]}-{date.today().isoformat()}"
+        csv_data, xlsx_data = to_csv(rows), to_xlsx(rows)
         path = cfg.deliveries_dir / f"c{cust['id']}-s{latest_id}.csv"
-        path.write_bytes(data)
-        body = (
-            f"Hej!\n\nHär är veckans nyregistrerade bolag som matchar ditt urval: {len(rows)} st.\n"
-            f"Listan finns som bifogad CSV-fil (öppnas i Excel).\n\n"
-            f"Ändra urval eller hantera prenumerationen: {cfg.base_url}/login\n\n"
-            "Källa: Bolagsverket, värdefulla datamängder (öppna data).\n"
-        )
-        send_mail(cfg, cust["email"], f"Nya bolag denna vecka: {len(rows)} st", body,
-                  attachment=(path.name, data, "text/csv"))
+        path.write_bytes(csv_data)
+        path.with_suffix(".xlsx").write_bytes(xlsx_data)
+        names = [f"{stem}.xlsx", f"{stem}.csv"]
+        subject, text, html = weekly_email(cfg, cust, filters, rows, demo, names)
+        send_mail(cfg, cust["email"], subject, text, html=html, attachments=[
+            (names[0], xlsx_data, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"),
+            (names[1], csv_data, "text/csv")])
         with tx(conn):
             conn.execute(
                 "INSERT INTO deliveries (customer_id, snapshot_id, sent_at, row_count, csv_path) VALUES (?,?,?,?,?)",

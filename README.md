@@ -20,6 +20,7 @@ CSV of companies newly registered in their area, from Bolagsverket's free open d
 | [docs/11-sales-messages.md](docs/11-sales-messages.md) | Personalised Swedish messages for 10 firms (not sent) |
 | [docs/12-security-privacy-reliability-audit.md](docs/12-security-privacy-reliability-audit.md) | Audit: what was fixed, what is open and when |
 | [docs/13-your-steps-to-first-paying-customer.md](docs/13-your-steps-to-first-paying-customer.md) | **Start here:** your steps 1–14, plus privacy, terms and LIA templates |
+| [docs/14-test-customer-delivery.md](docs/14-test-customer-delivery.md) | Test-customer run: welcome and weekly email previews, what is needed to actually send |
 
 Also: `site/index.html` (landing page, not published) and `validation/sample_report.py` (privacy-safe sample for accounting firms).
 

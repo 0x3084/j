@@ -402,3 +402,39 @@ def test_hvd_client_requires_credentials(cfg):
     from nyabolag.hvd_api import HvdClient, HvdError
     with pytest.raises(HvdError):
         HvdClient(cfg).token()
+
+
+def test_xlsx_stores_register_text_as_text_not_formulas():
+    from io import BytesIO
+    from openpyxl import load_workbook
+    from nyabolag.delivery import to_xlsx
+    data = to_xlsx([{"orgnr": "5595000003", "name": "=HYPERLINK(\"http://x\")", "form": "AB", "reg_date": "2026-10-01",
+                     "street": "+46", "postcode": "41463", "city": "Göteborg", "description": "@x", "rs_checked_at": None}])
+    ws = load_workbook(BytesIO(data)).active
+    cells = [c for row in ws.iter_rows(min_row=2) for c in row if c.value]
+    assert cells and all(c.data_type == "s" for c in cells)
+    assert ws["B2"].value == '=HYPERLINK("http://x")'  # shown as text, never executed
+
+
+def test_test_mode_refuses_other_recipients(cfg, conn, week2, monkeypatch):
+    from nyabolag.mailer import MailRefused, send_mail
+    cfg.test_mode, cfg.test_recipients = True, ("ok@example.se",)
+    with pytest.raises(MailRefused):
+        send_mail(cfg, "real-customer@example.se", "x", "y")
+    ingest(conn, week2, cfg, today=TODAY)
+    verify_all(conn, cfg)
+    _add_customer(conn, "real-customer@example.se", postcode_prefixes="41")
+    res = deliver_all(conn, cfg)
+    assert res == [{"customer_id": 1, "skipped": "test mode: not in TEST_RECIPIENTS"}]
+    assert not list(cfg.outbox_dir.glob("*.eml"))
+
+
+def test_welcome_and_weekly_emails_have_no_dead_links(cfg, conn, week2):
+    from nyabolag.emails import welcome_email, weekly_email
+    _add_customer(conn, "k@example.se", cities="göteborg", label="Göteborg")
+    cust = conn.execute("SELECT * FROM customers").fetchone()
+    f = normalise_filters({"cities": "göteborg", "label": "Göteborg"})
+    for subject, text, html in (welcome_email(cfg, cust, f), weekly_email(cfg, cust, f, [], False, ["a.xlsx"])):
+        assert "localhost" not in text + html and "href=" not in html  # manual mode: reply instead of links
+        assert "Svara bara på det här mejlet" in text
+    assert "249 kr/mån" in welcome_email(cfg, cust, f)[1]

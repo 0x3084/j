@@ -23,6 +23,16 @@ class Config:
     smtp_password: str = field(default_factory=lambda: _env("SMTP_PASSWORD", ""))
     mail_from: str = field(default_factory=lambda: _env("MAIL_FROM", "nyabolag <noreply@localhost>"))
     admin_email: str = field(default_factory=lambda: _env("ADMIN_EMAIL", ""))
+    # Commercial / mail settings
+    brand: str = field(default_factory=lambda: _env("BRAND", "Veckans Nya Bolag"))
+    price_sek_month: int = field(default_factory=lambda: int(_env("PRICE_SEK_MONTH", "249")))
+    vat_text: str = field(default_factory=lambda: _env("VAT_TEXT", "[moms-text: momsbefriad / exkl. moms]"))
+    reply_to: str = field(default_factory=lambda: _env("REPLY_TO", ""))
+    # TEST MODE: subjects get a [TEST] prefix, every e-mail carries a test banner, and mail can
+    # only go to addresses in TEST_RECIPIENTS (comma-separated). Everything else is refused.
+    test_mode: bool = field(default_factory=lambda: _env("NYABOLAG_TEST_MODE", "0") in ("1", "true", "yes"))
+    test_recipients: tuple = field(default_factory=lambda: tuple(
+        a.strip().lower() for a in _env("TEST_RECIPIENTS", "").split(",") if a.strip()))
     healthcheck_url: str = field(default_factory=lambda: _env("HEALTHCHECK_URL", ""))
     # A company counts as newly registered only if its registration date (when present)
     # is at most this many days before the snapshot date.
@@ -39,6 +49,11 @@ class Config:
         "HVD_API_BASE", "https://gw.api.bolagsverket.se/vardefulla-datamangder/v1"))
     hvd_scope: str = field(default_factory=lambda: _env("HVD_SCOPE", "vardefulla-datamangder:read"))
     stale_after_days: int = field(default_factory=lambda: int(_env("STALE_AFTER_DAYS", "9")))
+
+    @property
+    def dashboard_enabled(self) -> bool:
+        """The web dashboard only exists once deployed on https; until then e-mails say 'reply to change'."""
+        return self.base_url.startswith("https://")
 
     @property
     def db_path(self) -> Path:

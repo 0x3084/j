@@ -101,7 +101,7 @@ def cmd_add_customer(args, cfg):
     """Concierge/manual customer, e.g. one who paid via a Stripe Payment Link."""
     conn = connect(cfg.db_path)
     filters = normalise_filters({"postcode_prefixes": args.postcodes, "cities": args.cities,
-                                 "forms": args.forms, "keywords": args.keywords})
+                                 "forms": args.forms, "keywords": args.keywords, "label": args.label})
     with tx(conn):
         conn.execute(
             "INSERT INTO customers (email, company_name, status, filters, created_at) VALUES (?,?,?,?,?) "
@@ -144,6 +144,19 @@ def cmd_purge(args, cfg):
         f.unlink()
         removed += 1
     print(f"removed {removed} files")
+
+
+def cmd_welcome(args, cfg):
+    """Send (or preview, without SMTP) the welcome e-mail to an existing customer."""
+    from .db import get_filters
+    from .emails import welcome_email
+    conn = connect(cfg.db_path)
+    cust = conn.execute("SELECT * FROM customers WHERE email = ?", (args.email.lower(),)).fetchone()
+    if not cust:
+        raise SystemExit(f"no customer {args.email}")
+    subject, text, html = welcome_email(cfg, cust, get_filters(cust))
+    path = send_mail(cfg, cust["email"], subject, text, html=html)
+    print(f"welcome e-mail {'written to ' + str(path) if path else 'sent'}")
 
 
 def cmd_deliver(args, cfg):
@@ -217,7 +230,8 @@ def main(argv: list[str] | None = None) -> None:
     s.add_argument("--include-unverified", action="store_true", help="internal use only, never for customers")
     s.set_defaults(fn=cmd_export)
     s = sub.add_parser("add-customer", help="add/update a manually billed customer")
-    s.add_argument("email"); s.add_argument("--company"); s.add_argument("--status", default="active",
+    s.add_argument("email"); s.add_argument("--company"); s.add_argument("--label", help='area name in e-mails, e.g. "Norrköping och Linköping"')
+    s.add_argument("--status", default="active",
                                                                          choices=["active", "canceled", "past_due"])
     filter_args(s); s.set_defaults(fn=cmd_add_customer)
     s = sub.add_parser("verify-reklamsparr", help="check reklamspärr in Bolagsverket's HVD API")
@@ -226,6 +240,8 @@ def main(argv: list[str] | None = None) -> None:
     s.set_defaults(fn=cmd_verify_reklamsparr)
     s = sub.add_parser("purge", help="data retention clean-up"); s.add_argument("--days", type=int, default=365)
     s.set_defaults(fn=cmd_purge)
+    s = sub.add_parser("welcome", help="send/preview the welcome e-mail"); s.add_argument("email")
+    s.set_defaults(fn=cmd_welcome)
     sub.add_parser("deliver", help="send pending deliveries").set_defaults(fn=cmd_deliver)
     s = sub.add_parser("run-weekly", help="fetch+ingest+deliver with monitoring")
     s.add_argument("--file", help="use a local file instead of downloading"); s.set_defaults(fn=cmd_run_weekly)
