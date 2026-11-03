@@ -1,0 +1,8 @@
+services:
+  qrs:
+    build: .
+    ports: ["8000:8000"]
+    volumes:
+      - ./data:/app/data          # persistent market data, manifest and paper-trading journals
+      - ./reports:/app/reports
+    restart: unless-stopped       # automated recovery; paper traders resume from their journal state

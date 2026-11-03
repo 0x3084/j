@@ -68,7 +68,7 @@ def status():
             e["latest"] = end
         if st and (e["earliest"] is None or st < e["earliest"]):
             e["earliest"] = st
-    labels = {"binance_public": "Binance public archive (data.binance.vision) - HISTORICAL, daily, UTC",
+    labels = {"binance": "Binance public archive (data.binance.vision) - HISTORICAL, daily, UTC",
               "yahoo_mirror": "Yahoo Finance daily via GitHub mirror o-lq/run - HISTORICAL/DELAYED end-of-day",
               "github_datasets": "EIA / Fed H.10 / CBOE / BLS / Shiller via datasets/* - HISTORICAL reference"}
     meta = json.loads((REPORT_DIR / "leaderboard_meta.json").read_text()) if (REPORT_DIR / "leaderboard_meta.json").exists() else {}

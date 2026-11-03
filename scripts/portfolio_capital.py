@@ -85,10 +85,14 @@ def main():
                     "fractional_engine_cagr": summarize(frac, 252)["cagr"],
                     "small_account_drag_cagr": summarize(frac, 252)["cagr"] - summarize(r_usd, 252)["cagr"],
                     "fees_pct_of_capital_per_year": sum(v for k, v in row.items() if k.endswith("fees_total_usd"))
-                                                    / (c * 1.08) / (len(r_usd) / 252)})
+                                                    / float(eq_usd.mean()) / (len(r_usd) / 252)})
         if c in (10_000, 100_000):
             row["outcomes_10y_eur"] = outcome_distribution(r_eur, c, years=10)
             row["withdrawals_20y_eur"] = [withdrawal_paths(r_eur, c, w, years=20) for w in (0.0, 0.02, 0.03, 0.04, 0.06)]
+            # conservative: bootstrap only the 2022-2026 holdout returns (the weaker, most recent regime)
+            row["withdrawals_20y_eur_holdout_only"] = [withdrawal_paths(r_eur.loc["2022-01-01":], c, w, years=20)
+                                                       for w in (0.0, 0.02, 0.03, 0.04, 0.06)]
+            row["outcomes_10y_eur_holdout_only"] = outcome_distribution(r_eur.loc["2022-01-01":], c, years=10)
         cap["levels"][c] = row
         print(c, round(row["usd"]["cagr"], 4), round(row["eur_unhedged"]["cagr"], 4), round(row["small_account_drag_cagr"], 4))
     # passive comparison for the income question: SPY and 60/40 under the same withdrawal model

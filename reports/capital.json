@@ -41,7 +41,7 @@
    },
    "fractional_engine_cagr": 0.09349948266807684,
    "small_account_drag_cagr": 0.09626139679874257,
-   "fees_pct_of_capital_per_year": 0.08399905092046123
+   "fees_pct_of_capital_per_year": 0.08017908331019091
   },
   "5000": {
    "rotation_filtered_etf_fees_total_usd": 2185.375632635297,
@@ -84,7 +84,7 @@
    },
    "fractional_engine_cagr": 0.09349948266807684,
    "small_account_drag_cagr": 0.02345052654867663,
-   "fees_pct_of_capital_per_year": 0.049399516060705626
+   "fees_pct_of_capital_per_year": 0.02365750182901939
   },
   "10000": {
    "rotation_filtered_etf_fees_total_usd": 3383.8840190214382,
@@ -127,7 +127,7 @@
    },
    "fractional_engine_cagr": 0.09349948266807684,
    "small_account_drag_cagr": 0.013392745255914607,
-   "fees_pct_of_capital_per_year": 0.04152396173060552,
+   "fees_pct_of_capital_per_year": 0.017532397522112355,
    "outcomes_10y_eur": {
     "years": 10,
     "cagr_p5": 0.03630907445885988,
@@ -180,7 +180,60 @@
      "real_terminal_median": 15193.542718726934,
      "real_terminal_p95": 49437.068855158686
     }
-   ]
+   ],
+   "withdrawals_20y_eur_holdout_only": [
+    {
+     "withdrawal_rate": 0.0,
+     "monthly_income_start": 0.0,
+     "p_depletion": 0.0185,
+     "real_terminal_p5": 7521.233111407014,
+     "real_terminal_median": 15860.535765775423,
+     "real_terminal_p95": 32437.170832367687
+    },
+    {
+     "withdrawal_rate": 0.02,
+     "monthly_income_start": 16.666666666666668,
+     "p_depletion": 0.151,
+     "real_terminal_p5": 3884.749334638613,
+     "real_terminal_median": 10590.594541592589,
+     "real_terminal_p95": 24930.933950893814
+    },
+    {
+     "withdrawal_rate": 0.03,
+     "monthly_income_start": 25.0,
+     "p_depletion": 0.2845,
+     "real_terminal_p5": 2066.655222917871,
+     "real_terminal_median": 8010.928449578288,
+     "real_terminal_p95": 21421.48554223961
+    },
+    {
+     "withdrawal_rate": 0.04,
+     "monthly_income_start": 33.333333333333336,
+     "p_depletion": 0.491,
+     "real_terminal_p5": 177.15943364506236,
+     "real_terminal_median": 5506.316163988633,
+     "real_terminal_p95": 17864.91234436653
+    },
+    {
+     "withdrawal_rate": 0.06,
+     "monthly_income_start": 50.0,
+     "p_depletion": 0.8325,
+     "real_terminal_p5": 0.0,
+     "real_terminal_median": 570.8911001040208,
+     "real_terminal_p95": 10653.871402089711
+    }
+   ],
+   "outcomes_10y_eur_holdout_only": {
+    "years": 10,
+    "cagr_p5": -0.011020188094024724,
+    "cagr_median": 0.04382990464372016,
+    "cagr_p95": 0.09760652632120166,
+    "p_loss": 0.0935,
+    "maxdd_median": -0.21880516147371631,
+    "maxdd_p5": -0.3756664804509261,
+    "terminal_median": 15356.680467928312,
+    "terminal_p5": 8951.055792631503
+   }
   },
   "25000": {
    "rotation_filtered_etf_fees_total_usd": 7230.891941776472,
@@ -223,7 +276,7 @@
    },
    "fractional_engine_cagr": 0.09349948266807684,
    "small_account_drag_cagr": 0.009782038591119147,
-   "fees_pct_of_capital_per_year": 0.03699680402272147
+   "fees_pct_of_capital_per_year": 0.014981022676999583
   },
   "50000": {
    "rotation_filtered_etf_fees_total_usd": 13945.590110311325,
@@ -266,7 +319,7 @@
    },
    "fractional_engine_cagr": 0.09349948266807684,
    "small_account_drag_cagr": 0.00934612298946691,
-   "fees_pct_of_capital_per_year": 0.03631286123163476
+   "fees_pct_of_capital_per_year": 0.014601106141240409
   },
   "100000": {
    "rotation_filtered_etf_fees_total_usd": 27629.45860495793,
@@ -309,7 +362,7 @@
    },
    "fractional_engine_cagr": 0.09349948266807684,
    "small_account_drag_cagr": 0.009166948896459193,
-   "fees_pct_of_capital_per_year": 0.03618906268784873,
+   "fees_pct_of_capital_per_year": 0.01452820625459409,
    "outcomes_10y_eur": {
     "years": 10,
     "cagr_p5": 0.04007334176173978,
@@ -362,7 +415,60 @@
      "real_terminal_median": 172081.6925146138,
      "real_terminal_p95": 556553.1653529165
     }
-   ]
+   ],
+   "withdrawals_20y_eur_holdout_only": [
+    {
+     "withdrawal_rate": 0.0,
+     "monthly_income_start": 0.0,
+     "p_depletion": 0.0175,
+     "real_terminal_p5": 77221.98278919952,
+     "real_terminal_median": 164647.73675105447,
+     "real_terminal_p95": 340038.000131063
+    },
+    {
+     "withdrawal_rate": 0.02,
+     "monthly_income_start": 166.66666666666666,
+     "p_depletion": 0.1385,
+     "real_terminal_p5": 40571.94288640024,
+     "real_terminal_median": 111106.4096166341,
+     "real_terminal_p95": 264582.13019353634
+    },
+    {
+     "withdrawal_rate": 0.03,
+     "monthly_income_start": 250.0,
+     "p_depletion": 0.265,
+     "real_terminal_p5": 22242.457304461415,
+     "real_terminal_median": 84844.86830286444,
+     "real_terminal_p95": 228657.30906850562
+    },
+    {
+     "withdrawal_rate": 0.04,
+     "monthly_income_start": 333.3333333333333,
+     "p_depletion": 0.454,
+     "real_terminal_p5": 2828.2533890078935,
+     "real_terminal_median": 59134.45569552762,
+     "real_terminal_p95": 190989.48435429603
+    },
+    {
+     "withdrawal_rate": 0.06,
+     "monthly_income_start": 500.0,
+     "p_depletion": 0.811,
+     "real_terminal_p5": 0.0,
+     "real_terminal_median": 8782.317309881364,
+     "real_terminal_p95": 116561.64107778885
+    }
+   ],
+   "outcomes_10y_eur_holdout_only": {
+    "years": 10,
+    "cagr_p5": -0.009630066621600618,
+    "cagr_median": 0.0459575667974742,
+    "cagr_p95": 0.1009267605156624,
+    "p_loss": 0.0845,
+    "maxdd_median": -0.21965791315372585,
+    "maxdd_p5": -0.3764256632580549,
+    "terminal_median": 156725.85977603003,
+    "terminal_p5": 90776.71684125211
+   }
   }
  },
  "assumptions": {
