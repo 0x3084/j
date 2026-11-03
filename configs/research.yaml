@@ -1,0 +1,45 @@
+# Pre-registered research protocol. Written BEFORE running any strategy experiment.
+# Changing these after seeing holdout results invalidates the holdout; the trial ledger records every run.
+
+splits:
+  etf:
+    data_start: "2001-01-01"      # signals may use data from here (instruments enter as they list)
+    wf_oos_start: "2008-01-01"    # walk-forward out-of-sample evaluation starts
+    holdout_start: "2022-01-01"   # untouched test period (evaluated once, after strategy set is frozen)
+    end: "2026-10-30"
+  crypto:
+    data_start: "2017-08-17"
+    wf_oos_start: "2019-07-01"
+    holdout_start: "2024-01-01"
+    end: "2026-10-31"
+  crypto_perp:
+    data_start: "2020-01-01"
+    wf_oos_start: "2021-01-01"
+    holdout_start: "2024-01-01"
+    end: "2026-10-31"
+
+walk_forward:
+  reselect_every: "YS"            # re-select parameters at the start of each calendar year
+  min_train_years: 3              # minimum history before a parameter set can be selected
+  train_window_years: null        # null = expanding window
+  embargo_days: 21                # gap between train end and OOS start (prevents leakage of overlapping labels)
+  selection_metric: sharpe
+
+# Gate for promotion to paper trading. ALL must hold.
+acceptance:
+  wf_oos_sharpe_min: 0.40           # net of costs, annualised
+  wf_oos_sharpe_ci_lo_min: 0.0      # lower bound of 95% stationary-bootstrap CI
+  dsr_min: 0.90                     # deflated Sharpe vs number of trials in this family
+  holdout_sharpe_min: 0.0           # must not lose money risk-adjusted in the untouched holdout
+  stress_2x_cost_sharpe_min: 0.20   # WF-OOS Sharpe with doubled costs
+  max_dd_max: -0.35                 # WF-OOS max drawdown no worse than -35%
+  min_trades: 30
+  # A strategy must also add something over its passive benchmark: either higher Sharpe than the
+  # benchmark over WF-OOS, or correlation to the benchmark < 0.5 with positive Sharpe.
+  benchmark_rule: true
+
+stress:
+  cost_multipliers: [2.0, 3.0]
+  extra_slippage_bps: [5.0]
+  extra_lag: 1                      # execute one bar later than designed
+  missing_data_frac: 0.05           # randomly drop 5% of bars (made non-tradable)

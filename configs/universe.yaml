@@ -1,0 +1,122 @@
+# Research universe. Chosen EX-ANTE by liquidity / asset-class coverage, not by past performance.
+# Cost parameters are one-way, in basis points of traded notional, and are deliberately on the
+# conservative side of what a retail/pro-retail account (e.g. IBKR Pro, Binance VIP0) would pay.
+#
+# half_spread_bps : half of the typical quoted bid/ask spread at the open/close auction-ish times
+# slippage_bps    : additional adverse execution beyond the half spread (latency, queue, impact)
+# commission_bps  : broker/exchange fees as bps of notional (for ETFs: ~USD 0.0035/share at ~USD 50-500/share)
+# borrow_bps_yr   : annual cost of being short (ETF stock-borrow fee; crypto shorts use perp funding instead)
+# shortable       : whether the instrument can realistically be shorted by a retail account
+
+etf:
+  source: yahoo_mirror           # Yahoo Finance daily, dividend/split-adjusted, via GitHub mirror o-lq/run
+  calendar: XNYS
+  currency: USD
+  defaults: {half_spread_bps: 1.5, slippage_bps: 2.0, commission_bps: 0.5, borrow_bps_yr: 50, shortable: true}
+  instruments:
+    # --- equities (US + international) ---
+    SPY: {asset_class: equity, region: US, desc: "S&P 500", half_spread_bps: 0.5}
+    QQQ: {asset_class: equity, region: US, desc: "Nasdaq 100", half_spread_bps: 0.5}
+    IWM: {asset_class: equity, region: US, desc: "Russell 2000", half_spread_bps: 0.5}
+    EFA: {asset_class: equity, region: DEV, desc: "MSCI EAFE", half_spread_bps: 1.0}
+    EEM: {asset_class: equity, region: EM, desc: "MSCI Emerging", half_spread_bps: 1.0}
+    VGK: {asset_class: equity, region: EU, desc: "FTSE Europe", half_spread_bps: 1.5}
+    EZU: {asset_class: equity, region: EU, desc: "MSCI Eurozone", half_spread_bps: 2.0}
+    EWG: {asset_class: equity, region: EU, desc: "MSCI Germany", half_spread_bps: 2.5}
+    EWU: {asset_class: equity, region: EU, desc: "MSCI UK", half_spread_bps: 2.5}
+    EWQ: {asset_class: equity, region: EU, desc: "MSCI France", half_spread_bps: 3.0}
+    EWJ: {asset_class: equity, region: ASIA, desc: "MSCI Japan", half_spread_bps: 1.5}
+    EWA: {asset_class: equity, region: ASIA, desc: "MSCI Australia", half_spread_bps: 2.5}
+    EWC: {asset_class: equity, region: AMER, desc: "MSCI Canada", half_spread_bps: 2.5}
+    # --- US sectors (Select Sector SPDRs, all alive since 1998-12) ---
+    XLK: {asset_class: equity_sector, region: US, desc: "Technology", half_spread_bps: 1.0}
+    XLF: {asset_class: equity_sector, region: US, desc: "Financials", half_spread_bps: 1.0}
+    XLV: {asset_class: equity_sector, region: US, desc: "Health care", half_spread_bps: 1.0}
+    XLY: {asset_class: equity_sector, region: US, desc: "Cons. discretionary", half_spread_bps: 1.0}
+    XLP: {asset_class: equity_sector, region: US, desc: "Cons. staples", half_spread_bps: 1.0}
+    XLI: {asset_class: equity_sector, region: US, desc: "Industrials", half_spread_bps: 1.0}
+    XLB: {asset_class: equity_sector, region: US, desc: "Materials", half_spread_bps: 1.5}
+    XLU: {asset_class: equity_sector, region: US, desc: "Utilities", half_spread_bps: 1.0}
+    XLE: {asset_class: equity_sector, region: US, desc: "Energy", half_spread_bps: 1.0}
+    VNQ: {asset_class: real_estate, region: US, desc: "US REITs", half_spread_bps: 1.0}
+    # --- rates / credit ---
+    SHY: {asset_class: rates, region: US, desc: "UST 1-3y", half_spread_bps: 0.7}
+    IEF: {asset_class: rates, region: US, desc: "UST 7-10y", half_spread_bps: 0.7}
+    TLT: {asset_class: rates, region: US, desc: "UST 20y+", half_spread_bps: 0.7}
+    TIP: {asset_class: rates, region: US, desc: "US TIPS", half_spread_bps: 1.0}
+    LQD: {asset_class: credit, region: US, desc: "IG corporate", half_spread_bps: 1.0}
+    HYG: {asset_class: credit, region: US, desc: "HY corporate", half_spread_bps: 1.0}
+    # --- commodities (ETFs embed futures roll costs/contango: USO/UNG/DBC/BNO/CPER hold futures) ---
+    GLD: {asset_class: commodity, region: GLOBAL, desc: "Gold (physical)", half_spread_bps: 0.7}
+    SLV: {asset_class: commodity, region: GLOBAL, desc: "Silver (physical)", half_spread_bps: 1.5}
+    USO: {asset_class: commodity, region: GLOBAL, desc: "WTI front-month futures", half_spread_bps: 2.0, borrow_bps_yr: 150}
+    BNO: {asset_class: commodity, region: GLOBAL, desc: "Brent futures", half_spread_bps: 5.0, borrow_bps_yr: 300}
+    UNG: {asset_class: commodity, region: GLOBAL, desc: "Henry Hub nat gas futures", half_spread_bps: 3.0, borrow_bps_yr: 300}
+    DBC: {asset_class: commodity, region: GLOBAL, desc: "Diversified commodity futures", half_spread_bps: 3.0}
+    DBA: {asset_class: commodity, region: GLOBAL, desc: "Agriculture futures", half_spread_bps: 5.0}
+    CPER: {asset_class: commodity, region: GLOBAL, desc: "Copper futures", half_spread_bps: 10.0, borrow_bps_yr: 300}
+    # --- FX (currency trusts / dollar index futures fund) ---
+    FXE: {asset_class: fx, region: GLOBAL, desc: "EUR/USD", half_spread_bps: 2.0}
+    FXB: {asset_class: fx, region: GLOBAL, desc: "GBP/USD", half_spread_bps: 4.0}
+    FXY: {asset_class: fx, region: GLOBAL, desc: "JPY/USD", half_spread_bps: 3.0}
+    FXF: {asset_class: fx, region: GLOBAL, desc: "CHF/USD", half_spread_bps: 5.0}
+    FXA: {asset_class: fx, region: GLOBAL, desc: "AUD/USD", half_spread_bps: 4.0}
+    UUP: {asset_class: fx, region: GLOBAL, desc: "USD index (long USD)", half_spread_bps: 2.0}
+    # --- volatility ---
+    VIXY: {asset_class: volatility, region: US, desc: "VIX short-term futures (long vol)", half_spread_bps: 3.0, borrow_bps_yr: 800}
+    # --- cash proxy (not traded by strategies; used as the risk-free return series) ---
+    BIL: {asset_class: cash, region: US, desc: "UST 1-3 month T-bills", half_spread_bps: 0.5}
+
+crypto:
+  source: binance_public       # Official Binance archive (data.binance.vision S3), SHA256-verified
+  calendar: 24/7 (UTC daily bars)
+  currency: USDT
+  # Spot: taker 10 bps (VIP0 without BNB discount). USDT-M perp: taker 5 bps. Shorts only via perps.
+  spot_defaults: {half_spread_bps: 2.0, slippage_bps: 3.0, commission_bps: 10.0}
+  perp_defaults: {half_spread_bps: 1.5, slippage_bps: 3.0, commission_bps: 5.0}
+  # Fixed list of historically major coins INCLUDING ones that later collapsed or were delisted
+  # (LUNA, FTT, ...) to limit survivorship bias. Tradable universe at each date is chosen point-in-time
+  # by trailing 30d quote volume among coins with >= 120d of history.
+  instruments:
+    BTCUSDT: {tier: 1}
+    ETHUSDT: {tier: 1}
+    BNBUSDT: {tier: 2}
+    SOLUSDT: {tier: 2}
+    XRPUSDT: {tier: 2}
+    ADAUSDT: {tier: 2}
+    DOGEUSDT: {tier: 2}
+    LTCUSDT: {tier: 2}
+    LINKUSDT: {tier: 2}
+    DOTUSDT: {tier: 2}
+    AVAXUSDT: {tier: 2}
+    TRXUSDT: {tier: 2}
+    BCHUSDT: {tier: 2}
+    ETCUSDT: {tier: 2}
+    XLMUSDT: {tier: 3}
+    ATOMUSDT: {tier: 3}
+    MATICUSDT: {tier: 3}
+    UNIUSDT: {tier: 3}
+    FILUSDT: {tier: 3}
+    EOSUSDT: {tier: 3}
+    XMRUSDT: {tier: 3}
+    NEOUSDT: {tier: 3}
+    IOTAUSDT: {tier: 3}
+    VETUSDT: {tier: 3}
+    ALGOUSDT: {tier: 3}
+    NEARUSDT: {tier: 3}
+    AAVEUSDT: {tier: 3}
+    LUNAUSDT: {tier: 3}
+    FTTUSDT: {tier: 3}
+    ICPUSDT: {tier: 3}
+  perps: [BTCUSDT, ETHUSDT, BNBUSDT, SOLUSDT, XRPUSDT, ADAUSDT, DOGEUSDT, LTCUSDT, LINKUSDT, DOTUSDT, AVAXUSDT, TRXUSDT, BCHUSDT, ETCUSDT, XLMUSDT, ATOMUSDT, EOSUSDT]
+
+reference:
+  source: github_datasets      # datasets/* on GitHub (EIA, FRED H.10, CBOE) - used for cross-checks / features, not traded
+  series:
+    wti_spot: {repo: datasets/oil-prices, path: data/wti-daily.csv, origin: "US EIA RWTC"}
+    brent_spot: {repo: datasets/oil-prices, path: data/brent-daily.csv, origin: "US EIA RBRTE"}
+    henry_hub: {repo: datasets/natural-gas, path: data/daily.csv, origin: "US EIA RNGWHHD"}
+    vix: {repo: datasets/finance-vix, path: data/vix-daily.csv, origin: "CBOE VIX"}
+    fx_h10: {repo: datasets/exchange-rates, path: data/daily.csv, origin: "FRED / Fed H.10"}
+    cpi_us: {repo: datasets/cpi-us, path: data/cpiai.csv, origin: "BLS CPI-U"}
+    shiller_sp500: {repo: datasets/s-and-p-500, path: data/data.csv, origin: "R. Shiller monthly"}

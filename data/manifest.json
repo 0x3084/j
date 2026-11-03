@@ -1,0 +1,1141 @@
+{
+ "binance/spot/klines/1d/AAVEUSDT": {
+  "checksum_failures": [],
+  "end": "2026-10-31 00:00:00",
+  "files": 73,
+  "recorded_utc": "2026-11-03T05:14:15+00:00",
+  "rows": 2208,
+  "source": "binance_public",
+  "start": "2020-10-15 00:00:00",
+  "url_prefix": "https://s3-ap-northeast-1.amazonaws.com/data.binance.vision/data/spot/monthly/klines/AAVEUSDT/1d/"
+ },
+ "binance/spot/klines/1d/ADAUSDT": {
+  "checksum_failures": [],
+  "end": "2026-10-31 00:00:00",
+  "files": 103,
+  "recorded_utc": "2026-11-03T05:14:06+00:00",
+  "rows": 3120,
+  "source": "binance_public",
+  "start": "2018-04-17 00:00:00",
+  "url_prefix": "https://s3-ap-northeast-1.amazonaws.com/data.binance.vision/data/spot/monthly/klines/ADAUSDT/1d/"
+ },
+ "binance/spot/klines/1d/ALGOUSDT": {
+  "checksum_failures": [],
+  "end": "2026-10-31 00:00:00",
+  "files": 89,
+  "recorded_utc": "2026-11-03T05:14:14+00:00",
+  "rows": 2689,
+  "source": "binance_public",
+  "start": "2019-06-22 00:00:00",
+  "url_prefix": "https://s3-ap-northeast-1.amazonaws.com/data.binance.vision/data/spot/monthly/klines/ALGOUSDT/1d/"
+ },
+ "binance/spot/klines/1d/ATOMUSDT": {
+  "checksum_failures": [],
+  "end": "2026-10-31 00:00:00",
+  "files": 91,
+  "recorded_utc": "2026-11-03T05:14:11+00:00",
+  "rows": 2743,
+  "source": "binance_public",
+  "start": "2019-04-29 00:00:00",
+  "url_prefix": "https://s3-ap-northeast-1.amazonaws.com/data.binance.vision/data/spot/monthly/klines/ATOMUSDT/1d/"
+ },
+ "binance/spot/klines/1d/AVAXUSDT": {
+  "checksum_failures": [],
+  "end": "2026-10-31 00:00:00",
+  "files": 74,
+  "recorded_utc": "2026-11-03T05:14:08+00:00",
+  "rows": 2231,
+  "source": "binance_public",
+  "start": "2020-09-22 00:00:00",
+  "url_prefix": "https://s3-ap-northeast-1.amazonaws.com/data.binance.vision/data/spot/monthly/klines/AVAXUSDT/1d/"
+ },
+ "binance/spot/klines/1d/BCHUSDT": {
+  "checksum_failures": [],
+  "end": "2026-10-31 00:00:00",
+  "files": 84,
+  "recorded_utc": "2026-11-03T05:14:09+00:00",
+  "rows": 2530,
+  "source": "binance_public",
+  "start": "2019-11-28 00:00:00",
+  "url_prefix": "https://s3-ap-northeast-1.amazonaws.com/data.binance.vision/data/spot/monthly/klines/BCHUSDT/1d/"
+ },
+ "binance/spot/klines/1d/BNBUSDT": {
+  "checksum_failures": [],
+  "end": "2026-10-31 00:00:00",
+  "files": 108,
+  "recorded_utc": "2026-11-03T05:14:05+00:00",
+  "rows": 3282,
+  "source": "binance_public",
+  "start": "2017-11-06 00:00:00",
+  "url_prefix": "https://s3-ap-northeast-1.amazonaws.com/data.binance.vision/data/spot/monthly/klines/BNBUSDT/1d/"
+ },
+ "binance/spot/klines/1d/BTCUSDT": {
+  "checksum_failures": [],
+  "end": "2026-10-31 00:00:00",
+  "files": 111,
+  "recorded_utc": "2026-11-03T05:14:04+00:00",
+  "rows": 3363,
+  "source": "binance_public",
+  "start": "2017-08-17 00:00:00",
+  "url_prefix": "https://s3-ap-northeast-1.amazonaws.com/data.binance.vision/data/spot/monthly/klines/BTCUSDT/1d/"
+ },
+ "binance/spot/klines/1d/DOGEUSDT": {
+  "checksum_failures": [],
+  "end": "2026-10-31 00:00:00",
+  "files": 88,
+  "recorded_utc": "2026-11-03T05:14:07+00:00",
+  "rows": 2676,
+  "source": "binance_public",
+  "start": "2019-07-05 00:00:00",
+  "url_prefix": "https://s3-ap-northeast-1.amazonaws.com/data.binance.vision/data/spot/monthly/klines/DOGEUSDT/1d/"
+ },
+ "binance/spot/klines/1d/DOTUSDT": {
+  "checksum_failures": [],
+  "end": "2026-10-31 00:00:00",
+  "files": 75,
+  "recorded_utc": "2026-11-03T05:14:08+00:00",
+  "rows": 2266,
+  "source": "binance_public",
+  "start": "2020-08-18 00:00:00",
+  "url_prefix": "https://s3-ap-northeast-1.amazonaws.com/data.binance.vision/data/spot/monthly/klines/DOTUSDT/1d/"
+ },
+ "binance/spot/klines/1d/EOSUSDT": {
+  "checksum_failures": [],
+  "end": "2025-05-26 00:00:00",
+  "files": 85,
+  "recorded_utc": "2026-11-03T05:14:12+00:00",
+  "rows": 2556,
+  "source": "binance_public",
+  "start": "2018-05-28 00:00:00",
+  "url_prefix": "https://s3-ap-northeast-1.amazonaws.com/data.binance.vision/data/spot/monthly/klines/EOSUSDT/1d/"
+ },
+ "binance/spot/klines/1d/ETCUSDT": {
+  "checksum_failures": [],
+  "end": "2026-10-31 00:00:00",
+  "files": 101,
+  "recorded_utc": "2026-11-03T05:14:10+00:00",
+  "rows": 3064,
+  "source": "binance_public",
+  "start": "2018-06-12 00:00:00",
+  "url_prefix": "https://s3-ap-northeast-1.amazonaws.com/data.binance.vision/data/spot/monthly/klines/ETCUSDT/1d/"
+ },
+ "binance/spot/klines/1d/ETHUSDT": {
+  "checksum_failures": [],
+  "end": "2026-10-31 00:00:00",
+  "files": 111,
+  "recorded_utc": "2026-11-03T05:14:05+00:00",
+  "rows": 3363,
+  "source": "binance_public",
+  "start": "2017-08-17 00:00:00",
+  "url_prefix": "https://s3-ap-northeast-1.amazonaws.com/data.binance.vision/data/spot/monthly/klines/ETHUSDT/1d/"
+ },
+ "binance/spot/klines/1d/FILUSDT": {
+  "checksum_failures": [],
+  "end": "2026-10-31 00:00:00",
+  "files": 73,
+  "recorded_utc": "2026-11-03T05:14:12+00:00",
+  "rows": 2208,
+  "source": "binance_public",
+  "start": "2020-10-15 00:00:00",
+  "url_prefix": "https://s3-ap-northeast-1.amazonaws.com/data.binance.vision/data/spot/monthly/klines/FILUSDT/1d/"
+ },
+ "binance/spot/klines/1d/FTTUSDT": {
+  "checksum_failures": [],
+  "end": "2026-10-31 00:00:00",
+  "files": 74,
+  "recorded_utc": "2026-11-03T05:14:16+00:00",
+  "rows": 2198,
+  "source": "binance_public",
+  "start": "2019-12-20 00:00:00",
+  "url_prefix": "https://s3-ap-northeast-1.amazonaws.com/data.binance.vision/data/spot/monthly/klines/FTTUSDT/1d/"
+ },
+ "binance/spot/klines/1d/ICPUSDT": {
+  "checksum_failures": [],
+  "end": "2026-10-31 00:00:00",
+  "files": 66,
+  "recorded_utc": "2026-11-03T05:14:16+00:00",
+  "rows": 2000,
+  "source": "binance_public",
+  "start": "2021-05-11 00:00:00",
+  "url_prefix": "https://s3-ap-northeast-1.amazonaws.com/data.binance.vision/data/spot/monthly/klines/ICPUSDT/1d/"
+ },
+ "binance/spot/klines/1d/IOTAUSDT": {
+  "checksum_failures": [],
+  "end": "2026-10-31 00:00:00",
+  "files": 102,
+  "recorded_utc": "2026-11-03T05:14:13+00:00",
+  "rows": 3076,
+  "source": "binance_public",
+  "start": "2018-05-31 00:00:00",
+  "url_prefix": "https://s3-ap-northeast-1.amazonaws.com/data.binance.vision/data/spot/monthly/klines/IOTAUSDT/1d/"
+ },
+ "binance/spot/klines/1d/LINKUSDT": {
+  "checksum_failures": [],
+  "end": "2026-10-31 00:00:00",
+  "files": 94,
+  "recorded_utc": "2026-11-03T05:14:08+00:00",
+  "rows": 2846,
+  "source": "binance_public",
+  "start": "2019-01-16 00:00:00",
+  "url_prefix": "https://s3-ap-northeast-1.amazonaws.com/data.binance.vision/data/spot/monthly/klines/LINKUSDT/1d/"
+ },
+ "binance/spot/klines/1d/LTCUSDT": {
+  "checksum_failures": [],
+  "end": "2026-10-31 00:00:00",
+  "files": 107,
+  "recorded_utc": "2026-11-03T05:14:07+00:00",
+  "rows": 3245,
+  "source": "binance_public",
+  "start": "2017-12-13 00:00:00",
+  "url_prefix": "https://s3-ap-northeast-1.amazonaws.com/data.binance.vision/data/spot/monthly/klines/LTCUSDT/1d/"
+ },
+ "binance/spot/klines/1d/LUNAUSDT": {
+  "checksum_failures": [],
+  "end": "2026-10-31 00:00:00",
+  "files": 75,
+  "recorded_utc": "2026-11-03T05:14:15+00:00",
+  "rows": 2246,
+  "source": "binance_public",
+  "start": "2020-08-21 00:00:00",
+  "url_prefix": "https://s3-ap-northeast-1.amazonaws.com/data.binance.vision/data/spot/monthly/klines/LUNAUSDT/1d/"
+ },
+ "binance/spot/klines/1d/MATICUSDT": {
+  "checksum_failures": [],
+  "end": "2024-09-10 00:00:00",
+  "files": 66,
+  "recorded_utc": "2026-11-03T05:14:11+00:00",
+  "rows": 1965,
+  "source": "binance_public",
+  "start": "2019-04-26 00:00:00",
+  "url_prefix": "https://s3-ap-northeast-1.amazonaws.com/data.binance.vision/data/spot/monthly/klines/MATICUSDT/1d/"
+ },
+ "binance/spot/klines/1d/NEARUSDT": {
+  "checksum_failures": [],
+  "end": "2026-10-31 00:00:00",
+  "files": 73,
+  "recorded_utc": "2026-11-03T05:14:15+00:00",
+  "rows": 2209,
+  "source": "binance_public",
+  "start": "2020-10-14 00:00:00",
+  "url_prefix": "https://s3-ap-northeast-1.amazonaws.com/data.binance.vision/data/spot/monthly/klines/NEARUSDT/1d/"
+ },
+ "binance/spot/klines/1d/NEOUSDT": {
+  "checksum_failures": [],
+  "end": "2026-10-31 00:00:00",
+  "files": 108,
+  "recorded_utc": "2026-11-03T05:14:13+00:00",
+  "rows": 3268,
+  "source": "binance_public",
+  "start": "2017-11-20 00:00:00",
+  "url_prefix": "https://s3-ap-northeast-1.amazonaws.com/data.binance.vision/data/spot/monthly/klines/NEOUSDT/1d/"
+ },
+ "binance/spot/klines/1d/SOLUSDT": {
+  "checksum_failures": [],
+  "end": "2026-10-31 00:00:00",
+  "files": 75,
+  "recorded_utc": "2026-11-03T05:14:05+00:00",
+  "rows": 2273,
+  "source": "binance_public",
+  "start": "2020-08-11 00:00:00",
+  "url_prefix": "https://s3-ap-northeast-1.amazonaws.com/data.binance.vision/data/spot/monthly/klines/SOLUSDT/1d/"
+ },
+ "binance/spot/klines/1d/TRXUSDT": {
+  "checksum_failures": [],
+  "end": "2026-10-31 00:00:00",
+  "files": 101,
+  "recorded_utc": "2026-11-03T05:14:09+00:00",
+  "rows": 3065,
+  "source": "binance_public",
+  "start": "2018-06-11 00:00:00",
+  "url_prefix": "https://s3-ap-northeast-1.amazonaws.com/data.binance.vision/data/spot/monthly/klines/TRXUSDT/1d/"
+ },
+ "binance/spot/klines/1d/UNIUSDT": {
+  "checksum_failures": [],
+  "end": "2026-10-31 00:00:00",
+  "files": 74,
+  "recorded_utc": "2026-11-03T05:14:11+00:00",
+  "rows": 2236,
+  "source": "binance_public",
+  "start": "2020-09-17 00:00:00",
+  "url_prefix": "https://s3-ap-northeast-1.amazonaws.com/data.binance.vision/data/spot/monthly/klines/UNIUSDT/1d/"
+ },
+ "binance/spot/klines/1d/VETUSDT": {
+  "checksum_failures": [],
+  "end": "2026-10-31 00:00:00",
+  "files": 100,
+  "recorded_utc": "2026-11-03T05:14:14+00:00",
+  "rows": 3021,
+  "source": "binance_public",
+  "start": "2018-07-25 00:00:00",
+  "url_prefix": "https://s3-ap-northeast-1.amazonaws.com/data.binance.vision/data/spot/monthly/klines/VETUSDT/1d/"
+ },
+ "binance/spot/klines/1d/XLMUSDT": {
+  "checksum_failures": [],
+  "end": "2026-10-31 00:00:00",
+  "files": 102,
+  "recorded_utc": "2026-11-03T05:14:10+00:00",
+  "rows": 3076,
+  "source": "binance_public",
+  "start": "2018-05-31 00:00:00",
+  "url_prefix": "https://s3-ap-northeast-1.amazonaws.com/data.binance.vision/data/spot/monthly/klines/XLMUSDT/1d/"
+ },
+ "binance/spot/klines/1d/XMRUSDT": {
+  "checksum_failures": [],
+  "end": "2024-02-20 00:00:00",
+  "files": 60,
+  "recorded_utc": "2026-11-03T05:14:12+00:00",
+  "rows": 1804,
+  "source": "binance_public",
+  "start": "2019-03-15 00:00:00",
+  "url_prefix": "https://s3-ap-northeast-1.amazonaws.com/data.binance.vision/data/spot/monthly/klines/XMRUSDT/1d/"
+ },
+ "binance/spot/klines/1d/XRPUSDT": {
+  "checksum_failures": [],
+  "end": "2026-10-31 00:00:00",
+  "files": 102,
+  "recorded_utc": "2026-11-03T05:14:06+00:00",
+  "rows": 3103,
+  "source": "binance_public",
+  "start": "2018-05-04 00:00:00",
+  "url_prefix": "https://s3-ap-northeast-1.amazonaws.com/data.binance.vision/data/spot/monthly/klines/XRPUSDT/1d/"
+ },
+ "binance/um/fundingRate//ADAUSDT": {
+  "checksum_failures": [],
+  "end": "2026-10-31 16:00:00",
+  "files": 82,
+  "recorded_utc": "2026-11-03T05:14:20+00:00",
+  "rows": 7432,
+  "source": "binance_public",
+  "start": "2020-01-19 16:00:00",
+  "url_prefix": "https://s3-ap-northeast-1.amazonaws.com/data.binance.vision/data/futures/um/monthly/fundingRate/ADAUSDT/"
+ },
+ "binance/um/fundingRate//ATOMUSDT": {
+  "checksum_failures": [],
+  "end": "2026-10-31 16:00:00",
+  "files": 81,
+  "recorded_utc": "2026-11-03T05:14:28+00:00",
+  "rows": 7378,
+  "source": "binance_public",
+  "start": "2020-02-06 16:00:00",
+  "url_prefix": "https://s3-ap-northeast-1.amazonaws.com/data.binance.vision/data/futures/um/monthly/fundingRate/ATOMUSDT/"
+ },
+ "binance/um/fundingRate//AVAXUSDT": {
+  "checksum_failures": [],
+  "end": "2026-10-31 16:00:00",
+  "files": 74,
+  "recorded_utc": "2026-11-03T05:14:24+00:00",
+  "rows": 6691,
+  "source": "binance_public",
+  "start": "2020-09-22 16:00:00.004000",
+  "url_prefix": "https://s3-ap-northeast-1.amazonaws.com/data.binance.vision/data/futures/um/monthly/fundingRate/AVAXUSDT/"
+ },
+ "binance/um/fundingRate//BCHUSDT": {
+  "checksum_failures": [],
+  "end": "2026-10-31 16:00:00",
+  "files": 82,
+  "recorded_utc": "2026-11-03T05:14:26+00:00",
+  "rows": 7488,
+  "source": "binance_public",
+  "start": "2020-01-01 00:00:00",
+  "url_prefix": "https://s3-ap-northeast-1.amazonaws.com/data.binance.vision/data/futures/um/monthly/fundingRate/BCHUSDT/"
+ },
+ "binance/um/fundingRate//BNBUSDT": {
+  "checksum_failures": [],
+  "end": "2026-10-31 16:00:00",
+  "files": 81,
+  "recorded_utc": "2026-11-03T05:14:18+00:00",
+  "rows": 7367,
+  "source": "binance_public",
+  "start": "2020-02-10 08:00:00",
+  "url_prefix": "https://s3-ap-northeast-1.amazonaws.com/data.binance.vision/data/futures/um/monthly/fundingRate/BNBUSDT/"
+ },
+ "binance/um/fundingRate//BTCUSDT": {
+  "checksum_failures": [],
+  "end": "2026-10-31 16:00:00",
+  "files": 82,
+  "recorded_utc": "2026-11-03T05:14:17+00:00",
+  "rows": 7488,
+  "source": "binance_public",
+  "start": "2020-01-01 00:00:00",
+  "url_prefix": "https://s3-ap-northeast-1.amazonaws.com/data.binance.vision/data/futures/um/monthly/fundingRate/BTCUSDT/"
+ },
+ "binance/um/fundingRate//DOGEUSDT": {
+  "checksum_failures": [],
+  "end": "2026-10-31 16:00:00",
+  "files": 76,
+  "recorded_utc": "2026-11-03T05:14:21+00:00",
+  "rows": 6914,
+  "source": "binance_public",
+  "start": "2020-07-10 08:00:00.001000",
+  "url_prefix": "https://s3-ap-northeast-1.amazonaws.com/data.binance.vision/data/futures/um/monthly/fundingRate/DOGEUSDT/"
+ },
+ "binance/um/fundingRate//DOTUSDT": {
+  "checksum_failures": [],
+  "end": "2026-10-31 16:00:00",
+  "files": 75,
+  "recorded_utc": "2026-11-03T05:14:23+00:00",
+  "rows": 6791,
+  "source": "binance_public",
+  "start": "2020-08-20 08:00:00",
+  "url_prefix": "https://s3-ap-northeast-1.amazonaws.com/data.binance.vision/data/futures/um/monthly/fundingRate/DOTUSDT/"
+ },
+ "binance/um/fundingRate//EOSUSDT": {
+  "checksum_failures": [],
+  "end": "2026-10-31 16:00:00",
+  "files": 82,
+  "recorded_utc": "2026-11-03T05:14:29+00:00",
+  "rows": 7466,
+  "source": "binance_public",
+  "start": "2020-01-08 08:00:00",
+  "url_prefix": "https://s3-ap-northeast-1.amazonaws.com/data.binance.vision/data/futures/um/monthly/fundingRate/EOSUSDT/"
+ },
+ "binance/um/fundingRate//ETCUSDT": {
+  "checksum_failures": [],
+  "end": "2026-10-31 16:00:00",
+  "files": 82,
+  "recorded_utc": "2026-11-03T05:14:26+00:00",
+  "rows": 7442,
+  "source": "binance_public",
+  "start": "2020-01-16 08:00:00",
+  "url_prefix": "https://s3-ap-northeast-1.amazonaws.com/data.binance.vision/data/futures/um/monthly/fundingRate/ETCUSDT/"
+ },
+ "binance/um/fundingRate//ETHUSDT": {
+  "checksum_failures": [],
+  "end": "2026-10-31 16:00:00",
+  "files": 82,
+  "recorded_utc": "2026-11-03T05:14:17+00:00",
+  "rows": 7488,
+  "source": "binance_public",
+  "start": "2020-01-01 00:00:00",
+  "url_prefix": "https://s3-ap-northeast-1.amazonaws.com/data.binance.vision/data/futures/um/monthly/fundingRate/ETHUSDT/"
+ },
+ "binance/um/fundingRate//LINKUSDT": {
+  "checksum_failures": [],
+  "end": "2026-10-31 16:00:00",
+  "files": 82,
+  "recorded_utc": "2026-11-03T05:14:23+00:00",
+  "rows": 7439,
+  "source": "binance_public",
+  "start": "2020-01-17 08:00:00",
+  "url_prefix": "https://s3-ap-northeast-1.amazonaws.com/data.binance.vision/data/futures/um/monthly/fundingRate/LINKUSDT/"
+ },
+ "binance/um/fundingRate//LTCUSDT": {
+  "checksum_failures": [],
+  "end": "2026-10-31 16:00:00",
+  "files": 82,
+  "recorded_utc": "2026-11-03T05:14:22+00:00",
+  "rows": 7463,
+  "source": "binance_public",
+  "start": "2020-01-09 08:00:00",
+  "url_prefix": "https://s3-ap-northeast-1.amazonaws.com/data.binance.vision/data/futures/um/monthly/fundingRate/LTCUSDT/"
+ },
+ "binance/um/fundingRate//SOLUSDT": {
+  "checksum_failures": [],
+  "end": "2026-10-31 16:00:00",
+  "files": 74,
+  "recorded_utc": "2026-11-03T05:14:19+00:00",
+  "rows": 6793,
+  "source": "binance_public",
+  "start": "2020-09-13 16:00:00.004000",
+  "url_prefix": "https://s3-ap-northeast-1.amazonaws.com/data.binance.vision/data/futures/um/monthly/fundingRate/SOLUSDT/"
+ },
+ "binance/um/fundingRate//TRXUSDT": {
+  "checksum_failures": [],
+  "end": "2026-10-31 16:00:00",
+  "files": 82,
+  "recorded_utc": "2026-11-03T05:14:25+00:00",
+  "rows": 7445,
+  "source": "binance_public",
+  "start": "2020-01-15 08:00:00",
+  "url_prefix": "https://s3-ap-northeast-1.amazonaws.com/data.binance.vision/data/futures/um/monthly/fundingRate/TRXUSDT/"
+ },
+ "binance/um/fundingRate//XLMUSDT": {
+  "checksum_failures": [],
+  "end": "2026-10-31 16:00:00",
+  "files": 82,
+  "recorded_utc": "2026-11-03T05:14:27+00:00",
+  "rows": 7432,
+  "source": "binance_public",
+  "start": "2020-01-19 16:00:00",
+  "url_prefix": "https://s3-ap-northeast-1.amazonaws.com/data.binance.vision/data/futures/um/monthly/fundingRate/XLMUSDT/"
+ },
+ "binance/um/fundingRate//XRPUSDT": {
+  "checksum_failures": [],
+  "end": "2026-10-31 16:00:00",
+  "files": 82,
+  "recorded_utc": "2026-11-03T05:14:20+00:00",
+  "rows": 7472,
+  "source": "binance_public",
+  "start": "2020-01-06 08:00:00",
+  "url_prefix": "https://s3-ap-northeast-1.amazonaws.com/data.binance.vision/data/futures/um/monthly/fundingRate/XRPUSDT/"
+ },
+ "binance/um/klines/1d/ADAUSDT": {
+  "checksum_failures": [],
+  "end": "2026-10-31 00:00:00",
+  "files": 82,
+  "recorded_utc": "2026-11-03T05:14:20+00:00",
+  "rows": 2465,
+  "source": "binance_public",
+  "start": "2020-01-31 00:00:00",
+  "url_prefix": "https://s3-ap-northeast-1.amazonaws.com/data.binance.vision/data/futures/um/monthly/klines/ADAUSDT/1d/"
+ },
+ "binance/um/klines/1d/ATOMUSDT": {
+  "checksum_failures": [],
+  "end": "2026-10-31 00:00:00",
+  "files": 81,
+  "recorded_utc": "2026-11-03T05:14:28+00:00",
+  "rows": 2458,
+  "source": "binance_public",
+  "start": "2020-02-07 00:00:00",
+  "url_prefix": "https://s3-ap-northeast-1.amazonaws.com/data.binance.vision/data/futures/um/monthly/klines/ATOMUSDT/1d/"
+ },
+ "binance/um/klines/1d/AVAXUSDT": {
+  "checksum_failures": [],
+  "end": "2026-10-31 00:00:00",
+  "files": 74,
+  "recorded_utc": "2026-11-03T05:14:24+00:00",
+  "rows": 2229,
+  "source": "binance_public",
+  "start": "2020-09-23 00:00:00",
+  "url_prefix": "https://s3-ap-northeast-1.amazonaws.com/data.binance.vision/data/futures/um/monthly/klines/AVAXUSDT/1d/"
+ },
+ "binance/um/klines/1d/BCHUSDT": {
+  "checksum_failures": [],
+  "end": "2026-10-31 00:00:00",
+  "files": 82,
+  "recorded_utc": "2026-11-03T05:14:25+00:00",
+  "rows": 2495,
+  "source": "binance_public",
+  "start": "2020-01-01 00:00:00",
+  "url_prefix": "https://s3-ap-northeast-1.amazonaws.com/data.binance.vision/data/futures/um/monthly/klines/BCHUSDT/1d/"
+ },
+ "binance/um/klines/1d/BNBUSDT": {
+  "checksum_failures": [],
+  "end": "2026-10-31 00:00:00",
+  "files": 81,
+  "recorded_utc": "2026-11-03T05:14:18+00:00",
+  "rows": 2455,
+  "source": "binance_public",
+  "start": "2020-02-10 00:00:00",
+  "url_prefix": "https://s3-ap-northeast-1.amazonaws.com/data.binance.vision/data/futures/um/monthly/klines/BNBUSDT/1d/"
+ },
+ "binance/um/klines/1d/BTCUSDT": {
+  "checksum_failures": [],
+  "end": "2026-10-31 00:00:00",
+  "files": 82,
+  "recorded_utc": "2026-11-03T05:14:16+00:00",
+  "rows": 2495,
+  "source": "binance_public",
+  "start": "2020-01-01 00:00:00",
+  "url_prefix": "https://s3-ap-northeast-1.amazonaws.com/data.binance.vision/data/futures/um/monthly/klines/BTCUSDT/1d/"
+ },
+ "binance/um/klines/1d/DOGEUSDT": {
+  "checksum_failures": [],
+  "end": "2026-10-31 00:00:00",
+  "files": 76,
+  "recorded_utc": "2026-11-03T05:14:21+00:00",
+  "rows": 2304,
+  "source": "binance_public",
+  "start": "2020-07-10 00:00:00",
+  "url_prefix": "https://s3-ap-northeast-1.amazonaws.com/data.binance.vision/data/futures/um/monthly/klines/DOGEUSDT/1d/"
+ },
+ "binance/um/klines/1d/DOTUSDT": {
+  "checksum_failures": [],
+  "end": "2026-10-31 00:00:00",
+  "files": 75,
+  "recorded_utc": "2026-11-03T05:14:23+00:00",
+  "rows": 2261,
+  "source": "binance_public",
+  "start": "2020-08-22 00:00:00",
+  "url_prefix": "https://s3-ap-northeast-1.amazonaws.com/data.binance.vision/data/futures/um/monthly/klines/DOTUSDT/1d/"
+ },
+ "binance/um/klines/1d/EOSUSDT": {
+  "checksum_failures": [],
+  "end": "2025-05-21 00:00:00",
+  "files": 65,
+  "recorded_utc": "2026-11-03T05:14:28+00:00",
+  "rows": 1961,
+  "source": "binance_public",
+  "start": "2020-01-08 00:00:00",
+  "url_prefix": "https://s3-ap-northeast-1.amazonaws.com/data.binance.vision/data/futures/um/monthly/klines/EOSUSDT/1d/"
+ },
+ "binance/um/klines/1d/ETCUSDT": {
+  "checksum_failures": [],
+  "end": "2026-10-31 00:00:00",
+  "files": 82,
+  "recorded_utc": "2026-11-03T05:14:26+00:00",
+  "rows": 2480,
+  "source": "binance_public",
+  "start": "2020-01-16 00:00:00",
+  "url_prefix": "https://s3-ap-northeast-1.amazonaws.com/data.binance.vision/data/futures/um/monthly/klines/ETCUSDT/1d/"
+ },
+ "binance/um/klines/1d/ETHUSDT": {
+  "checksum_failures": [],
+  "end": "2026-10-31 00:00:00",
+  "files": 82,
+  "recorded_utc": "2026-11-03T05:14:17+00:00",
+  "rows": 2495,
+  "source": "binance_public",
+  "start": "2020-01-01 00:00:00",
+  "url_prefix": "https://s3-ap-northeast-1.amazonaws.com/data.binance.vision/data/futures/um/monthly/klines/ETHUSDT/1d/"
+ },
+ "binance/um/klines/1d/LINKUSDT": {
+  "checksum_failures": [],
+  "end": "2026-10-31 00:00:00",
+  "files": 82,
+  "recorded_utc": "2026-11-03T05:14:22+00:00",
+  "rows": 2479,
+  "source": "binance_public",
+  "start": "2020-01-17 00:00:00",
+  "url_prefix": "https://s3-ap-northeast-1.amazonaws.com/data.binance.vision/data/futures/um/monthly/klines/LINKUSDT/1d/"
+ },
+ "binance/um/klines/1d/LTCUSDT": {
+  "checksum_failures": [],
+  "end": "2026-10-31 00:00:00",
+  "files": 82,
+  "recorded_utc": "2026-11-03T05:14:22+00:00",
+  "rows": 2482,
+  "source": "binance_public",
+  "start": "2020-01-09 00:00:00",
+  "url_prefix": "https://s3-ap-northeast-1.amazonaws.com/data.binance.vision/data/futures/um/monthly/klines/LTCUSDT/1d/"
+ },
+ "binance/um/klines/1d/SOLUSDT": {
+  "checksum_failures": [],
+  "end": "2026-10-31 00:00:00",
+  "files": 74,
+  "recorded_utc": "2026-11-03T05:14:19+00:00",
+  "rows": 2233,
+  "source": "binance_public",
+  "start": "2020-09-14 00:00:00",
+  "url_prefix": "https://s3-ap-northeast-1.amazonaws.com/data.binance.vision/data/futures/um/monthly/klines/SOLUSDT/1d/"
+ },
+ "binance/um/klines/1d/TRXUSDT": {
+  "checksum_failures": [],
+  "end": "2026-10-31 00:00:00",
+  "files": 82,
+  "recorded_utc": "2026-11-03T05:14:24+00:00",
+  "rows": 2476,
+  "source": "binance_public",
+  "start": "2020-01-15 00:00:00",
+  "url_prefix": "https://s3-ap-northeast-1.amazonaws.com/data.binance.vision/data/futures/um/monthly/klines/TRXUSDT/1d/"
+ },
+ "binance/um/klines/1d/XLMUSDT": {
+  "checksum_failures": [],
+  "end": "2026-10-31 00:00:00",
+  "files": 82,
+  "recorded_utc": "2026-11-03T05:14:27+00:00",
+  "rows": 2471,
+  "source": "binance_public",
+  "start": "2020-01-20 00:00:00",
+  "url_prefix": "https://s3-ap-northeast-1.amazonaws.com/data.binance.vision/data/futures/um/monthly/klines/XLMUSDT/1d/"
+ },
+ "binance/um/klines/1d/XRPUSDT": {
+  "checksum_failures": [],
+  "end": "2026-10-31 00:00:00",
+  "files": 82,
+  "recorded_utc": "2026-11-03T05:14:19+00:00",
+  "rows": 2485,
+  "source": "binance_public",
+  "start": "2020-01-06 00:00:00",
+  "url_prefix": "https://s3-ap-northeast-1.amazonaws.com/data.binance.vision/data/futures/um/monthly/klines/XRPUSDT/1d/"
+ },
+ "github_datasets/brent_spot": {
+  "recorded_utc": "2026-11-03T05:14:29+00:00",
+  "rows": 9117,
+  "sha256": "32623c5d3585b787290e97ce154739a231ad8c862bebe642b46f7387ba5410e1",
+  "source": "github_datasets",
+  "url": "https://raw.githubusercontent.com/datasets/oil-prices/main/data/brent-daily.csv"
+ },
+ "github_datasets/cpi_us": {
+  "recorded_utc": "2026-11-03T05:14:29+00:00",
+  "rows": 1364,
+  "sha256": "4cc3a555b65d7d8470213e8e6a61f201b541beee16655692acb730119458f2e0",
+  "source": "github_datasets",
+  "url": "https://raw.githubusercontent.com/datasets/cpi-us/main/data/cpiai.csv"
+ },
+ "github_datasets/fx_h10": {
+  "recorded_utc": "2026-11-03T05:14:29+00:00",
+  "rows": 273921,
+  "sha256": "5f82c543467ae6398e766fb110fe57abe446b95c4ad13b2eaca8954911c6259d",
+  "source": "github_datasets",
+  "url": "https://raw.githubusercontent.com/datasets/exchange-rates/main/data/daily.csv"
+ },
+ "github_datasets/henry_hub": {
+  "recorded_utc": "2026-11-03T05:14:29+00:00",
+  "rows": 7486,
+  "sha256": "b03a6c4bd273fcbd8b5e1a90b49e18b5fa10d0abba99ea5a841844c6e3c62879",
+  "source": "github_datasets",
+  "url": "https://raw.githubusercontent.com/datasets/natural-gas/main/data/daily.csv"
+ },
+ "github_datasets/shiller_sp500": {
+  "recorded_utc": "2026-11-03T05:14:29+00:00",
+  "rows": 1869,
+  "sha256": "b797a3c8de4586af837b86a156b05f49be11ffab99e13171dae763b2a11bdf79",
+  "source": "github_datasets",
+  "url": "https://raw.githubusercontent.com/datasets/s-and-p-500/main/data/data.csv"
+ },
+ "github_datasets/vix": {
+  "recorded_utc": "2026-11-03T05:14:29+00:00",
+  "rows": 9278,
+  "sha256": "570e05630c9a5e7350d0c3dbe3acc58e793cb5248181ab0e949c121cc082fb83",
+  "source": "github_datasets",
+  "url": "https://raw.githubusercontent.com/datasets/finance-vix/main/data/vix-daily.csv"
+ },
+ "github_datasets/wti_spot": {
+  "recorded_utc": "2026-11-03T05:14:29+00:00",
+  "rows": 9532,
+  "sha256": "4f409e5a99b7c759492c4da609474890459b5c142c7e9031234e8e40b3e88c65",
+  "source": "github_datasets",
+  "url": "https://raw.githubusercontent.com/datasets/oil-prices/main/data/wti-daily.csv"
+ },
+ "yahoo_mirror/BIL": {
+  "end": "2026-10-30",
+  "note": "yfinance auto_adjust=True (split+dividend adjusted OHLC)",
+  "recorded_utc": "2026-11-03T05:14:03+00:00",
+  "rows": 4888,
+  "sha256": "eac09745b7c4dc0e4b10cf166788ef2c3773b702877a6a922d3442c473134e84",
+  "source": "yahoo_mirror",
+  "start": "2007-05-30",
+  "url": "https://raw.githubusercontent.com/o-lq/run/main/data/us/1d/2026-10-31/BIL.csv"
+ },
+ "yahoo_mirror/BNO": {
+  "end": "2026-10-30",
+  "note": "yfinance auto_adjust=True (split+dividend adjusted OHLC)",
+  "recorded_utc": "2026-11-03T05:14:03+00:00",
+  "rows": 4130,
+  "sha256": "c366c25f9734de3c7a04767dcdfe6c33e165e6c2dc1b3000f47f61c437f83d9a",
+  "source": "yahoo_mirror",
+  "start": "2010-06-02",
+  "url": "https://raw.githubusercontent.com/o-lq/run/main/data/us/1d/2026-10-31/BNO.csv"
+ },
+ "yahoo_mirror/CPER": {
+  "end": "2026-10-30",
+  "note": "yfinance auto_adjust=True (split+dividend adjusted OHLC)",
+  "recorded_utc": "2026-11-03T05:14:03+00:00",
+  "rows": 3761,
+  "sha256": "97fb875e51bc307a8b3b5b1ee76afc987079234218872131b6baa5e767ed6e0b",
+  "source": "yahoo_mirror",
+  "start": "2011-11-15",
+  "url": "https://raw.githubusercontent.com/o-lq/run/main/data/us/1d/2026-10-31/CPER.csv"
+ },
+ "yahoo_mirror/DBA": {
+  "end": "2026-10-30",
+  "note": "yfinance auto_adjust=True (split+dividend adjusted OHLC)",
+  "recorded_utc": "2026-11-03T05:14:03+00:00",
+  "rows": 4987,
+  "sha256": "ced2bdf3793538b031ca1f4314875456c939f885bd6da30dfb48e984c8a32508",
+  "source": "yahoo_mirror",
+  "start": "2007-01-05",
+  "url": "https://raw.githubusercontent.com/o-lq/run/main/data/us/1d/2026-10-31/DBA.csv"
+ },
+ "yahoo_mirror/DBC": {
+  "end": "2026-10-30",
+  "note": "yfinance auto_adjust=True (split+dividend adjusted OHLC)",
+  "recorded_utc": "2026-11-03T05:14:03+00:00",
+  "rows": 5217,
+  "sha256": "d714a173a0481ae57efe1adc158d3b86056fa4edb91addfe8f0a11bcb0fe5587",
+  "source": "yahoo_mirror",
+  "start": "2006-02-06",
+  "url": "https://raw.githubusercontent.com/o-lq/run/main/data/us/1d/2026-10-31/DBC.csv"
+ },
+ "yahoo_mirror/EEM": {
+  "end": "2026-10-30",
+  "note": "yfinance auto_adjust=True (split+dividend adjusted OHLC)",
+  "recorded_utc": "2026-11-03T05:14:02+00:00",
+  "rows": 5926,
+  "sha256": "23f877e90f72b96021f11abe4137662e4655571c6614097017a60949b690a014",
+  "source": "yahoo_mirror",
+  "start": "2003-04-14",
+  "url": "https://raw.githubusercontent.com/o-lq/run/main/data/us/1d/2026-10-31/EEM.csv"
+ },
+ "yahoo_mirror/EFA": {
+  "end": "2026-10-30",
+  "note": "yfinance auto_adjust=True (split+dividend adjusted OHLC)",
+  "recorded_utc": "2026-11-03T05:14:02+00:00",
+  "rows": 6332,
+  "sha256": "cc2a36ee59cb185a219e5430e1a23268d18d5e40f44b55e3fb9ead8192383dc4",
+  "source": "yahoo_mirror",
+  "start": "2001-08-27",
+  "url": "https://raw.githubusercontent.com/o-lq/run/main/data/us/1d/2026-10-31/EFA.csv"
+ },
+ "yahoo_mirror/EWA": {
+  "end": "2026-10-30",
+  "note": "yfinance auto_adjust=True (split+dividend adjusted OHLC)",
+  "recorded_utc": "2026-11-03T05:14:02+00:00",
+  "rows": 7706,
+  "sha256": "0d191c7c76769738b815a111e5199eab6fd68ddbed54e8dcc74a7337b5202349",
+  "source": "yahoo_mirror",
+  "start": "1996-03-18",
+  "url": "https://raw.githubusercontent.com/o-lq/run/main/data/us/1d/2026-10-31/EWA.csv"
+ },
+ "yahoo_mirror/EWC": {
+  "end": "2026-10-30",
+  "note": "yfinance auto_adjust=True (split+dividend adjusted OHLC)",
+  "recorded_utc": "2026-11-03T05:14:02+00:00",
+  "rows": 7706,
+  "sha256": "f2cc253158e24e00b7727bde28023f25533714ac498d48df6888bcb6717e9277",
+  "source": "yahoo_mirror",
+  "start": "1996-03-18",
+  "url": "https://raw.githubusercontent.com/o-lq/run/main/data/us/1d/2026-10-31/EWC.csv"
+ },
+ "yahoo_mirror/EWG": {
+  "end": "2026-10-30",
+  "note": "yfinance auto_adjust=True (split+dividend adjusted OHLC)",
+  "recorded_utc": "2026-11-03T05:14:02+00:00",
+  "rows": 7706,
+  "sha256": "9510953179af9fc076a223c08d1f010ab8801826879436bd5dc123d97ecaf0cf",
+  "source": "yahoo_mirror",
+  "start": "1996-03-18",
+  "url": "https://raw.githubusercontent.com/o-lq/run/main/data/us/1d/2026-10-31/EWG.csv"
+ },
+ "yahoo_mirror/EWJ": {
+  "end": "2026-10-30",
+  "note": "yfinance auto_adjust=True (split+dividend adjusted OHLC)",
+  "recorded_utc": "2026-11-03T05:14:02+00:00",
+  "rows": 7706,
+  "sha256": "57d61760fbf080df7afe84bdd023f03933533104304f63d3066a06a3439d8697",
+  "source": "yahoo_mirror",
+  "start": "1996-03-18",
+  "url": "https://raw.githubusercontent.com/o-lq/run/main/data/us/1d/2026-10-31/EWJ.csv"
+ },
+ "yahoo_mirror/EWQ": {
+  "end": "2026-10-30",
+  "note": "yfinance auto_adjust=True (split+dividend adjusted OHLC)",
+  "recorded_utc": "2026-11-03T05:14:02+00:00",
+  "rows": 7706,
+  "sha256": "bf0ecd1e789e99664fb8b5f4729f943331a2d70c459e43cd0713e06b673f6843",
+  "source": "yahoo_mirror",
+  "start": "1996-03-18",
+  "url": "https://raw.githubusercontent.com/o-lq/run/main/data/us/1d/2026-10-31/EWQ.csv"
+ },
+ "yahoo_mirror/EWU": {
+  "end": "2026-10-30",
+  "note": "yfinance auto_adjust=True (split+dividend adjusted OHLC)",
+  "recorded_utc": "2026-11-03T05:14:02+00:00",
+  "rows": 7706,
+  "sha256": "6591cf77033672ba9d5e87341be8f09ad20babb39562d9142f6efb846081f8e2",
+  "source": "yahoo_mirror",
+  "start": "1996-03-18",
+  "url": "https://raw.githubusercontent.com/o-lq/run/main/data/us/1d/2026-10-31/EWU.csv"
+ },
+ "yahoo_mirror/EZU": {
+  "end": "2026-10-30",
+  "note": "yfinance auto_adjust=True (split+dividend adjusted OHLC)",
+  "recorded_utc": "2026-11-03T05:14:02+00:00",
+  "rows": 6603,
+  "sha256": "130afc0004d280ca7cb17612cfdd382e48d30cd3d858a89c23431819006319b4",
+  "source": "yahoo_mirror",
+  "start": "2000-07-31",
+  "url": "https://raw.githubusercontent.com/o-lq/run/main/data/us/1d/2026-10-31/EZU.csv"
+ },
+ "yahoo_mirror/FXA": {
+  "end": "2026-10-30",
+  "note": "yfinance auto_adjust=True (split+dividend adjusted OHLC)",
+  "recorded_utc": "2026-11-03T05:14:03+00:00",
+  "rows": 5120,
+  "sha256": "1e71a3430d574cb26c9d9b7b70e7c6763eb1db21b737c7d2a4f72f4702146908",
+  "source": "yahoo_mirror",
+  "start": "2006-06-26",
+  "url": "https://raw.githubusercontent.com/o-lq/run/main/data/us/1d/2026-10-31/FXA.csv"
+ },
+ "yahoo_mirror/FXB": {
+  "end": "2026-10-30",
+  "note": "yfinance auto_adjust=True (split+dividend adjusted OHLC)",
+  "recorded_utc": "2026-11-03T05:14:03+00:00",
+  "rows": 5120,
+  "sha256": "eda8b1a27ff22f820f4796b1d3679ec5df82a2c780e52c1f9b2f625b4605ec73",
+  "source": "yahoo_mirror",
+  "start": "2006-06-26",
+  "url": "https://raw.githubusercontent.com/o-lq/run/main/data/us/1d/2026-10-31/FXB.csv"
+ },
+ "yahoo_mirror/FXE": {
+  "end": "2026-10-30",
+  "note": "yfinance auto_adjust=True (split+dividend adjusted OHLC)",
+  "recorded_utc": "2026-11-03T05:14:03+00:00",
+  "rows": 5254,
+  "sha256": "d72586ae3486be639bd4735928a860c9afb65ad60af6b9bca660bd98ca02511a",
+  "source": "yahoo_mirror",
+  "start": "2005-12-12",
+  "url": "https://raw.githubusercontent.com/o-lq/run/main/data/us/1d/2026-10-31/FXE.csv"
+ },
+ "yahoo_mirror/FXF": {
+  "end": "2026-10-30",
+  "note": "yfinance auto_adjust=True (split+dividend adjusted OHLC)",
+  "recorded_utc": "2026-11-03T05:14:03+00:00",
+  "rows": 5120,
+  "sha256": "c645c08b7523d2e0f37c7a2aa2825764e80e868511f37cbb4e622b2ecc94bc0f",
+  "source": "yahoo_mirror",
+  "start": "2006-06-26",
+  "url": "https://raw.githubusercontent.com/o-lq/run/main/data/us/1d/2026-10-31/FXF.csv"
+ },
+ "yahoo_mirror/FXY": {
+  "end": "2026-10-30",
+  "note": "yfinance auto_adjust=True (split+dividend adjusted OHLC)",
+  "recorded_utc": "2026-11-03T05:14:03+00:00",
+  "rows": 4961,
+  "sha256": "cd5dbc158761b50091f9fa7c73a1579254510dfb06c10073bfbd71e974767511",
+  "source": "yahoo_mirror",
+  "start": "2007-02-13",
+  "url": "https://raw.githubusercontent.com/o-lq/run/main/data/us/1d/2026-10-31/FXY.csv"
+ },
+ "yahoo_mirror/GLD": {
+  "end": "2026-10-30",
+  "note": "yfinance auto_adjust=True (split+dividend adjusted OHLC)",
+  "recorded_utc": "2026-11-03T05:14:03+00:00",
+  "rows": 5522,
+  "sha256": "53f272274c5af8134585af072af4f3bd548ba57e94ced5f8e776cef4b0e1e562",
+  "source": "yahoo_mirror",
+  "start": "2004-11-18",
+  "url": "https://raw.githubusercontent.com/o-lq/run/main/data/us/1d/2026-10-31/GLD.csv"
+ },
+ "yahoo_mirror/HYG": {
+  "end": "2026-10-30",
+  "note": "yfinance auto_adjust=True (split+dividend adjusted OHLC)",
+  "recorded_utc": "2026-11-03T05:14:03+00:00",
+  "rows": 4922,
+  "sha256": "bd866d64b9ffbc7b5fff0b9f99809e564d1a57df674e959f92fe87508d58f811",
+  "source": "yahoo_mirror",
+  "start": "2007-04-11",
+  "url": "https://raw.githubusercontent.com/o-lq/run/main/data/us/1d/2026-10-31/HYG.csv"
+ },
+ "yahoo_mirror/IEF": {
+  "end": "2026-10-30",
+  "note": "yfinance auto_adjust=True (split+dividend adjusted OHLC)",
+  "recorded_utc": "2026-11-03T05:14:02+00:00",
+  "rows": 6104,
+  "sha256": "1fe14667eae0eb591ff23485ab3ac9ab0f7f71b42f5beaeb3ef73f60bb813d4f",
+  "source": "yahoo_mirror",
+  "start": "2002-07-30",
+  "url": "https://raw.githubusercontent.com/o-lq/run/main/data/us/1d/2026-10-31/IEF.csv"
+ },
+ "yahoo_mirror/IWM": {
+  "end": "2026-10-30",
+  "note": "yfinance auto_adjust=True (split+dividend adjusted OHLC)",
+  "recorded_utc": "2026-11-03T05:14:02+00:00",
+  "rows": 6647,
+  "sha256": "0afa0b2bcbbee22b4fcb2ac6f70d1389abac674836f21aba5c9d9f0d1a60423c",
+  "source": "yahoo_mirror",
+  "start": "2000-05-26",
+  "url": "https://raw.githubusercontent.com/o-lq/run/main/data/us/1d/2026-10-31/IWM.csv"
+ },
+ "yahoo_mirror/LQD": {
+  "end": "2026-10-30",
+  "note": "yfinance auto_adjust=True (split+dividend adjusted OHLC)",
+  "recorded_utc": "2026-11-03T05:14:03+00:00",
+  "rows": 6104,
+  "sha256": "275c51c175bd3fd4b5fc526d392acb5ee40ed973aabdd9d09a54a937bb412d79",
+  "source": "yahoo_mirror",
+  "start": "2002-07-30",
+  "url": "https://raw.githubusercontent.com/o-lq/run/main/data/us/1d/2026-10-31/LQD.csv"
+ },
+ "yahoo_mirror/QQQ": {
+  "end": "2026-10-30",
+  "note": "yfinance auto_adjust=True (split+dividend adjusted OHLC)",
+  "recorded_utc": "2026-11-03T05:14:02+00:00",
+  "rows": 6955,
+  "sha256": "80d84eeebc6668a57d18b2618079993f7e851739887bec8d46c57c8e0f0f9cfe",
+  "source": "yahoo_mirror",
+  "start": "1999-03-10",
+  "url": "https://raw.githubusercontent.com/o-lq/run/main/data/us/1d/2026-10-31/QQQ.csv"
+ },
+ "yahoo_mirror/SHY": {
+  "end": "2026-10-30",
+  "note": "yfinance auto_adjust=True (split+dividend adjusted OHLC)",
+  "recorded_utc": "2026-11-03T05:14:02+00:00",
+  "rows": 6104,
+  "sha256": "864d2440b2be6a05890102f934f4a7d53db62203a3c9d8bc3235a3118e544a9b",
+  "source": "yahoo_mirror",
+  "start": "2002-07-30",
+  "url": "https://raw.githubusercontent.com/o-lq/run/main/data/us/1d/2026-10-31/SHY.csv"
+ },
+ "yahoo_mirror/SLV": {
+  "end": "2026-10-30",
+  "note": "yfinance auto_adjust=True (split+dividend adjusted OHLC)",
+  "recorded_utc": "2026-11-03T05:14:03+00:00",
+  "rows": 5160,
+  "sha256": "e2d5fa876c2e11100d42e6da259a263719b2174114e4cdcb407f036da93b48ef",
+  "source": "yahoo_mirror",
+  "start": "2006-04-28",
+  "url": "https://raw.githubusercontent.com/o-lq/run/main/data/us/1d/2026-10-31/SLV.csv"
+ },
+ "yahoo_mirror/SPY": {
+  "end": "2026-10-30",
+  "note": "yfinance auto_adjust=True (split+dividend adjusted OHLC)",
+  "recorded_utc": "2026-11-03T05:14:02+00:00",
+  "rows": 8497,
+  "sha256": "53734818c3344f0f96ce0d8e953733597a51747424f836b9a4d5acaebb929266",
+  "source": "yahoo_mirror",
+  "start": "1993-01-29",
+  "url": "https://raw.githubusercontent.com/o-lq/run/main/data/us/1d/2026-10-31/SPY.csv"
+ },
+ "yahoo_mirror/TIP": {
+  "end": "2026-10-30",
+  "note": "yfinance auto_adjust=True (split+dividend adjusted OHLC)",
+  "recorded_utc": "2026-11-03T05:14:02+00:00",
+  "rows": 5762,
+  "sha256": "62af133d41f4a65256bef5db1d9c666b8c8ac5a27a70b52986c94b7722edf585",
+  "source": "yahoo_mirror",
+  "start": "2003-12-05",
+  "url": "https://raw.githubusercontent.com/o-lq/run/main/data/us/1d/2026-10-31/TIP.csv"
+ },
+ "yahoo_mirror/TLT": {
+  "end": "2026-10-30",
+  "note": "yfinance auto_adjust=True (split+dividend adjusted OHLC)",
+  "recorded_utc": "2026-11-03T05:14:02+00:00",
+  "rows": 6104,
+  "sha256": "44f8fa3539c7c9a9c7aedcdadc982090edfe882fb6e290b27f965c097e5578fe",
+  "source": "yahoo_mirror",
+  "start": "2002-07-30",
+  "url": "https://raw.githubusercontent.com/o-lq/run/main/data/us/1d/2026-10-31/TLT.csv"
+ },
+ "yahoo_mirror/UNG": {
+  "end": "2026-10-30",
+  "note": "yfinance auto_adjust=True (split+dividend adjusted OHLC)",
+  "recorded_utc": "2026-11-03T05:14:03+00:00",
+  "rows": 4917,
+  "sha256": "04b74e0158e2e42055ddf151ac33d81b5215e4d7e5d0ab0db66359e5a2a7a278",
+  "source": "yahoo_mirror",
+  "start": "2007-04-18",
+  "url": "https://raw.githubusercontent.com/o-lq/run/main/data/us/1d/2026-10-31/UNG.csv"
+ },
+ "yahoo_mirror/USO": {
+  "end": "2026-10-30",
+  "note": "yfinance auto_adjust=True (split+dividend adjusted OHLC)",
+  "recorded_utc": "2026-11-03T05:14:03+00:00",
+  "rows": 5173,
+  "sha256": "408d7a935f9f64e7463082642eee766310c5fecb6d3fc278f9e26f5a038bac9f",
+  "source": "yahoo_mirror",
+  "start": "2006-04-10",
+  "url": "https://raw.githubusercontent.com/o-lq/run/main/data/us/1d/2026-10-31/USO.csv"
+ },
+ "yahoo_mirror/UUP": {
+  "end": "2026-10-30",
+  "note": "yfinance auto_adjust=True (split+dividend adjusted OHLC)",
+  "recorded_utc": "2026-11-03T05:14:03+00:00",
+  "rows": 4950,
+  "sha256": "51b86557ee46fd8ed0d91a18526f11910380e26902c77609f011faa221abfe12",
+  "source": "yahoo_mirror",
+  "start": "2007-03-01",
+  "url": "https://raw.githubusercontent.com/o-lq/run/main/data/us/1d/2026-10-31/UUP.csv"
+ },
+ "yahoo_mirror/VGK": {
+  "end": "2026-10-30",
+  "note": "yfinance auto_adjust=True (split+dividend adjusted OHLC)",
+  "recorded_utc": "2026-11-03T05:14:02+00:00",
+  "rows": 5446,
+  "sha256": "f5857acdb3a51ac6bfb6c48f1f136eb8bac83cd29bb93c0d9eff117aa6b01393",
+  "source": "yahoo_mirror",
+  "start": "2005-03-10",
+  "url": "https://raw.githubusercontent.com/o-lq/run/main/data/us/1d/2026-10-31/VGK.csv"
+ },
+ "yahoo_mirror/VIXY": {
+  "end": "2026-10-30",
+  "note": "yfinance auto_adjust=True (split+dividend adjusted OHLC)",
+  "recorded_utc": "2026-11-03T05:14:03+00:00",
+  "rows": 3980,
+  "sha256": "c59084e508ad1becbf03890bd46012bb4fd1759a5943f130556100f9e14f1b88",
+  "source": "yahoo_mirror",
+  "start": "2011-01-04",
+  "url": "https://raw.githubusercontent.com/o-lq/run/main/data/us/1d/2026-10-31/VIXY.csv"
+ },
+ "yahoo_mirror/VNQ": {
+  "end": "2026-10-30",
+  "note": "yfinance auto_adjust=True (split+dividend adjusted OHLC)",
+  "recorded_utc": "2026-11-03T05:14:02+00:00",
+  "rows": 5558,
+  "sha256": "e60f87b44877602732d5ad826b59ac1e6c1c4710739ebf7c77b6da1156873df7",
+  "source": "yahoo_mirror",
+  "start": "2004-09-29",
+  "url": "https://raw.githubusercontent.com/o-lq/run/main/data/us/1d/2026-10-31/VNQ.csv"
+ },
+ "yahoo_mirror/XLB": {
+  "end": "2026-10-30",
+  "note": "yfinance auto_adjust=True (split+dividend adjusted OHLC)",
+  "recorded_utc": "2026-11-03T05:14:02+00:00",
+  "rows": 7007,
+  "sha256": "1597c339182ed22bfd9c06d93dfc70b20f06b58724b13979665957c2c3025bc4",
+  "source": "yahoo_mirror",
+  "start": "1998-12-22",
+  "url": "https://raw.githubusercontent.com/o-lq/run/main/data/us/1d/2026-10-31/XLB.csv"
+ },
+ "yahoo_mirror/XLE": {
+  "end": "2026-10-30",
+  "note": "yfinance auto_adjust=True (split+dividend adjusted OHLC)",
+  "recorded_utc": "2026-11-03T05:14:02+00:00",
+  "rows": 7007,
+  "sha256": "750e3c788c8cfe91f37b67291fc5c54d86a51691c957ec22965cac3ebb9146a1",
+  "source": "yahoo_mirror",
+  "start": "1998-12-22",
+  "url": "https://raw.githubusercontent.com/o-lq/run/main/data/us/1d/2026-10-31/XLE.csv"
+ },
+ "yahoo_mirror/XLF": {
+  "end": "2026-10-30",
+  "note": "yfinance auto_adjust=True (split+dividend adjusted OHLC)",
+  "recorded_utc": "2026-11-03T05:14:02+00:00",
+  "rows": 7007,
+  "sha256": "01b1b281b615eb404d995ef0cbba15ce12af9de5f51e33a1815772edffa377f5",
+  "source": "yahoo_mirror",
+  "start": "1998-12-22",
+  "url": "https://raw.githubusercontent.com/o-lq/run/main/data/us/1d/2026-10-31/XLF.csv"
+ },
+ "yahoo_mirror/XLI": {
+  "end": "2026-10-30",
+  "note": "yfinance auto_adjust=True (split+dividend adjusted OHLC)",
+  "recorded_utc": "2026-11-03T05:14:02+00:00",
+  "rows": 7007,
+  "sha256": "636c21675eb8b38bcac6dcfe1a8f5fb53c83e418b4daa9164266b43ac47d26b5",
+  "source": "yahoo_mirror",
+  "start": "1998-12-22",
+  "url": "https://raw.githubusercontent.com/o-lq/run/main/data/us/1d/2026-10-31/XLI.csv"
+ },
+ "yahoo_mirror/XLK": {
+  "end": "2026-10-30",
+  "note": "yfinance auto_adjust=True (split+dividend adjusted OHLC)",
+  "recorded_utc": "2026-11-03T05:14:02+00:00",
+  "rows": 7007,
+  "sha256": "02eb1686b17df051ee6c45da2abdfee89e70fe347971ab94674c72d63de75f68",
+  "source": "yahoo_mirror",
+  "start": "1998-12-22",
+  "url": "https://raw.githubusercontent.com/o-lq/run/main/data/us/1d/2026-10-31/XLK.csv"
+ },
+ "yahoo_mirror/XLP": {
+  "end": "2026-10-30",
+  "note": "yfinance auto_adjust=True (split+dividend adjusted OHLC)",
+  "recorded_utc": "2026-11-03T05:14:02+00:00",
+  "rows": 7007,
+  "sha256": "6871154c44a4c8c20aa61c84e4d76eefde131c2089c77a7f40db66d58139d1a6",
+  "source": "yahoo_mirror",
+  "start": "1998-12-22",
+  "url": "https://raw.githubusercontent.com/o-lq/run/main/data/us/1d/2026-10-31/XLP.csv"
+ },
+ "yahoo_mirror/XLU": {
+  "end": "2026-10-30",
+  "note": "yfinance auto_adjust=True (split+dividend adjusted OHLC)",
+  "recorded_utc": "2026-11-03T05:14:02+00:00",
+  "rows": 7007,
+  "sha256": "f9553fcc54d64cbcecb4edd2078ffc9b1380f826808ff65604c2394afbacda19",
+  "source": "yahoo_mirror",
+  "start": "1998-12-22",
+  "url": "https://raw.githubusercontent.com/o-lq/run/main/data/us/1d/2026-10-31/XLU.csv"
+ },
+ "yahoo_mirror/XLV": {
+  "end": "2026-10-30",
+  "note": "yfinance auto_adjust=True (split+dividend adjusted OHLC)",
+  "recorded_utc": "2026-11-03T05:14:02+00:00",
+  "rows": 7007,
+  "sha256": "1ab6039990ba4ec3cd0bfa5fe36f3c0cb94450951141cb44f5d89e6830107df8",
+  "source": "yahoo_mirror",
+  "start": "1998-12-22",
+  "url": "https://raw.githubusercontent.com/o-lq/run/main/data/us/1d/2026-10-31/XLV.csv"
+ },
+ "yahoo_mirror/XLY": {
+  "end": "2026-10-30",
+  "note": "yfinance auto_adjust=True (split+dividend adjusted OHLC)",
+  "recorded_utc": "2026-11-03T05:14:02+00:00",
+  "rows": 7007,
+  "sha256": "29578dc0f7fc5ddbc75889ba25c2bce6e9be9fe90bf943a801cb788f5710ff1b",
+  "source": "yahoo_mirror",
+  "start": "1998-12-22",
+  "url": "https://raw.githubusercontent.com/o-lq/run/main/data/us/1d/2026-10-31/XLY.csv"
+ }
+}
