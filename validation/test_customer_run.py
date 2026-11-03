@@ -155,15 +155,53 @@ def check_outbox(cfg: Config, email: str) -> list[str]:
     return problems
 
 
+def send_single(cfg: Config, conn, a) -> int:
+    """Exactly one e-mail: welcome + demo weekly report, Excel attachment only."""
+    from nyabolag.db import get_filters, now_iso
+    from nyabolag.delivery import matches, new_companies_since, to_xlsx, verified_cutoff
+    from nyabolag.emails import combined_test_email
+    from nyabolag.mailer import send_mail
+
+    cust = conn.execute("SELECT * FROM customers WHERE email = ?", (a.email.lower(),)).fetchone()
+    filters = get_filters(cust)
+    latest = conn.execute("SELECT MAX(id) FROM snapshots").fetchone()[0]
+    rows = [r for r in new_companies_since(conn, latest - 1, latest, verified_cutoff(cfg)) if matches(r, filters)]
+    assert rows and all("DEMO" in r["name"] for r in rows), "only fictional DEMO companies may be sent"
+    name = f"DEMO-nya-bolag-v{date.today().isocalendar()[1]}.xlsx"
+    xlsx = to_xlsx(rows, "DEMO nya bolag")
+    subject, text, html = combined_test_email(cfg, cust, filters, rows, True, [name])
+    for needle in ("TESTLEVERANS", "FIKTIVA"):
+        assert needle in text and needle in html, f"test labelling missing: {needle}"
+    print(f"sending 1 e-mail via '{cfg.mail_transport}' from {cfg.mail_from} to {a.email}: "
+          f"{len(rows)} DEMO companies, attachment {name}")
+    path = send_mail(cfg, a.email, subject, text, html=html, attachments=[
+        (name, xlsx, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")])
+    if not path:  # really sent -> lock so it cannot be sent twice by accident
+        (cfg.data_dir / "single-test-email.sent").write_text(f"{now_iso()} to {a.email} via {cfg.mail_transport}\n")
+    if path:
+        print(f"preview written (nothing sent): {path}")
+        problems = check_outbox(cfg, a.email)
+        print("CHECKS:", "all passed" if not problems else problems)
+        return 1 if problems else 0
+    return 0
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("email")
     ap.add_argument("--label", default="Norrköping och Linköping")
+    ap.add_argument("--single-email", action="store_true",
+                    help="send exactly ONE e-mail: welcome + demo report, Excel attached (refuses to run twice)")
+    ap.add_argument("--again", action="store_true", help="allow --single-email to send a second time")
     a = ap.parse_args()
     cfg = Config()
     if not cfg.test_mode or a.email.lower() not in cfg.test_recipients:
         raise SystemExit("refusing: set NYABOLAG_TEST_MODE=1 and TEST_RECIPIENTS to include the test address")
     cfg.ensure_dirs()
+    marker = cfg.data_dir / "single-test-email.sent"
+    if a.single_email and marker.exists() and not a.again:
+        raise SystemExit(f"refusing: a single test e-mail was already sent ({marker.read_text().strip()}). "
+                         "Use --again only if you really want another one.")
     today = date.today()
     zpath = cfg.raw_dir / f"DEMO-bulkfil-{today.isoformat()}.zip"
     names = build_bulk(zpath, today)
@@ -181,6 +219,8 @@ def main() -> int:
     with tx(conn):
         conn.execute("UPDATE reklamsparr SET source = 'DEMO-fiktiv (lokal stub, ingen riktig kontroll)'")
     print("reklamspärr (DEMO stub):", {k: stats[k] for k in ("candidates", "verified", "blocked", "failed")})
+    if a.single_email:
+        return send_single(cfg, conn, a)
     cli(["welcome", a.email])
     cli(["deliver"])
     problems = check_outbox(cfg, a.email)

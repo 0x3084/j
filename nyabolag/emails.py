@@ -75,8 +75,8 @@ Du får det här mejlet eftersom du prenumererar på {e(cfg.brand)}.
 </td></tr></table></td></tr></table></body></html>"""
 
 
-def welcome_email(cfg: Config, customer, filters: dict) -> tuple[str, str, str]:
-    """(subject, text, html) sent when a subscription starts."""
+def welcome_email(cfg: Config, customer, filters: dict, inner_only: bool = False):
+    """(subject, text, html) sent when a subscription starts. inner_only: (subject, text, inner rows)."""
     price = f"{cfg.price_sek_month} kr/mån"
     billing = ("TEST: ingen faktura skickas och inget dras." if cfg.test_mode
                else "Faktura eller kvitto kommer separat. Ingen bindningstid.")
@@ -114,12 +114,14 @@ def welcome_email(cfg: Config, customer, filters: dict) -> tuple[str, str, str]:
 <p style="margin:0 0 14px;font-size:14px;line-height:1.55">Lagerbolag, enskilda firmor, avregistrerade bolag och bolag med reklamspärr hos SCB är bortrensade. Varje bolag kontrolleras mot Bolagsverkets register innan leverans.</p>
 <p style="margin:0 0 14px;font-size:13px;line-height:1.55;color:{MUTED};background:{SOFT};padding:10px 12px;border-radius:6px"><b>Att tänka på när du kontaktar bolagen:</b> skriv vem du är och hur mottagaren slipper fler utskick, och respektera ett nej. Listan innehåller inga e-postadresser.</p>
 <p style="margin:0 0 18px;font-size:14px">{e(billing)}</p></td></tr>"""
+    if inner_only:
+        return subject, text, inner
     return subject, text, _shell(cfg, subject, f"Din prenumeration: {_area(filters)}, {price}", inner)
 
 
-def weekly_email(cfg: Config, customer, filters: dict, rows: list, demo: bool, attachment_names: list[str]
-                 ) -> tuple[str, str, str]:
-    """(subject, text, html) for the weekly delivery."""
+def weekly_email(cfg: Config, customer, filters: dict, rows: list, demo: bool, attachment_names: list[str],
+                 inner_only: bool = False):
+    """(subject, text, html) for the weekly delivery. inner_only: (subject, text, inner rows)."""
     n = len(rows)
     dates = sorted(r["reg_date"] for r in rows if r["reg_date"])
     week = date.today().isocalendar()[1]
@@ -157,7 +159,23 @@ def weekly_email(cfg: Config, customer, filters: dict, rows: list, demo: bool, a
 <p style="margin:16px 0 18px;font-size:12px;color:{MUTED};line-height:1.5">Bortrensat: lagerbolag, enskilda firmor,
 avregistrerade bolag, bolag i likvidation/konkurs och bolag med reklamspärr. Kontakta bolagen med brev, besök eller
 telefon. Ange vem du är och hur mottagaren slipper fler utskick.</p></td></tr>"""
+    if inner_only:
+        return subject, "\n".join(text) + "\n", inner
     return subject, "\n".join(text) + "\n", _shell(cfg, subject, f"{n} nya bolag denna vecka", inner, demo)
+
+
+def combined_test_email(cfg: Config, customer, filters: dict, rows: list, demo: bool, attachment_names: list[str]):
+    """ONE test e-mail: the welcome e-mail followed by a demo weekly report (TEST MODE only)."""
+    _, wtext, winner = welcome_email(cfg, customer, filters, inner_only=True)
+    _, rtext, rinner = weekly_email(cfg, customer, filters, rows, demo, attachment_names, inner_only=True)
+    divider = (f"<tr><td style='padding:6px 24px 0'><div style='border-top:3px solid {BRAND};padding-top:14px;"
+               f"font-size:12px;font-weight:700;letter-spacing:.06em;color:{BRAND}'>SÅ HÄR SER EN VECKOLEVERANS UT"
+               f"{' – DEMORAPPORT MED FIKTIVA BOLAG' if demo else ''}</div></td></tr>")
+    subject = f"Välkommen till {cfg.brand} + exempel på veckoleverans"
+    text = (wtext + "\n" + "=" * 60 + "\nSÅ HÄR SER EN VECKOLEVERANS UT" +
+            (" – DEMORAPPORT MED FIKTIVA BOLAG" if demo else "") + "\n" + "=" * 60 + "\n\n" +
+            rtext.replace(_test_banner_text(cfg, demo), ""))
+    return subject, text, _shell(cfg, subject, "Välkommen + exempel på veckoleverans", winner + divider + rinner, demo)
 
 
 def _short(text: str, n: int = 110) -> str:

@@ -21,6 +21,13 @@ class Config:
     smtp_port: int = field(default_factory=lambda: int(_env("SMTP_PORT", "587")))
     smtp_user: str = field(default_factory=lambda: _env("SMTP_USER", ""))
     smtp_password: str = field(default_factory=lambda: _env("SMTP_PASSWORD", ""))
+    # "smtp" (needs SMTP_HOST), "resend-api" (HTTPS, Resend), or "outbox" (preview files only).
+    # Default: smtp if SMTP_HOST is set, else outbox. The Resend key is read from RESEND_API_KEY,
+    # falling back to SMTP_PASSWORD (Resend uses the same key for both).
+    mail_transport: str = field(default_factory=lambda: _env(
+        "MAIL_TRANSPORT", "smtp" if _env("SMTP_HOST") else "outbox"))
+    resend_api_key: str = field(default_factory=lambda: _env("RESEND_API_KEY") or _env("SMTP_PASSWORD"))
+    resend_api_url: str = field(default_factory=lambda: _env("RESEND_API_URL", "https://api.resend.com/emails"))
     mail_from: str = field(default_factory=lambda: _env("MAIL_FROM", "nyabolag <noreply@localhost>"))
     admin_email: str = field(default_factory=lambda: _env("ADMIN_EMAIL", ""))
     # Commercial / mail settings

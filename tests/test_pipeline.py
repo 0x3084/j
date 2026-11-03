@@ -438,3 +438,57 @@ def test_welcome_and_weekly_emails_have_no_dead_links(cfg, conn, week2):
         assert "localhost" not in text + html and "href=" not in html  # manual mode: reply instead of links
         assert "Svara bara på det här mejlet" in text
     assert "249 kr/mån" in welcome_email(cfg, cust, f)[1]
+
+
+def _fake_resend(status, body):
+    import threading
+    from http.server import BaseHTTPRequestHandler, HTTPServer
+    seen = {}
+
+    class H(BaseHTTPRequestHandler):
+        def log_message(self, *a):
+            pass
+
+        def do_POST(self):
+            seen["auth"] = self.headers["Authorization"]
+            seen["json"] = json.loads(self.rfile.read(int(self.headers["Content-Length"])))
+            data = json.dumps(body).encode()
+            self.send_response(status)
+            self.send_header("Content-Type", "application/json")
+            self.send_header("Content-Length", str(len(data)))
+            self.end_headers()
+            self.wfile.write(data)
+
+    srv = HTTPServer(("127.0.0.1", 0), H)
+    threading.Thread(target=srv.serve_forever, daemon=True).start()
+    return srv, seen
+
+
+def test_resend_api_transport(cfg, capsys):
+    import base64
+    from nyabolag.mailer import send_mail
+    srv, seen = _fake_resend(200, {"id": "abc123"})
+    cfg.mail_transport, cfg.resend_api_key = "resend-api", "re_SECRET_test_key"
+    cfg.resend_api_url = f"http://127.0.0.1:{srv.server_address[1]}/emails"
+    cfg.mail_from, cfg.test_mode, cfg.test_recipients = "X <onboarding@resend.dev>", True, ("me@example.se",)
+    assert send_mail(cfg, "me@example.se", "Hej", "text", html="<b>h</b>",
+                     attachments=[("a.xlsx", b"\x00xl", "application/vnd.ms-excel")]) is None
+    srv.shutdown()
+    j = seen["json"]
+    assert seen["auth"] == "Bearer re_SECRET_test_key"
+    assert j["to"] == ["me@example.se"] and j["subject"] == "[TEST] Hej" and j["from"].endswith("<onboarding@resend.dev>")
+    assert base64.b64decode(j["attachments"][0]["content"]) == b"\x00xl" and j["html"] == "<b>h</b>"
+    out = capsys.readouterr().out
+    assert "abc123" in out and "re_SECRET" not in out
+
+
+def test_resend_error_is_reported_without_leaking_key(cfg, capsys):
+    from nyabolag.mailer import MailError, send_mail
+    srv, _ = _fake_resend(403, {"message": "You can only send testing emails to your own email address"})
+    cfg.mail_transport, cfg.resend_api_key = "resend-api", "re_SECRET_test_key"
+    cfg.resend_api_url = f"http://127.0.0.1:{srv.server_address[1]}/emails"
+    with pytest.raises(MailError) as ei:
+        send_mail(cfg, "someone@example.se", "x", "y")
+    srv.shutdown()
+    assert "403" in str(ei.value) and "own email address" in str(ei.value)
+    assert "re_SECRET" not in str(ei.value) + capsys.readouterr().out
