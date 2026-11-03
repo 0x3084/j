@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block body %}
+<h1>Alla nya aktiebolag i ditt område – varje måndag</h1>
+<p class="lead">En färdig lista (Excel/CSV) med bolag som registrerats hos Bolagsverket den senaste veckan, filtrerad på dina postnummer eller orter. För redovisningsbyråer, försäkringsförmedlare, byråer och andra som säljer till nystartade bolag.</p>
+
+<div class="card">
+  <div class="price">249 kr/mån <span class="hint">exkl. moms · ingen bindningstid</span></div>
+  <ul>
+    <li>Namn, organisationsnummer, adress, registreringsdatum och verksamhetsbeskrivning</li>
+    <li>Levereras automatiskt via mejl varje måndag</li>
+    <li>Ändra urval när du vill, säg upp med ett klick</li>
+  </ul>
+</div>
+
+<div class="card">
+  <h2 style="margin-top:0">Starta prenumeration</h2>
+  {% if error %}<p class="err">{{ error }}</p>{% endif %}
+  <form method="post" action="/checkout">
+    <label for="email">E-post</label>
+    <input id="email" name="email" type="email" required>
+    <label for="company_name">Företagsnamn</label>
+    <input id="company_name" name="company_name" type="text">
+    <label for="postcode_prefixes">Postnummer (början)</label>
+    <input id="postcode_prefixes" name="postcode_prefixes" type="text" placeholder="t.ex. 411, 412, 413">
+    <label for="cities">och/eller orter</label>
+    <input id="cities" name="cities" type="text" placeholder="t.ex. Göteborg, Mölndal">
+    <p class="hint">Du betalar via Stripe. Kortet dras månadsvis.</p>
+    <button type="submit">Gå till betalning</button>
+  </form>
+  <p class="hint">Redan kund? <a href="/login">Logga in</a></p>
+</div>
+{% endblock %}

@@ -1,0 +1,4 @@
+flask>=3.0
+stripe>=10.0
+gunicorn>=22.0
+pytest>=8.0

@@ -1,0 +1,10 @@
+[Unit]
+Description=Run nyabolag weekly job every Monday morning
+
+[Timer]
+# Bolagsverket updates the bulk file weekly; confirm the publishing day in Phase 0 and adjust.
+OnCalendar=Mon *-*-* 06:00:00 Europe/Stockholm
+Persistent=true
+
+[Install]
+WantedBy=timers.target
