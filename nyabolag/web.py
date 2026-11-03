@@ -13,7 +13,7 @@ from itsdangerous import BadSignature, SignatureExpired, URLSafeTimedSerializer
 from . import billing
 from .config import Config
 from .db import connect, get_filters, tx
-from .delivery import normalise_filters, preview
+from .delivery import normalise_filters, preview, verified_cutoff
 from .mailer import send_mail
 
 EMAIL_RE = re.compile(r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
@@ -22,6 +22,8 @@ LOGIN_MAX_AGE = 60 * 60  # magic links valid for 1 hour
 
 def create_app(cfg: Config | None = None) -> Flask:
     cfg = cfg or Config()
+    if cfg.base_url.startswith("https://") and (cfg.secret_key.startswith("dev-") or len(cfg.secret_key) < 32):
+        raise RuntimeError("SECRET_KEY must be a random value of at least 32 characters in production")
     cfg.ensure_dirs()
     app = Flask(__name__)
     app.config.update(SECRET_KEY=cfg.secret_key, SESSION_COOKIE_HTTPONLY=True, SESSION_COOKIE_SAMESITE="Lax",
@@ -32,6 +34,17 @@ def create_app(cfg: Config | None = None) -> Flask:
         if "db" not in g:
             g.db = connect(cfg.db_path)
         return g.db
+
+    @app.after_request
+    def _security_headers(resp):
+        resp.headers.setdefault("Content-Security-Policy",
+                                "default-src 'self'; style-src 'self' 'unsafe-inline'; frame-ancestors 'none'; "
+                                "form-action 'self' https://checkout.stripe.com https://billing.stripe.com")
+        resp.headers.setdefault("X-Content-Type-Options", "nosniff")
+        resp.headers.setdefault("Referrer-Policy", "no-referrer")  # magic-link tokens live in URLs
+        if request.path.startswith(("/dashboard", "/download", "/auth")):
+            resp.headers["Cache-Control"] = "no-store"
+        return resp
 
     @app.teardown_appcontext
     def _close(_exc):
@@ -86,6 +99,7 @@ def create_app(cfg: Config | None = None) -> Flask:
         result = billing.handle_event(db(), event)
         if result.startswith("activated "):
             send_login_link(result.removeprefix("activated "))
+            result = "activated"  # don't echo personal data in responses/logs
         return jsonify(ok=True, result=result)
 
     @app.route("/login", methods=["GET", "POST"])
@@ -127,7 +141,7 @@ def create_app(cfg: Config | None = None) -> Flask:
         filters = get_filters(cust)
         deliveries = db().execute(
             "SELECT * FROM deliveries WHERE customer_id = ? ORDER BY id DESC LIMIT 52", (cust["id"],)).fetchall()
-        sample = preview(db(), filters, 4)
+        sample = preview(db(), filters, 4, verified_cutoff(cfg))
         return render_template("dashboard.html", c=cust, f=filters, deliveries=deliveries,
                                preview_count=len(sample), preview_rows=sample[:10], saved=request.args.get("saved"))
 

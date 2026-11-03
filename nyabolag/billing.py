@@ -8,6 +8,7 @@ import stripe
 
 from .config import Config
 from .db import now_iso, tx
+from .delivery import normalise_filters
 
 # Stripe subscription status -> our status
 STATUS_MAP = {
@@ -63,9 +64,9 @@ def handle_event(conn: sqlite3.Connection, event: dict) -> str:
             email = (obj.get("customer_details") or {}).get("email") or obj.get("customer_email")
             meta = obj.get("metadata") or {}
             try:
-                filters = json.loads(meta.get("filters") or "{}")
-            except json.JSONDecodeError:
-                filters = {}
+                filters = normalise_filters(json.loads(meta.get("filters") or "{}"))
+            except (json.JSONDecodeError, AttributeError, TypeError):
+                filters = normalise_filters({})
             existing = conn.execute("SELECT id FROM customers WHERE email = ?", (email,)).fetchone()
             if existing:
                 conn.execute(

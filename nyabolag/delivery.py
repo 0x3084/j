@@ -5,6 +5,7 @@ import csv
 import io
 import re
 import sqlite3
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 from .config import Config
@@ -54,17 +55,31 @@ def matches(company: sqlite3.Row | dict, f: dict) -> bool:
     return True
 
 
+def verified_cutoff(cfg: Config) -> str:
+    """Oldest acceptable reklamspärr check timestamp (ISO, UTC)."""
+    return (datetime.now(timezone.utc) - timedelta(days=cfg.reklamsparr_max_age_days)).replace(
+        microsecond=0).isoformat()
+
+
 def new_companies_since(conn: sqlite3.Connection, after_snapshot_id: int, upto_snapshot_id: int,
-                        require_reklamsparr_check: bool = False) -> list[sqlite3.Row]:
-    """New, non-shelf companies without reklamspärr. Optionally only those whose
-    reklamspärr status has actually been checked."""
-    join = "JOIN" if require_reklamsparr_check else "LEFT JOIN"
+                        verified_since: str | None = None) -> list[sqlite3.Row]:
+    """New, non-shelf companies that have no reklamspärr.
+
+    verified_since=None: also returns companies whose status is unknown (internal use only).
+    verified_since=<ISO timestamp>: only companies verified as NOT opted out at or after that
+    time. Missing or stale statuses are treated as unverified and excluded. This is the mode
+    used for every customer delivery.
+    """
+    if verified_since is None:
+        join, extra, params = "LEFT JOIN", "", ()
+    else:
+        join, extra, params = "JOIN", "AND r.checked_at >= ? ", (verified_since,)
     return conn.execute(
         f"SELECT c.*, r.blocked AS rs_blocked, r.checked_at AS rs_checked_at FROM companies c "
         f"{join} reklamsparr r ON r.orgnr = c.orgnr "
-        "WHERE c.is_new = 1 AND c.is_shelf = 0 AND COALESCE(r.blocked, 0) = 0 "
+        f"WHERE c.is_new = 1 AND c.is_shelf = 0 AND COALESCE(r.blocked, 0) = 0 {extra}"
         "AND c.first_snapshot_id > ? AND c.first_snapshot_id <= ? ORDER BY c.reg_date DESC, c.name",
-        (after_snapshot_id, upto_snapshot_id),
+        (*params, after_snapshot_id, upto_snapshot_id),
     ).fetchall()
 
 
@@ -76,27 +91,36 @@ def _rs_label(r) -> str:
     return f"Nej (kontrollerad {checked[:10]})" if checked else "Ej kontrollerad"
 
 
+_FORMULA_START = ("=", "+", "-", "@", "\t", "\r")
+
+
+def _cell(value) -> str:
+    """Neutralise spreadsheet formula injection: register data is third-party input."""
+    text = "" if value is None else str(value)
+    return "'" + text if text.startswith(_FORMULA_START) else text
+
+
 def to_csv(rows: list) -> bytes:
     buf = io.StringIO()
     w = csv.writer(buf, delimiter=";")  # Swedish Excel expects ';'
     w.writerow(CSV_COLUMNS)
     for r in rows:
         pc = r["postcode"] or ""
-        w.writerow([
+        w.writerow([_cell(v) for v in (
             f"{r['orgnr'][:6]}-{r['orgnr'][6:]}", r["name"], r["form"], r["reg_date"] or "",
             r["street"] or "", f"{pc[:3]} {pc[3:]}" if len(pc) == 5 else pc, r["city"] or "", r["description"] or "",
             _rs_label(r),
-        ])
+        )])
     return ("﻿" + buf.getvalue()).encode("utf-8")  # BOM so Excel detects UTF-8
 
 
 def preview(conn: sqlite3.Connection, filters: dict, last_n_snapshots: int = 4,
-            require_reklamsparr_check: bool = False) -> list[sqlite3.Row]:
+            verified_since: str | None = None) -> list[sqlite3.Row]:
     ids = [r["id"] for r in conn.execute(
         "SELECT id FROM snapshots ORDER BY id DESC LIMIT ?", (last_n_snapshots,)).fetchall()]
     if not ids:
         return []
-    rows = new_companies_since(conn, min(ids) - 1, max(ids), require_reklamsparr_check)
+    rows = new_companies_since(conn, min(ids) - 1, max(ids), verified_since)
     return [r for r in rows if matches(r, filters)]
 
 
@@ -121,7 +145,7 @@ def deliver_all(conn: sqlite3.Connection, cfg: Config) -> list[dict]:
             # New customer: start from the previous snapshot so the first mail has one week of data.
             last = latest_id - 1
         filters = get_filters(cust)
-        rows = [r for r in new_companies_since(conn, last, latest_id, cfg.require_reklamsparr_check)
+        rows = [r for r in new_companies_since(conn, last, latest_id, verified_cutoff(cfg))
                 if matches(r, filters)]
         data = to_csv(rows)
         path = cfg.deliveries_dir / f"c{cust['id']}-s{latest_id}.csv"
@@ -143,8 +167,10 @@ def deliver_all(conn: sqlite3.Connection, cfg: Config) -> list[dict]:
     return results
 
 
-def export(conn: sqlite3.Connection, filters: dict, since_snapshots: int, out: Path) -> int:
-    """Manual export used during concierge validation (no customer record needed)."""
-    rows = preview(conn, normalise_filters(filters), since_snapshots)
+def export(conn: sqlite3.Connection, filters: dict, since_snapshots: int, out: Path,
+           verified_since: str | None = None) -> int:
+    """Manual export for concierge delivery. Pass verified_since (delivery rule) for anything a
+    customer receives; None includes unverified companies and is for internal checks only."""
+    rows = preview(conn, normalise_filters(filters), since_snapshots, verified_since)
     out.write_bytes(to_csv(rows))
     return len(rows)

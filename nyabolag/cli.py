@@ -2,8 +2,10 @@
 from __future__ import annotations
 
 import argparse
+import fcntl
 import json
 import sys
+import time
 import traceback
 import urllib.request
 from datetime import date
@@ -13,10 +15,31 @@ from pathlib import Path
 from .bulkfile import iter_companies, read_header
 from .config import Config
 from .db import connect, now_iso, tx
-from .delivery import deliver_all, export, normalise_filters
+from .delivery import deliver_all, export, normalise_filters, verified_cutoff
 from .ingest import fetch, ingest
 from .mailer import send_mail
-from .reklamsparr import import_file
+from .reklamsparr import candidates, import_file, verify
+
+MAX_VERIFY_FAILURE_RATE = 0.05  # above this, no deliveries are sent that week
+
+
+class _JobLock:
+    """Prevents two weekly runs (e.g. timer + manual) from overlapping."""
+
+    def __init__(self, path: Path):
+        self.path = path
+
+    def __enter__(self):
+        self.f = open(self.path, "w")
+        try:
+            fcntl.flock(self.f, fcntl.LOCK_EX | fcntl.LOCK_NB)
+        except BlockingIOError:
+            raise SystemExit("another nyabolag job is running")
+        return self
+
+    def __exit__(self, *exc):
+        fcntl.flock(self.f, fcntl.LOCK_UN)
+        self.f.close()
 
 
 def _ping(url: str) -> None:
@@ -68,8 +91,10 @@ def cmd_export(args, cfg):
     conn = connect(cfg.db_path)
     filters = {"postcode_prefixes": args.postcodes, "cities": args.cities, "forms": args.forms,
                "keywords": args.keywords}
-    n = export(conn, filters, args.snapshots, Path(args.out))
-    print(f"wrote {n} companies to {args.out}")
+    verified = None if args.include_unverified else verified_cutoff(cfg)
+    n = export(conn, filters, args.snapshots, Path(args.out), verified)
+    note = " (INTERNAL: includes unverified reklamspärr)" if verified is None else " (reklamspärr verified)"
+    print(f"wrote {n} companies to {args.out}{note}")
 
 
 def cmd_add_customer(args, cfg):
@@ -86,13 +111,50 @@ def cmd_add_customer(args, cfg):
     print("ok")
 
 
+def _area_filters(args) -> list[dict]:
+    if not (args.postcodes or args.cities):
+        return []
+    return [normalise_filters({"postcode_prefixes": args.postcodes, "cities": args.cities, "forms": args.forms})]
+
+
+def cmd_verify_reklamsparr(args, cfg):
+    """Verify reklamspärr in Bolagsverket's HVD API for companies that customers would receive."""
+    conn = connect(cfg.db_path)
+    todo = candidates(conn, cfg, _area_filters(args), args.snapshots)[: args.limit]
+    minutes = len(todo) * 1.1 / 60
+    print(f"{len(todo)} companies need a check (about {minutes:.1f} min at the API rate limit)")
+    if args.dry_run or not todo:
+        return
+    with _JobLock(cfg.data_dir / "job.lock"):
+        print(json.dumps(verify(conn, cfg, todo)))
+
+
+def cmd_purge(args, cfg):
+    """Data retention: delete delivered CSVs and API evidence older than --days, keep 2 newest bulk files."""
+    cutoff = time.time() - args.days * 86400
+    removed = 0
+    for d in (cfg.deliveries_dir, cfg.raw_dir / "api"):
+        if d.exists():
+            for f in d.iterdir():
+                if f.is_file() and f.stat().st_mtime < cutoff:
+                    f.unlink()
+                    removed += 1
+    bulk = sorted(cfg.raw_dir.glob("bulkfil-*.zip"), key=lambda f: f.stat().st_mtime)
+    for f in bulk[:-2]:
+        f.unlink()
+        removed += 1
+    print(f"removed {removed} files")
+
+
 def cmd_deliver(args, cfg):
     conn = connect(cfg.db_path)
     print(json.dumps(deliver_all(conn, cfg), indent=2))
 
 
 def cmd_run_weekly(args, cfg):
-    """fetch → ingest → deliver, with monitoring hooks. Intended for a systemd timer / cron."""
+    """fetch → ingest → verify reklamspärr → deliver, with monitoring. For a systemd timer / cron."""
+    lock = _JobLock(cfg.data_dir / "job.lock")
+    lock.__enter__()
     conn = connect(cfg.db_path)
     with tx(conn):
         run_id = conn.execute("INSERT INTO job_runs (started_at) VALUES (?)", (now_iso(),)).lastrowid
@@ -101,8 +163,16 @@ def cmd_run_weekly(args, cfg):
         result = ingest(conn, path, cfg)
         if not result["skipped"] and result.get("yielded", 1) == 0:
             raise RuntimeError("bulk file parsed to zero companies – format change?")
+        if not result["skipped"] and result.get("bad_rows", 0) > 0.01 * max(result.get("rows", 1), 1):
+            raise RuntimeError(f"{result['bad_rows']} of {result['rows']} rows malformed – format change? "
+                               "No deliveries sent.")
+        todo = candidates(conn, cfg)
+        checked = verify(conn, cfg, todo) if todo else {"candidates": 0, "failed": 0}
+        if todo and checked["failed"] / len(todo) > MAX_VERIFY_FAILURE_RATE:
+            raise RuntimeError(f"reklamspärr verification failed for {checked['failed']}/{len(todo)} "
+                               "companies; no deliveries sent. Fix and re-run.")
         sent = deliver_all(conn, cfg)
-        msg = json.dumps({"ingest": result, "deliveries": sent}, default=str)
+        msg = json.dumps({"ingest": result, "reklamsparr": checked, "deliveries": sent}, default=str)
         with tx(conn):
             conn.execute("UPDATE job_runs SET finished_at=?, ok=1, message=? WHERE id=?", (now_iso(), msg, run_id))
         print(msg)
@@ -116,6 +186,8 @@ def cmd_run_weekly(args, cfg):
         if cfg.admin_email:
             send_mail(cfg, cfg.admin_email, "nyabolag: veckokörningen misslyckades", err)
         sys.exit(1)
+    finally:
+        lock.__exit__()
 
 
 def cmd_serve(args, cfg):
@@ -142,11 +214,18 @@ def main(argv: list[str] | None = None) -> None:
 
     s = sub.add_parser("export", help="manual CSV export (concierge validation)")
     filter_args(s); s.add_argument("--snapshots", type=int, default=1); s.add_argument("--out", default="export.csv")
+    s.add_argument("--include-unverified", action="store_true", help="internal use only, never for customers")
     s.set_defaults(fn=cmd_export)
     s = sub.add_parser("add-customer", help="add/update a manually billed customer")
     s.add_argument("email"); s.add_argument("--company"); s.add_argument("--status", default="active",
                                                                          choices=["active", "canceled", "past_due"])
     filter_args(s); s.set_defaults(fn=cmd_add_customer)
+    s = sub.add_parser("verify-reklamsparr", help="check reklamspärr in Bolagsverket's HVD API")
+    filter_args(s); s.add_argument("--snapshots", type=int, default=1)
+    s.add_argument("--limit", type=int, default=1000); s.add_argument("--dry-run", action="store_true")
+    s.set_defaults(fn=cmd_verify_reklamsparr)
+    s = sub.add_parser("purge", help="data retention clean-up"); s.add_argument("--days", type=int, default=365)
+    s.set_defaults(fn=cmd_purge)
     sub.add_parser("deliver", help="send pending deliveries").set_defaults(fn=cmd_deliver)
     s = sub.add_parser("run-weekly", help="fetch+ingest+deliver with monitoring")
     s.add_argument("--file", help="use a local file instead of downloading"); s.set_defaults(fn=cmd_run_weekly)

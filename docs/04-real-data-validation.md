@@ -99,9 +99,9 @@ Outputs are not committed, because they contain real company data:
 - **Implemented:**
   - `nyabolag import-reklamsparr <saved responses>` reads both API formats. Any opt-out wins, and unknown non-null values count as an opt-out.
   - Companies with an opt-out are **excluded** from every delivery. That is stricter than SCB's minimum (inform), because the product exists for direct marketing.
-  - With `REQUIRE_REKLAMSPARR_CHECK=1` (the default), paying customers only receive companies whose status was actually checked. The CSV column shows "Nej (kontrollerad YYYY-MM-DD)" or "Ej kontrollerad".
+  - Customer deliveries, the dashboard and `export` only include companies verified as not opted out within `REKLAMSPARR_MAX_AGE_DAYS` (30). Missing, stale or failed statuses are excluded (updated in docs/12; there is no longer a switch to turn this off). The CSV column shows "Nej (kontrollerad YYYY-MM-DD)".
   - The same table can hold manual objections (source `objection`). The GDPR right to object to direct marketing is absolute.
-- **Not built (needs credentials only you can create):** an automatic weekly lookup of each new company in the HVD API, using OAuth client credentials from Bolagsverket's free registration form, at about 25 lookups/week for the region (limit 60/min). Until then, only 3/108 sample companies have a checked status.
+- **Built later (docs/09 E):** `nyabolag verify-reklamsparr` looks up candidates in the HVD API, once you have registered for free credentials.
 
 ## What remains before the data side is launch-ready
 1. **Allow network access** in the environment settings to `vardefulla-datamangder.bolagsverket.se`, `bolagsverket.se` and `www.scb.se`, or run on your own machine or VPS. Then:

@@ -80,7 +80,6 @@ def cfg(tmp_path, monkeypatch):
     monkeypatch.setenv("NYABOLAG_DATA_DIR", str(tmp_path / "data"))
     monkeypatch.setenv("STRIPE_WEBHOOK_SECRET", "whsec_test")
     monkeypatch.setenv("SECRET_KEY", "test-secret")
-    monkeypatch.setenv("REQUIRE_REKLAMSPARR_CHECK", "0")
     c = Config()
     c.ensure_dirs()
     return c
@@ -136,6 +135,10 @@ def test_new_is_decided_by_registration_date(conn, cfg, week1, week2):
     assert r2["shelf_flagged"] == 4
     assert ingest(conn, week2, cfg, today=TODAY)["skipped"]
     assert conn.execute("SELECT is_new FROM companies WHERE orgnr='5560000077'").fetchone()[0] == 0
+    # Data minimisation: old companies keep no street address or description
+    old = conn.execute("SELECT street, description FROM companies WHERE orgnr='5560000001'").fetchone()
+    assert old["street"] is None and old["description"] is None
+    assert conn.execute("SELECT street FROM companies WHERE orgnr='5596000003'").fetchone()[0] == "Fjällgatan 3"
 
 
 def test_first_import_of_full_history_file_finds_recent_registrations(conn, cfg, week2):
@@ -156,8 +159,74 @@ def test_reklamsparr_import_and_exclusion(conn, cfg, week2, tmp_path):
     open_rows = {r["orgnr"] for r in new_companies_since(conn, 0, 1)}
     assert "5596000004" not in open_rows and "5596000003" in open_rows  # opted out -> excluded
     assert not any(r["name"].startswith("Grundbulten") for r in new_companies_since(conn, 0, 1))
-    checked_only = {r["orgnr"] for r in new_companies_since(conn, 0, 1, require_reklamsparr_check=True)}
+    checked_only = {r["orgnr"] for r in new_companies_since(conn, 0, 1, verified_since="2026-01-01T00:00:00+00:00")}
     assert checked_only == {"5596000003"}
+    # A status older than the cut-off is stale -> unverified -> excluded
+    assert not new_companies_since(conn, 0, 1, verified_since="2026-10-27T00:00:00+00:00")
+
+
+class FakeHvd:
+    """Stands in for Bolagsverket's API. Response shape copied from real HVD responses."""
+
+    def __init__(self, blocked=(), fail=()):
+        self.blocked, self.fail, self.calls = set(blocked), set(fail), []
+
+    def organisation(self, nr):
+        self.calls.append(nr)
+        if nr in self.fail:
+            return 503, {}
+        return 200, {"organisationer": [{
+            "organisationsidentitet": {"identitetsbeteckning": nr, "typ": {"kod": "ORGNR"}},
+            "reklamsparr": {"kod": "JA"} if nr in self.blocked else None}]}
+
+
+def verify_all(conn, cfg, client=None, **filters):
+    from nyabolag.reklamsparr import candidates, verify
+    todo = candidates(conn, cfg, [normalise_filters(filters or {"cities": "göteborg,mölndal,stockholm"})], 5)
+    return verify(conn, cfg, todo, client or FakeHvd())
+
+
+def test_verify_workflow_only_verified_companies_are_delivered(conn, cfg, week2):
+    from nyabolag.reklamsparr import candidates
+    ingest(conn, week2, cfg, today=TODAY)
+    _add_customer(conn, "gbg@example.se", postcode_prefixes="41,43")
+    # Before verification: nothing may be delivered
+    assert {r["customer_id"]: r["rows"] for r in deliver_all(conn, cfg)} == {1: 0}
+    conn.execute("DELETE FROM deliveries"); conn.commit()
+    todo = candidates(conn, cfg)
+    assert set(todo) == {"5596000003", "5596000004"}  # customer's area only, no shelf companies
+    client = FakeHvd(blocked={"5596000004"})
+    stats = verify_all(conn, cfg, client, postcode_prefixes="41,43")
+    assert stats["verified"] == 2 and stats["blocked"] == 1 and stats["failed"] == 0
+    evidence = Path(stats["evidence_file"]).read_text()
+    assert evidence.count("\n") == 2 and "identitetsbeteckning" not in evidence  # minimised evidence
+    assert candidates(conn, cfg) == []  # fresh statuses are not re-checked
+    assert {r["customer_id"]: r["rows"] for r in deliver_all(conn, cfg)} == {1: 1}  # blocked one excluded
+
+
+def test_failed_lookup_stays_unverified(conn, cfg, week2):
+    ingest(conn, week2, cfg, today=TODAY)
+    stats = verify_all(conn, cfg, FakeHvd(fail={"5596000003"}), cities="göteborg")
+    assert stats["failed"] == 1
+    assert conn.execute("SELECT COUNT(*) FROM reklamsparr WHERE orgnr='5596000003'").fetchone()[0] == 0
+
+
+def test_run_weekly_aborts_delivery_when_verification_fails(conn, cfg, week2, monkeypatch):
+    from nyabolag import cli
+    _add_customer(conn, "gbg@example.se", postcode_prefixes="41")
+    monkeypatch.setattr("nyabolag.hvd_api.HvdClient.organisation", lambda self, nr: (503, {}))
+    with pytest.raises(SystemExit):
+        cli.main(["run-weekly", "--file", str(week2)])
+    assert conn.execute("SELECT COUNT(*) FROM deliveries").fetchone()[0] == 0
+    run = conn.execute("SELECT ok, message FROM job_runs").fetchone()
+    assert run["ok"] == 0 and "no deliveries sent" in run["message"]
+
+
+def test_csv_neutralises_formulas():
+    data = to_csv([{"orgnr": "5595000003", "name": "=HYPERLINK(\"x\")", "form": "AB", "reg_date": "",
+                    "street": "+1", "postcode": "", "city": "", "description": "@x", "rs_checked_at": None}])
+    text = data.decode("utf-8-sig")
+    assert "'=HYPERLINK" in text and ";'+1;" in text and "'@x" in text
 
 
 # ---------- filters ----------
@@ -192,6 +261,7 @@ def _add_customer(conn, email, status="active", **filters):
 def test_delivery_idempotent_and_filtered(conn, cfg, week1, week2):
     ingest(conn, week1, cfg, today=TODAY)
     ingest(conn, week2, cfg, today=TODAY)
+    verify_all(conn, cfg)
     _add_customer(conn, "gbg@example.se", postcode_prefixes="41,43")
     _add_customer(conn, "sthlm@example.se", cities="Stockholm")
     _add_customer(conn, "gone@example.se", status="canceled", cities="Göteborg")
@@ -226,6 +296,7 @@ def _event(eid, etype, obj):
 def test_webhook_lifecycle_and_dashboard(client, cfg, conn, week1, week2):
     ingest(conn, week1, cfg, today=TODAY)
     ingest(conn, week2, cfg, today=TODAY)
+    verify_all(conn, cfg)
 
     assert client.post("/stripe/webhook", data=b"{}", headers={"Stripe-Signature": "bad"}).status_code == 400
 
@@ -234,7 +305,7 @@ def test_webhook_lifecycle_and_dashboard(client, cfg, conn, week1, week2):
            "metadata": {"company_name": "Byrån AB", "filters": json.dumps({"postcode_prefixes": ["414"]})}}
     body = _event("evt_1", "checkout.session.completed", obj)
     r = client.post("/stripe/webhook", data=body, headers={"Stripe-Signature": _signed(body, "whsec_test")})
-    assert r.status_code == 200 and r.json["result"] == "activated kund@example.se"
+    assert r.status_code == 200 and r.json["result"] == "activated"
     r = client.post("/stripe/webhook", data=body, headers={"Stripe-Signature": _signed(body, "whsec_test")})
     assert r.json["result"] == "duplicate"
 
@@ -276,3 +347,58 @@ def test_healthz(client, cfg, conn, week1):
     ingest(conn, week1, cfg, today=TODAY)
     r = client.get("/healthz")
     assert r.status_code == 200 and r.json["ok"]
+
+
+def test_hvd_client_against_local_fake_server(cfg, monkeypatch):
+    """Exercises the real HTTP client: token request, bearer auth, body, 401 refresh."""
+    import base64
+    import threading
+    from http.server import BaseHTTPRequestHandler, HTTPServer
+    from urllib.parse import parse_qs
+    from nyabolag import hvd_api
+
+    seen = {"tokens": 0, "lookups": []}
+
+    class H(BaseHTTPRequestHandler):
+        def log_message(self, *a):
+            pass
+
+        def do_POST(self):
+            body = self.rfile.read(int(self.headers["Content-Length"]))
+            if self.path == "/oauth2/token":
+                assert self.headers["Authorization"] == "Basic " + base64.b64encode(b"id:secret").decode()
+                assert parse_qs(body.decode())["grant_type"] == ["client_credentials"]
+                seen["tokens"] += 1
+                out, code = {"access_token": f"tok{seen['tokens']}"}, 200
+            else:
+                assert self.path == "/v1/organisationer"
+                seen["lookups"].append(json.loads(body)["identitetsbeteckning"])
+                if self.headers["Authorization"] == "Bearer tok1":  # first token "expired"
+                    out, code = {}, 401
+                else:
+                    out, code = {"organisationer": [{"organisationsidentitet": {"identitetsbeteckning": "5596000003"},
+                                                     "reklamsparr": None}]}, 200
+            data = json.dumps(out).encode()
+            self.send_response(code)
+            self.send_header("Content-Type", "application/json")
+            self.send_header("Content-Length", str(len(data)))
+            self.end_headers()
+            self.wfile.write(data)
+
+    srv = HTTPServer(("127.0.0.1", 0), H)
+    threading.Thread(target=srv.serve_forever, daemon=True).start()
+    port = srv.server_address[1]
+    cfg.hvd_client_id, cfg.hvd_client_secret = "id", "secret"
+    cfg.hvd_token_url = f"http://127.0.0.1:{port}/oauth2/token"
+    cfg.hvd_api_base = f"http://127.0.0.1:{port}/v1"
+    monkeypatch.setattr(hvd_api, "MIN_INTERVAL_S", 0)
+    status, body = hvd_api.HvdClient(cfg).organisation("5596000003")
+    srv.shutdown()
+    assert status == 200 and body["organisationer"][0]["reklamsparr"] is None
+    assert seen["tokens"] == 2 and seen["lookups"] == ["5596000003", "5596000003"]
+
+
+def test_hvd_client_requires_credentials(cfg):
+    from nyabolag.hvd_api import HvdClient, HvdError
+    with pytest.raises(HvdError):
+        HvdClient(cfg).token()

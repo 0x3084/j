@@ -15,6 +15,13 @@ CSV of companies newly registered in their area, from Bolagsverket's free open d
 | [docs/06-profit-and-vat.md](docs/06-profit-and-vat.md) | Monthly profit after hosting, Stripe and VAT (momsbefrielse vs momsregistrering) |
 | [docs/07-prospects.md](docs/07-prospects.md) | 20 potential customers in Norrköping, Linköping, Finspång (not contacted) |
 | [docs/08-sales-pitch.md](docs/08-sales-pitch.md) | Swedish pitch: phone, email, objections |
+| [docs/09-mac-setup-and-official-data.md](docs/09-mac-setup-and-official-data.md) | **On your Mac:** download the official file, verify the sample, import, verify reklamspärr, weekly routine |
+| [docs/10-acquisition-plan.md](docs/10-acquisition-plan.md) | Plan for the first 5 paying customers, funnel assumptions, decision rules |
+| [docs/11-sales-messages.md](docs/11-sales-messages.md) | Personalised Swedish messages for 10 firms (not sent) |
+| [docs/12-security-privacy-reliability-audit.md](docs/12-security-privacy-reliability-audit.md) | Audit: what was fixed, what is open and when |
+| [docs/13-your-steps-to-first-paying-customer.md](docs/13-your-steps-to-first-paying-customer.md) | **Start here:** your steps 1–14, plus privacy, terms and LIA templates |
+
+Also: `site/index.html` (landing page, not published) and `validation/sample_report.py` (privacy-safe sample for accounting firms).
 
 ## Status
 
@@ -22,10 +29,11 @@ CSV of companies newly registered in their area, from Bolagsverket's free open d
 - **Parser verified against 9,117 real rows** of Bolagsverket's weekly file of 2026-10-26, via a third-party
   copy, because this dev environment can't reach bolagsverket.se. See docs/04 for exactly what is and
   isn't verified.
-- **Detection:** "new" means a recent `registreringsdatum`. Shelf companies (30 % of registrations) and companies
-  with SCB reklamspärr are excluded.
-- **MVP:** parser → snapshot store → filters → CSV/email delivery → Stripe webhooks → magic-link
-  dashboard → `/healthz`. 14 tests pass.
+- **Detection:** "new" means a recent `registreringsdatum`. Shelf companies (30 % of registrations) are excluded.
+- **Reklamspärr:** only companies verified as not opted out in Bolagsverket's API within 30 days are ever delivered
+  (`nyabolag verify-reklamsparr`). Missing, stale or failed statuses are excluded.
+- **MVP:** parser → snapshot store → verify → filters → CSV/email delivery → Stripe webhooks → magic-link
+  dashboard → `/healthz`. 20 tests pass; `pip-audit` is clean.
 
 Re-run the sample report: `python validation/region_report.py out/ --file-date <date>` after
 `nyabolag ingest <official zip> --as-of <date>` (and `nyabolag import-reklamsparr <API responses>`).
@@ -66,7 +74,5 @@ Without `SMTP_HOST`, emails are written to `data/outbox/*.eml`.
 
 ## Known limitations / next steps
 
-- CSRF protection relies on `SameSite=Lax` cookies. Add tokens before adding more state-changing forms.
-- The reklamspärr lookup itself (HVD or SCB API client) is not implemented. It needs credentials you register for.
-  Saved responses can be imported with `nyabolag import-reklamsparr`.
+- Open security items before any public web launch: see docs/12 (S5–S7, D8, R7).
 - One filter per customer. No contact enrichment.

@@ -7,6 +7,7 @@ import shutil
 from collections import Counter
 import sqlite3
 import urllib.request
+import zipfile
 from datetime import date, timedelta
 from pathlib import Path
 
@@ -32,6 +33,9 @@ def fetch(cfg: Config) -> Path:
     req = urllib.request.Request(cfg.bulkfile_url, headers={"User-Agent": "nyabolag/0.1"})
     with urllib.request.urlopen(req, timeout=300) as resp, open(tmp, "wb") as out:
         shutil.copyfileobj(resp, out)
+    if not zipfile.is_zipfile(tmp):
+        tmp.unlink()
+        raise RuntimeError("download is not a zip file (wrong URL, error page or captcha?)")
     digest = sha256_file(tmp)
     final = cfg.raw_dir / f"bulkfil-{date.today().isoformat()}-{digest[:12]}.zip"
     tmp.replace(final)
@@ -92,9 +96,12 @@ def ingest(conn: sqlite3.Connection, path: Path, cfg: Config, today: date | None
             reg = c.reg_date.isoformat() if c.reg_date else None
             row = conn.execute("SELECT orgnr FROM companies WHERE orgnr = ?", (c.orgnr,)).fetchone()
             if row:
+                # Street and description are only kept for new companies (the only ones ever
+                # delivered); for the rest they are dropped (data minimisation, docs/12).
                 conn.execute(
-                    "UPDATE companies SET name=?, form=?, reg_date=?, street=?, postcode=?, city=?, "
-                    "description=?, last_snapshot_id=? WHERE orgnr=?",
+                    "UPDATE companies SET name=?, form=?, reg_date=?, "
+                    "street=CASE WHEN is_new=1 THEN ? ELSE NULL END, postcode=?, city=?, "
+                    "description=CASE WHEN is_new=1 THEN ? ELSE NULL END, last_snapshot_id=? WHERE orgnr=?",
                     (c.name, c.form, reg, c.street, c.postcode, c.city, c.description, sid, c.orgnr),
                 )
                 continue
@@ -103,7 +110,8 @@ def ingest(conn: sqlite3.Connection, path: Path, cfg: Config, today: date | None
             conn.execute(
                 "INSERT INTO companies (orgnr, name, form, reg_date, street, postcode, city, description, "
                 "first_snapshot_id, last_snapshot_id, is_new) VALUES (?,?,?,?,?,?,?,?,?,?,?)",
-                (c.orgnr, c.name, c.form, reg, c.street, c.postcode, c.city, c.description, sid, sid, int(is_new)),
+                (c.orgnr, c.name, c.form, reg, c.street if is_new else None, c.postcode, c.city,
+                 c.description if is_new else None, sid, sid, int(is_new)),
             )
         shelf = _flag_shelf_companies(conn, cutoff)
         conn.execute(

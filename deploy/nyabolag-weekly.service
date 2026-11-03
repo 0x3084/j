@@ -7,3 +7,4 @@ User=nyabolag
 WorkingDirectory=/opt/nyabolag
 EnvironmentFile=/etc/nyabolag.env
 ExecStart=/opt/nyabolag/.venv/bin/python -m nyabolag run-weekly
+ExecStartPost=/opt/nyabolag/.venv/bin/python -m nyabolag purge --days 365

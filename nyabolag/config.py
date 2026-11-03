@@ -27,9 +27,17 @@ class Config:
     # A company counts as newly registered only if its registration date (when present)
     # is at most this many days before the snapshot date.
     new_max_age_days: int = field(default_factory=lambda: int(_env("NEW_MAX_AGE_DAYS", "60")))
-    # Paying customers only receive companies whose reklamspärr status was checked.
-    require_reklamsparr_check: bool = field(
-        default_factory=lambda: _env("REQUIRE_REKLAMSPARR_CHECK", "1") not in ("0", "false", "no"))
+    # Customer deliveries only contain companies whose reklamspärr status was verified via the
+    # official API within this many days. Missing or older statuses count as unverified.
+    reklamsparr_max_age_days: int = field(default_factory=lambda: int(_env("REKLAMSPARR_MAX_AGE_DAYS", "30")))
+    # Bolagsverket "API för värdefulla datamängder" (free; credentials via Kundanmälan form)
+    hvd_client_id: str = field(default_factory=lambda: _env("HVD_CLIENT_ID", ""))
+    hvd_client_secret: str = field(default_factory=lambda: _env("HVD_CLIENT_SECRET", ""))
+    hvd_token_url: str = field(default_factory=lambda: _env(
+        "HVD_TOKEN_URL", "https://portal.api.bolagsverket.se/oauth2/token"))
+    hvd_api_base: str = field(default_factory=lambda: _env(
+        "HVD_API_BASE", "https://gw.api.bolagsverket.se/vardefulla-datamangder/v1"))
+    hvd_scope: str = field(default_factory=lambda: _env("HVD_SCOPE", "vardefulla-datamangder:read"))
     stale_after_days: int = field(default_factory=lambda: int(_env("STALE_AFTER_DAYS", "9")))
 
     @property
