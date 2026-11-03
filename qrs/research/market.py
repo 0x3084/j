@@ -110,4 +110,4 @@ def crypto_market(kind: str = "spot", top_n: int = 15) -> Market:
     if kind == "perp":
         fund = load_funding_daily().reindex(index=c.index).reindex(columns=c.columns).fillna(0.0)
     return Market(f"crypto_{kind}", f["open"], f["high"], f["low"], c, f["quote_volume"], costs, 365, rf, elig,
-                  fund, splits=splits()["crypto"])
+                  fund, splits=splits()["crypto" if kind == "spot" else "crypto_perp"])

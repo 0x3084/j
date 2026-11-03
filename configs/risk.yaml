@@ -1,0 +1,21 @@
+# Mandatory risk limits applied by qrs.risk.manager.RiskManager to EVERY paper (and any future live)
+# order set. Strategies cannot override these; per-strategy engine settings may only RAISE gross caps up to
+# the strategy's researched maximum, never the loss / drawdown / stale-data limits.
+limits:
+  max_position_weight: 1.0       # single ETF up to 100% (index ETFs are diversified); crypto overridden below
+  max_gross: 1.0
+  max_net: 1.0
+  max_leverage: 1.0
+  max_group_weight: 1.0
+  max_portfolio_vol: 0.25
+  max_daily_loss: 0.04
+  max_drawdown: 0.25
+  max_data_age_hours: 96          # covers weekends/holidays for daily ETF bars
+  max_stale_fraction: 0.5
+  max_consecutive_errors: 3
+crypto_overrides:
+  max_position_weight: 0.35
+  max_data_age_hours: 36
+alerts:
+  log_file: data/paper/alerts.log
+  webhook_url: null               # e.g. a Slack/Discord webhook; disabled by default

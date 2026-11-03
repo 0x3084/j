@@ -1,0 +1,217 @@
+{
+ "name": "xsmom_sectors",
+ "family": "momentum",
+ "market": "etf",
+ "universe": "etf_sectors",
+ "n_trials": 16,
+ "selections": {
+  "2008-01-01": "lookback=126,k=2,abs_filter=True,long_short=False",
+  "2009-01-01": "lookback=126,k=2,abs_filter=True,long_short=False",
+  "2010-01-01": "lookback=126,k=2,abs_filter=True,long_short=False",
+  "2011-01-01": "lookback=126,k=2,abs_filter=True,long_short=False",
+  "2012-01-01": "lookback=126,k=2,abs_filter=True,long_short=False",
+  "2013-01-01": "lookback=126,k=2,abs_filter=True,long_short=False",
+  "2014-01-01": "lookback=126,k=2,abs_filter=True,long_short=False",
+  "2015-01-01": "lookback=126,k=2,abs_filter=True,long_short=False",
+  "2016-01-01": "lookback=252,k=3,abs_filter=True,long_short=False",
+  "2017-01-01": "lookback=126,k=2,abs_filter=True,long_short=False",
+  "2018-01-01": "lookback=252,k=3,abs_filter=True,long_short=False",
+  "2019-01-01": "lookback=126,k=2,abs_filter=True,long_short=False",
+  "2020-01-01": "lookback=126,k=2,abs_filter=True,long_short=False",
+  "2021-01-01": "lookback=126,k=2,abs_filter=True,long_short=False"
+ },
+ "git": "0d40c16",
+ "holdout_unlocked": false,
+ "wf_oos": {
+  "start": "2008-01-02",
+  "end": "2021-12-31",
+  "n_obs": 3526,
+  "cagr": 0.08170174033017852,
+  "ann_vol": 0.19208466117989148,
+  "sharpe": 0.48114197402306824,
+  "sharpe_raw": 0.5052687284726377,
+  "sortino": 0.7060624108846282,
+  "max_dd": -0.35691317180709836,
+  "max_dd_bars": 587,
+  "var95": -0.018601538000249496,
+  "es95": -0.0291789964651887,
+  "skew": -0.309054922171893,
+  "kurt": 15.579778929371706,
+  "hit_rate_bars": 0.5419540229885057,
+  "calmar": 0.2289120906256047,
+  "gross_cagr": 0.08496574688169134,
+  "cost_ann": 0.0030122760667684874,
+  "cost_pct_gross": 0.03010268957840094,
+  "financing_ann": 0.0005522140663566904,
+  "turnover_ann": 8.516977387643168,
+  "avg_gross_exp": 0.9214491041505687,
+  "avg_net_exp": 0.9214491041505687,
+  "time_in_market": 0.952921157118548,
+  "n_trades": 126,
+  "win_rate": 0.6031746031746031,
+  "avg_win": 0.03005439007906462,
+  "avg_loss": -0.018535675927051548,
+  "expectancy": 0.010772617854415346,
+  "profit_factor": 2.46458090333288,
+  "avg_bars": 55.476190476190474,
+  "sharpe_lo": 0.07157228965963346,
+  "sharpe_hi": 0.9366076834700567,
+  "ret_lo": 0.013587168440423975,
+  "ret_hi": 0.16747511520857608,
+  "p_sharpe": 0.014,
+  "psr0": 0.9630890702981372
+ },
+ "wf_oos_first_half": {
+  "start": "2008-01-02",
+  "end": "2015-01-02",
+  "n_obs": 1764,
+  "cagr": 0.09158119851637436,
+  "ann_vol": 0.17970432193469796,
+  "sharpe": 0.5632521185979268,
+  "sharpe_raw": 0.577608912668859,
+  "sortino": 0.8174417980167268,
+  "max_dd": -0.3295921041825769,
+  "max_dd_bars": 474,
+  "var95": -0.018241328025534805,
+  "es95": -0.027108374263936703,
+  "skew": -0.1434941284684915,
+  "kurt": 5.123187887608127,
+  "hit_rate_bars": 0.5384174311926605,
+  "calmar": 0.2778622344230769,
+  "gross_cagr": 0.09495626713141903,
+  "cost_ann": 0.003086447355491806,
+  "cost_pct_gross": 0.02887603852484714,
+  "financing_ann": 0.0008914411071554483,
+  "turnover_ann": 8.67373058172054,
+  "avg_gross_exp": 0.8820715843899364,
+  "avg_net_exp": 0.8820715843899364,
+  "time_in_market": 0.9297052154195011
+ },
+ "wf_oos_second_half": {
+  "start": "2015-01-02",
+  "end": "2021-12-31",
+  "n_obs": 1763,
+  "cagr": 0.07249618655876033,
+  "ann_vol": 0.20372461396163366,
+  "sharpe": 0.4129236656399661,
+  "sharpe_raw": 0.4459310092150075,
+  "sortino": 0.6173271464082866,
+  "max_dd": -0.35691317180709814,
+  "max_dd_bars": 587,
+  "var95": -0.018837974277271206,
+  "es95": -0.031122838472648878,
+  "skew": -0.41909498031483255,
+  "kurt": 21.498543096348563,
+  "hit_rate_bars": 0.5457685664939551,
+  "calmar": 0.20311995265319754,
+  "gross_cagr": 0.0756507074962618,
+  "cost_ann": 0.002936354098887205,
+  "cost_pct_gross": 0.031310193431922186,
+  "financing_ann": 0.000212481386813091,
+  "turnover_ann": 8.355304323695279,
+  "avg_gross_exp": 0.9608935146744512,
+  "avg_net_exp": 0.9608935146744512,
+  "time_in_market": 0.9761769710720363
+ },
+ "yearly": {
+  "2008": -0.17886116788187978,
+  "2009": 0.22738741489330638,
+  "2010": 0.14948715658650968,
+  "2011": 0.10102604122213599,
+  "2012": 0.009859186676650644,
+  "2013": 0.33086448080332875,
+  "2014": 0.0727299333066107,
+  "2015": -0.06395862776655248,
+  "2016": 0.07107980964318017,
+  "2017": 0.0979194876151035,
+  "2018": -0.06529344895251465,
+  "2019": 0.20866908610479795,
+  "2020": 0.10565017561196122,
+  "2021": 0.18675717829294491
+ },
+ "regimes": [
+  {
+   "regime": "VIX15-25",
+   "n": 1665,
+   "ann_ret": 0.1260223269615266,
+   "ann_vol": 0.17369430186110774,
+   "sharpe": 0.7255409395197008,
+   "max_dd": -0.4736411898062366
+  },
+  {
+   "regime": "VIX<15",
+   "n": 1180,
+   "ann_ret": 0.31408240796560166,
+   "ann_vol": 0.09710772402664626,
+   "sharpe": 3.23437101542425,
+   "max_dd": -0.05377958274037975
+  },
+  {
+   "regime": "VIX>25",
+   "n": 681,
+   "ann_ret": -0.37307992054576056,
+   "ann_vol": 0.3169698930486266,
+   "sharpe": -1.1770200537264468,
+   "max_dd": -0.7212229611060319
+  }
+ ],
+ "stress": {
+  "cost_x2": {
+   "sharpe": 0.46544942592929056,
+   "cagr": 0.0784461412334756
+  },
+  "cost_x3": {
+   "sharpe": 0.4497437536135965,
+   "cagr": 0.07519893139474187
+  },
+  "slip_+5bps": {
+   "sharpe": 0.4589537204547237,
+   "cagr": 0.07710171412690925
+  },
+  "delay_+1bar": {
+   "sharpe": 0.4959166426820903,
+   "cagr": 0.0848763022999528
+  },
+  "missing_5pct_bars": {
+   "sharpe": 0.5046553757676375,
+   "cagr": 0.08544118201199402
+  }
+ },
+ "benchmarks_wf": {
+  "SPY_buy_hold": {
+   "sharpe": 0.5902325392468974,
+   "cagr": 0.11046612935879097,
+   "max_dd": -0.5188157299439431,
+   "corr": 0.7731941061631451
+  },
+  "60_40_SPY_IEF": {
+   "sharpe": 0.7789652324998088,
+   "cagr": 0.08889688017251096,
+   "max_dd": -0.3147351080231543,
+   "corr": 0.7518641016356137
+  },
+  "equal_weight_multi": {
+   "sharpe": 0.4319032403436725,
+   "cagr": 0.04796978187786194,
+   "max_dd": -0.34430187814847213,
+   "corr": 0.6732207711750158
+  },
+  "cash_BIL": {
+   "sharpe": null,
+   "cagr": 0.004488131352282432,
+   "max_dd": -0.007799894878699254,
+   "corr": -0.04426067734565581
+  }
+ },
+ "dsr": 0.5533160110271583,
+ "dsr_xvar": 0.5683166774694937,
+ "n_trials_market_raw": 122,
+ "n_trials_market_effective": 12,
+ "p_sharpe_holm": 0.322,
+ "gate_pass": false,
+ "gate_failures": [
+  "Deflated Sharpe 0.55 < 0.9",
+  "max DD -35.7% worse than -35%",
+  "does not beat passive benchmark Sharpe and is not a low-correlation diversifier"
+ ]
+}

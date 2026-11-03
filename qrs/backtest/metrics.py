@@ -84,7 +84,8 @@ def summarize(ret: pd.DataFrame | pd.Series, ppy: int, trades: pd.DataFrame | No
     m = {
         "start": str(r.index[0].date()), "end": str(r.index[-1].date()), "n_obs": int(len(r)),
         "cagr": cagr(r, ppy), "ann_vol": float(r.std() * np.sqrt(ppy)),
-        "sharpe": sharpe(r, ppy), "sharpe_excess": sharpe(r, ppy, rf) if rf is not None else np.nan,
+        # 'sharpe' is the excess-over-risk-free Sharpe when rf is supplied (raw Sharpe kept separately)
+        "sharpe": sharpe(r, ppy, rf) if rf is not None else sharpe(r, ppy), "sharpe_raw": sharpe(r, ppy),
         "sortino": sortino(r, ppy), "max_dd": max_drawdown(r), "max_dd_bars": max_dd_duration(r),
         "var95": v, "es95": es, "skew": float(r.skew()), "kurt": float(r.kurt()),
         "hit_rate_bars": float((r[r != 0] > 0).mean()) if (r != 0).any() else np.nan,
@@ -115,7 +116,7 @@ def regime_table(r: pd.Series, regimes: pd.Series, ppy: int) -> pd.DataFrame:
     for k, g in r.groupby(lab):
         if len(g) > 20:
             rows.append({"regime": k, "n": len(g), "ann_ret": g.mean() * ppy, "ann_vol": g.std() * np.sqrt(ppy),
-                         "sharpe": sharpe(g, ppy), "max_dd": max_drawdown(g)})
+                         "sharpe": sharpe(g, ppy), "hit_rate": float((g > 0).mean())})
     return pd.DataFrame(rows)
 
 

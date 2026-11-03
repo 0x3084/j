@@ -27,7 +27,8 @@ from qrs.backtest.costs import CostModel
 
 @dataclass
 class BacktestResult:
-    returns: pd.DataFrame          # per-bar: net, gross, cost, financing, turnover, gross_exp, net_exp, n_pos
+    returns: pd.DataFrame          # per-bar: net, gross (= before transaction costs, after financing), cost,
+                                   # financing, turnover, gross_exp, net_exp, n_pos
     weights: pd.DataFrame          # post-trade weights at the execution open of each bar
     contrib: pd.DataFrame          # per-asset net return contribution per bar
     trades: pd.DataFrame           # round-trip (episode) table
@@ -136,7 +137,7 @@ def run_backtest(W: pd.DataFrame, open_: pd.DataFrame, close: pd.DataFrame, cost
 
         net_ret = (1.0 + G) * (1.0 - cost) * (1.0 + R + fin) - 1.0
         eq = eq * (1.0 + net_ret)
-        out[i] = [net_ret, (1 + G) * (1 + R) - 1, cost, fin, np.abs(trade).sum(),
+        out[i] = [net_ret, (1 + G) * (1 + R + fin) - 1, cost, fin, np.abs(trade).sum(),
                   np.abs(w_new).sum(), w_new.sum(), int((np.abs(w_new) > 1e-6).sum())]
         Wpost[i] = w_new
         contrib[i] = gap_c + w_new * r - cost_c + fin_c

@@ -1,0 +1,41 @@
+{
+ "effective_trials": {
+  "etf": {
+   "n_eff": 12,
+   "var_sr": 0.0002707075651860748,
+   "n_raw": 122
+  },
+  "crypto": {
+   "n_eff": 9,
+   "var_sr": 0.008213176205340941,
+   "n_raw": 78
+  }
+ },
+ "reality_check": {
+  "etf": {
+   "vs_cash": {
+    "t_obs": 3.050012442870054,
+    "p_rc": 0.004,
+    "p_spa": 0.004
+   },
+   "vs_benchmark": {
+    "t_obs": -0.22385966444311683,
+    "p_rc": 0.948,
+    "p_spa": 1.0
+   }
+  },
+  "crypto": {
+   "vs_cash": {
+    "t_obs": 2.947525243907178,
+    "p_rc": 0.051,
+    "p_spa": 0.051
+   },
+   "vs_benchmark": {
+    "t_obs": 1.7279377170798165,
+    "p_rc": 0.234,
+    "p_spa": 0.234
+   }
+  }
+ },
+ "holdout_unlocked": false
+}

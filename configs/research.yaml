@@ -7,20 +7,23 @@ splits:
     wf_oos_start: "2008-01-01"    # walk-forward out-of-sample evaluation starts
     holdout_start: "2022-01-01"   # untouched test period (evaluated once, after strategy set is frozen)
     end: "2026-10-30"
+    min_train_years: 3
   crypto:
     data_start: "2017-08-17"
     wf_oos_start: "2019-07-01"
     holdout_start: "2024-01-01"
     end: "2026-10-31"
+    min_train_years: 1.5
   crypto_perp:
     data_start: "2020-01-01"
     wf_oos_start: "2021-01-01"
     holdout_start: "2024-01-01"
     end: "2026-10-31"
+    min_train_years: 1.0
 
 walk_forward:
   reselect_every: "YS"            # re-select parameters at the start of each calendar year
-  min_train_years: 3              # minimum history before a parameter set can be selected
+  # min_train_years is set per market under splits
   train_window_years: null        # null = expanding window
   embargo_days: 21                # gap between train end and OOS start (prevents leakage of overlapping labels)
   selection_metric: sharpe

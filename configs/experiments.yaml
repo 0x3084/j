@@ -1,0 +1,266 @@
+# Experiment registry. Every parameter combination in every grid counts as a TRIAL for multiple-testing
+# corrections (deflated Sharpe, Holm, reality check). Grids are kept small and economically motivated.
+#
+# Fields: market (etf | crypto_spot | crypto_perp | crypto_carry), universe (named list below),
+# fn (module:function), params (fixed), grid (dict of lists), engine (band, max_gross), benchmark.
+
+universes:
+  etf_futures_like: [SPY, EFA, EEM, EWJ, VGK, TLT, IEF, GLD, SLV, USO, UNG, DBC, DBA, FXE, FXY, FXB, FXF, FXA, UUP]
+  etf_multi: [SPY, QQQ, IWM, EFA, EEM, VGK, EWJ, TLT, IEF, TIP, LQD, HYG, GLD, SLV, USO, DBC, VNQ, FXE, FXY, UUP]
+  etf_sectors: [XLK, XLF, XLV, XLY, XLP, XLI, XLB, XLU, XLE]
+  etf_countries: [SPY, EWG, EWU, EWQ, EWJ, EWA, EWC, EZU, EEM]
+  etf_gem: [SPY, QQQ, IWM, EFA, EEM, TLT, IEF, GLD, DBC, VNQ]
+  etf_eq_index: [SPY, QQQ, IWM, EFA, EEM, VGK]
+  etf_pairs: [XLK, XLF, XLV, XLY, XLP, XLI, XLB, XLU, XLE, EWG, EWU, EWQ, EWA, EWC, EZU, VGK, EFA, SPY, QQQ, IWM]
+  etf_regime: [SPY, IEF, HYG, TLT, SHY]
+  crypto_all: all
+  carry_all: all
+
+experiments:
+  # ---------------------------------------------------------------- TREND FOLLOWING
+  tsmom_etf:
+    family: trend
+    market: etf
+    universe: etf_futures_like
+    fn: trend:tsmom
+    params: {vol_target: 0.10, rebalance: 5}
+    grid: {lookback: [63, 126, 252, 0], long_only: [false, true]}
+    engine: {band: 0.01, max_gross: 2.0}
+  breakout_etf:
+    family: trend
+    market: etf
+    universe: etf_futures_like
+    fn: trend:breakout
+    params: {vol_target: 0.10}
+    grid: {n: [20, 55, 100], long_only: [false, true]}
+    engine: {band: 0.01, max_gross: 2.0}
+  ewmac_etf:
+    family: trend
+    market: etf
+    universe: etf_futures_like
+    fn: trend:ewmac
+    params: {vol_target: 0.10, rebalance: 5}
+    grid: {speeds: [fast, medium, slow], threshold: [0.0, 0.5], long_only: [false]}
+    engine: {band: 0.01, max_gross: 2.0}
+  tsmom_crypto:
+    family: trend
+    market: crypto_perp
+    universe: crypto_all
+    fn: trend:tsmom
+    params: {vol_target: 0.20, rebalance: 3}
+    grid: {lookback: [21, 63, 126, 0], long_only: [false, true]}
+    engine: {band: 0.01, max_gross: 1.0}
+  breakout_crypto:
+    family: trend
+    market: crypto_perp
+    universe: crypto_all
+    fn: trend:breakout
+    params: {vol_target: 0.20}
+    grid: {n: [20, 55], long_only: [false, true]}
+    engine: {band: 0.01, max_gross: 1.0}
+  ewmac_crypto:
+    family: trend
+    market: crypto_perp
+    universe: crypto_all
+    fn: trend:ewmac
+    params: {vol_target: 0.20, rebalance: 3}
+    grid: {speeds: [fast, medium, slow], threshold: [0.0, 0.5], long_only: [false, true]}
+    engine: {band: 0.01, max_gross: 1.0}
+
+  # ---------------------------------------------------------------- MEAN REVERSION
+  rsi2_etf:
+    family: mean_reversion
+    market: etf
+    universe: etf_eq_index
+    fn: meanrev:rsi_reversion
+    params: {n: 2, exit_ma: 5}
+    grid: {entry: [5.0, 10.0, 20.0], trend_ma: [200, 0], allow_short: [false]}
+    engine: {band: 0.0, max_gross: 1.0}
+  zrev_etf:
+    family: mean_reversion
+    market: etf
+    universe: etf_multi
+    fn: meanrev:zscore_reversion
+    params: {vol_target: 0.10}
+    grid: {lookback: [3, 5, 10], z_entry: [1.5, 2.0], allow_short: [true, false]}
+    engine: {band: 0.005, max_gross: 1.0}
+  xsrev_sectors:
+    family: mean_reversion
+    market: etf
+    universe: etf_sectors
+    fn: meanrev:xs_reversal
+    params: {}
+    grid: {lookback: [5, 21], k: [2, 3], hold: [5, 21]}
+    engine: {band: 0.0, max_gross: 1.0}
+  rsi2_crypto:
+    family: mean_reversion
+    market: crypto_spot
+    universe: crypto_all
+    fn: meanrev:rsi_reversion
+    params: {n: 2, exit_ma: 5, max_w: 0.25}
+    grid: {entry: [5.0, 10.0, 20.0], trend_ma: [100, 0]}
+    engine: {band: 0.0, max_gross: 1.0}
+  xsrev_crypto:
+    family: mean_reversion
+    market: crypto_perp
+    universe: crypto_all
+    fn: meanrev:xs_reversal
+    params: {}
+    grid: {lookback: [3, 7], k: [3, 5], hold: [3, 7]}
+    engine: {band: 0.0, max_gross: 1.0}
+
+  # ---------------------------------------------------------------- MOMENTUM / ROTATION
+  xsmom_multi:
+    family: momentum
+    market: etf
+    universe: etf_gem
+    fn: momentum:xs_momentum
+    params: {skip: 0}
+    grid: {lookback: [63, 126, 252], k: [2, 3], abs_filter: [true, false]}
+    engine: {band: 0.0, max_gross: 1.0}
+  xsmom_sectors:
+    family: momentum
+    market: etf
+    universe: etf_sectors
+    fn: momentum:xs_momentum
+    params: {skip: 21}
+    grid: {lookback: [126, 252], k: [2, 3], abs_filter: [true, false], long_short: [false, true]}
+    engine: {band: 0.0, max_gross: 1.0}
+  xsmom_countries:
+    family: momentum
+    market: etf
+    universe: etf_countries
+    fn: momentum:xs_momentum
+    params: {skip: 21}
+    grid: {lookback: [126, 252], k: [2, 3], abs_filter: [true, false]}
+    engine: {band: 0.0, max_gross: 1.0}
+  rotation_filtered_etf:
+    family: momentum
+    market: etf
+    universe: etf_gem
+    fn: momentum:trend_filtered_rotation
+    params: {}
+    grid: {lookback: [63, 126], k: [2, 3], ma: [100, 200]}
+    engine: {band: 0.0, max_gross: 1.0}
+  xsmom_crypto:
+    family: momentum
+    market: crypto_spot
+    universe: crypto_all
+    fn: momentum:xs_momentum
+    params: {skip: 0, rebalance: "7"}
+    grid: {lookback: [14, 30, 90], k: [3, 5], abs_filter: [true, false]}
+    engine: {band: 0.0, max_gross: 1.0}
+  xsmom_volfilter_crypto:
+    family: momentum
+    market: crypto_spot
+    universe: crypto_all
+    fn: momentum:xs_momentum
+    params: {skip: 0, rebalance: "7", abs_filter: true, weighting: inv_vol}
+    grid: {lookback: [30, 90], k: [3, 5], vol_filter: [1.0, 1.5]}
+    engine: {band: 0.0, max_gross: 1.0}
+
+  # ---------------------------------------------------------------- STATISTICAL ARBITRAGE
+  pairs_etf:
+    family: stat_arb
+    market: etf
+    universe: etf_pairs
+    fn: statarb:pairs_cointegration
+    params: {formation: 504, z_stop: 4.0, max_pairs: 5}
+    grid: {z_entry: [1.5, 2.0], zwin: [20, 60], pmax: [0.05]}
+    engine: {band: 0.0, max_gross: 1.0}
+  pairs_crypto:
+    family: stat_arb
+    market: crypto_perp
+    universe: crypto_all
+    fn: statarb:pairs_cointegration
+    params: {formation: 365, z_stop: 4.0, max_pairs: 5, reselect: "QS"}
+    grid: {z_entry: [1.5, 2.0], zwin: [14, 30]}
+    engine: {band: 0.0, max_gross: 1.0}
+
+  # ---------------------------------------------------------------- VOLATILITY
+  volmanaged_spy:
+    family: volatility
+    market: etf
+    universe: etf_eq_index
+    fn: vol:vol_managed
+    params: {asset: SPY}
+    grid: {target: [0.10, 0.15], max_lev: [1.0, 1.5], span: [20, 60]}
+    engine: {band: 0.05, max_gross: 1.5}
+  vix_regime_spy:
+    family: volatility
+    market: etf
+    universe: etf_regime
+    fn: vol:vix_regime
+    params: {asset: SPY}
+    grid: {pct: [0.7, 0.8, 0.9], alt: [IEF, null]}
+    engine: {band: 0.0, max_gross: 1.0}
+  riskparity_etf:
+    family: volatility
+    market: etf
+    universe: etf_multi
+    fn: vol:risk_parity
+    params: {}
+    grid: {target: [0.06, 0.10], regime: [true, false]}
+    engine: {band: 0.01, max_gross: 1.0}
+  funding_carry:
+    family: stat_arb
+    market: crypto_carry
+    universe: carry_all
+    fn: vol:funding_carry
+    params: {max_pairs: 5}
+    grid: {lookback: [3, 7, 14], entry_apr: [0.10, 0.20], exit_apr: [0.0, 0.05]}
+    engine: {band: 0.02, max_gross: 1.0}
+
+  # ---------------------------------------------------------------- MACHINE LEARNING
+  ml_ridge_etf:
+    family: ml
+    market: etf
+    universe: etf_gem
+    fn: ml:ml_xsection
+    params: {model: ridge, horizon: 21}
+    grid: {k: [2, 3]}
+    engine: {band: 0.0, max_gross: 1.0}
+  ml_lgbm_etf:
+    family: ml
+    market: etf
+    universe: etf_gem
+    fn: ml:ml_xsection
+    params: {model: lgbm, horizon: 21}
+    grid: {k: [2, 3]}
+    engine: {band: 0.0, max_gross: 1.0}
+  ml_regime_spy:
+    family: ml
+    market: etf
+    universe: etf_regime
+    fn: ml:ml_regime
+    params: {}
+    grid: {p_enter: [0.5, 0.55, 0.6], safe: [IEF, null]}
+    engine: {band: 0.0, max_gross: 1.0}
+  ml_ridge_crypto:
+    family: ml
+    market: crypto_spot
+    universe: crypto_all
+    fn: ml:ml_xsection
+    params: {model: ridge, horizon: 7, retrain: QS, min_train: 540}
+    grid: {k: [3, 5]}
+    engine: {band: 0.0, max_gross: 1.0}
+  ml_lgbm_crypto:
+    family: ml
+    market: crypto_spot
+    universe: crypto_all
+    fn: ml:ml_xsection
+    params: {model: lgbm, horizon: 7, retrain: QS, min_train: 540}
+    grid: {k: [3, 5]}
+    engine: {band: 0.0, max_gross: 1.0}
+
+# Passive benchmarks (evaluated on identical periods, same engine and cost model)
+benchmarks:
+  etf:
+    SPY_buy_hold: {SPY: 1.0}
+    "60_40_SPY_IEF": {SPY: 0.6, IEF: 0.4}
+    equal_weight_multi: equal:etf_multi
+    cash_BIL: cash
+  crypto:
+    BTC_buy_hold: {BTCUSDT: 1.0}
+    equal_weight_top10: equal_top:10
+    cash_USDT: cash

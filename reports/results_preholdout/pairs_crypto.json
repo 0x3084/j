@@ -1,0 +1,183 @@
+{
+ "name": "pairs_crypto",
+ "family": "stat_arb",
+ "market": "crypto_perp",
+ "universe": "crypto_all",
+ "n_trials": 4,
+ "selections": {
+  "2021-01-01": null,
+  "2022-01-01": null,
+  "2023-01-01": "z_entry=2.0,zwin=30"
+ },
+ "git": "0d40c16",
+ "holdout_unlocked": false,
+ "wf_oos": {
+  "start": "2021-01-01",
+  "end": "2023-12-31",
+  "n_obs": 1095,
+  "cagr": -0.07592542023401361,
+  "ann_vol": 0.1181738493315215,
+  "sharpe": -0.6088954554967144,
+  "sharpe_raw": -0.6088954554967144,
+  "sortino": -0.799087318509969,
+  "max_dd": -0.302201435384283,
+  "max_dd_bars": 212,
+  "var95": -0.005909301298477709,
+  "es95": -0.01763466924699128,
+  "skew": -0.6001057215331118,
+  "kurt": 25.18906373537893,
+  "hit_rate_bars": 0.4816053511705686,
+  "calmar": -0.2512410973080453,
+  "gross_cagr": -0.0651602751739776,
+  "cost_ann": 0.011578154577738975,
+  "cost_pct_gross": null,
+  "financing_ann": 0.004077108366239002,
+  "turnover_ann": 8.95678834619297,
+  "avg_gross_exp": 0.21759634858786217,
+  "avg_net_exp": -0.020363374223025997,
+  "time_in_market": 0.26575342465753427,
+  "n_trades": 47,
+  "win_rate": 0.46808510638297873,
+  "avg_win": 0.017225539982957852,
+  "avg_loss": -0.023791829986850054,
+  "expectancy": -0.004592210000982527,
+  "profit_factor": 0.6371294344899542,
+  "avg_bars": 20.78723404255319,
+  "sharpe_lo": -1.445456378275721,
+  "sharpe_hi": 0.4331287557524439,
+  "ret_lo": -0.21153075094885895,
+  "ret_hi": 0.037146457539469296,
+  "p_sharpe": 0.891,
+  "psr0": 0.1444222441643953
+ },
+ "wf_oos_first_half": {
+  "start": "2021-01-01",
+  "end": "2022-07-02",
+  "n_obs": 548,
+  "cagr": 0.0,
+  "ann_vol": 0.0,
+  "sharpe": null,
+  "sharpe_raw": null,
+  "sortino": null,
+  "max_dd": 0.0,
+  "max_dd_bars": 0,
+  "var95": 0.0,
+  "es95": 0.0,
+  "skew": 0.0,
+  "kurt": 0.0,
+  "hit_rate_bars": null,
+  "calmar": null,
+  "gross_cagr": 0.0,
+  "cost_ann": 0.0,
+  "cost_pct_gross": null,
+  "financing_ann": 0.0,
+  "turnover_ann": 0.0,
+  "avg_gross_exp": 0.0,
+  "avg_net_exp": 0.0,
+  "time_in_market": 0.0
+ },
+ "wf_oos_second_half": {
+  "start": "2022-07-02",
+  "end": "2023-12-31",
+  "n_obs": 548,
+  "cagr": -0.14596311988819333,
+  "ann_vol": 0.1670382376087989,
+  "sharpe": -0.8607594045422579,
+  "sharpe_raw": -0.8607594045422579,
+  "sortino": -1.1295644582044224,
+  "max_dd": -0.302201435384283,
+  "max_dd_bars": 212,
+  "var95": -0.013673402108956189,
+  "es95": -0.02612349033563952,
+  "skew": -0.3579963744464463,
+  "kurt": 11.152944577516804,
+  "hit_rate_bars": 0.4816053511705686,
+  "calmar": -0.4829994262025422,
+  "gross_cagr": -0.12596722745188982,
+  "cost_ann": 0.023135181136175506,
+  "cost_pct_gross": null,
+  "financing_ann": 0.008146776753707495,
+  "turnover_ann": 17.89723218810457,
+  "avg_gross_exp": 0.43479562354691437,
+  "avg_net_exp": -0.04068958900403918,
+  "time_in_market": 0.531021897810219
+ },
+ "yearly": {
+  "2021": 0.0,
+  "2022": 0.0,
+  "2023": -0.21091993733847458
+ },
+ "regimes": [
+  {
+   "regime": "BTC<200dMA",
+   "n": 682,
+   "ann_ret": -0.004742955726702498,
+   "ann_vol": 0.01979259891672441,
+   "sharpe": -0.23963279136095564,
+   "max_dd": -0.02086048729488932
+  },
+  {
+   "regime": "BTC>200dMA",
+   "n": 413,
+   "ann_ret": -0.1829457588219731,
+   "ann_vol": 0.19073576673227208,
+   "sharpe": -0.9591581167823993,
+   "max_dd": -0.30285503260776736
+  }
+ ],
+ "stress": {
+  "cost_x2": {
+   "sharpe": -0.7067609280194934,
+   "cagr": -0.08657421024469358
+  },
+  "cost_x3": {
+   "sharpe": -0.804123797642653,
+   "cagr": -0.09710782548229624
+  },
+  "slip_+5bps": {
+   "sharpe": -0.6467843525875462,
+   "cagr": -0.08005808633846101
+  },
+  "delay_+1bar": {
+   "sharpe": -0.7285300180631664,
+   "cagr": -0.08878118045134076
+  },
+  "missing_5pct_bars": {
+   "sharpe": -0.5601038738975296,
+   "cagr": -0.07539105654804246
+  }
+ },
+ "benchmarks_wf": {
+  "BTC_buy_hold": {
+   "sharpe": 0.5112509336158141,
+   "cagr": 0.1290873153256653,
+   "max_dd": -0.7662925431645937,
+   "corr": -0.06539421084430225
+  },
+  "equal_weight_top10": {
+   "sharpe": 0.6341112954247996,
+   "cagr": 0.18919258803711747,
+   "max_dd": -0.873465300283482,
+   "corr": -0.1021732150525075
+  },
+  "cash_USDT": {
+   "sharpe": null,
+   "cagr": 0.0,
+   "max_dd": 0.0,
+   "corr": null
+  }
+ },
+ "dsr": 0.004797098712657357,
+ "dsr_xvar": 8.146044590318169e-09,
+ "n_trials_market_raw": 78,
+ "n_trials_market_effective": 9,
+ "p_sharpe_holm": 1.0,
+ "gate_pass": false,
+ "gate_failures": [
+  "WF-OOS Sharpe -0.61 < 0.4",
+  "Sharpe 95% CI lower bound -1.45 <= 0",
+  "Deflated Sharpe 0.00 < 0.9",
+  "Sharpe at 2x costs -0.71 < 0.2",
+  "does not beat passive benchmark Sharpe and is not a low-correlation diversifier"
+ ]
+}
