@@ -28,11 +28,13 @@ CAPITAL_LEVELS = [1_000, 5_000, 10_000, 25_000, 50_000, 100_000]
 
 def share_simulation(W: pd.DataFrame, open_: pd.DataFrame, close: pd.DataFrame, capital: float,
                      one_way_bps: pd.Series, per_share: float = 0.005, min_fee: float = 1.0, max_fee_pct: float = 0.01,
-                     fx_cost_bps: float = 2.0, rf: pd.Series | None = None, lag: int = 1) -> pd.DataFrame:
+                     fx_cost_bps: float = 2.0, rf: pd.Series | None = None, lag: int = 1,
+                     band: float = 0.02) -> pd.DataFrame:
     """Integer-share, account-currency simulation (IBKR-Pro-fixed-like fee: USD 0.005/share,
     min USD 1, max 1% of trade value; plus spread/slippage bps and an FX conversion cost on traded
-    notional for a EUR account trading USD instruments). Orders at next open, like the research engine."""
-    idx = close.index
+    notional for a EUR account trading USD instruments). Orders at next open, like the research engine.
+    A 2%-of-equity rebalance band avoids paying minimum fees on one-share drift adjustments."""
+    idx = close.index[(close.index >= W.index[0]) & (close.index <= W.index[-1])]
     cols = list(W.columns)
     O = open_.reindex(index=idx, columns=cols).to_numpy(float)
     C = close.reindex(index=idx, columns=cols).to_numpy(float)
@@ -53,6 +55,10 @@ def share_simulation(W: pd.DataFrame, open_: pd.DataFrame, close: pd.DataFrame, 
             tgt = np.where(v, np.floor(np.abs(np.nan_to_num(Wt[j])) * max(eq, 0) / np.where(v, O[i], np.inf)) *
                            np.sign(np.nan_to_num(Wt[j])), shares)
             d = tgt - shares
+            # rebalance band: skip trades smaller than `band` x equity unless closing a position
+            small = (np.abs(d) * np.where(v, O[i], 0) < band * max(eq, 0)) & (tgt != 0)
+            d = np.where(small, 0, d)
+            tgt = shares + d
             for k in np.where(np.abs(d) > 0)[0]:
                 px = O[i, k] * (1 + slip[k] * np.sign(d[k]))
                 val = abs(d[k]) * px

@@ -7,10 +7,13 @@
  "selections": {
   "2021-01-01": null,
   "2022-01-01": null,
-  "2023-01-01": null
+  "2023-01-01": null,
+  "2024-01-01": null,
+  "2025-01-01": null,
+  "2026-01-01": null
  },
- "git": "0d40c16",
- "holdout_unlocked": false,
+ "git": "720b03c",
+ "holdout_unlocked": true,
  "wf_oos": {
   "start": "2021-01-01",
   "end": "2023-12-31",
@@ -105,7 +108,10 @@
  "yearly": {
   "2021": 0.0,
   "2022": 0.0,
-  "2023": 0.0
+  "2023": 0.0,
+  "2024": 0.0,
+  "2025": 0.0,
+  "2026": 0.0
  },
  "regimes": [
   {
@@ -114,7 +120,7 @@
    "ann_ret": 0.0,
    "ann_vol": 0.0,
    "sharpe": null,
-   "max_dd": 0.0
+   "hit_rate": 0.0
   },
   {
    "regime": "BTC>200dMA",
@@ -122,7 +128,7 @@
    "ann_ret": 0.0,
    "ann_vol": 0.0,
    "sharpe": null,
-   "max_dd": 0.0
+   "hit_rate": 0.0
   }
  ],
  "stress": {
@@ -167,6 +173,61 @@
    "corr": null
   }
  },
+ "holdout": {
+  "start": "2024-01-01",
+  "end": "2026-10-31",
+  "n_obs": 1034,
+  "cagr": 0.0,
+  "ann_vol": 0.0,
+  "sharpe": null,
+  "sharpe_raw": null,
+  "sortino": null,
+  "max_dd": 0.0,
+  "max_dd_bars": 0,
+  "var95": 0.0,
+  "es95": 0.0,
+  "skew": 0.0,
+  "kurt": 0.0,
+  "hit_rate_bars": null,
+  "calmar": null,
+  "gross_cagr": 0.0,
+  "cost_ann": 0.0,
+  "cost_pct_gross": null,
+  "financing_ann": 0.0,
+  "turnover_ann": 0.0,
+  "avg_gross_exp": 0.0,
+  "avg_net_exp": 0.0,
+  "time_in_market": 0.0,
+  "n_trades": 0,
+  "win_rate": null,
+  "avg_win": null,
+  "avg_loss": null,
+  "expectancy": null,
+  "profit_factor": null,
+  "avg_bars": null,
+  "sharpe_lo": null,
+  "sharpe_hi": null,
+  "ret_lo": null,
+  "ret_hi": null,
+  "p_sharpe": null
+ },
+ "benchmarks_holdout": {
+  "BTC_buy_hold": {
+   "sharpe": 0.6901433324995467,
+   "cagr": 0.2386728672108478,
+   "max_dd": -0.5297176591351058
+  },
+  "equal_weight_top10": {
+   "sharpe": 0.2795941224196745,
+   "cagr": -0.015890629942386325,
+   "max_dd": -0.6881189962806322
+  },
+  "cash_USDT": {
+   "sharpe": null,
+   "cagr": 0.0,
+   "max_dd": 0.0
+  }
+ },
  "dsr": null,
  "dsr_xvar": null,
  "n_trials_market_raw": 78,
@@ -179,6 +240,7 @@
   "Deflated Sharpe nan < 0.9",
   "Sharpe at 2x costs -9.00 < 0.2",
   "only 0 trades",
-  "does not beat passive benchmark Sharpe and is not a low-correlation diversifier"
+  "does not beat passive benchmark Sharpe and is not a low-correlation diversifier",
+  "holdout Sharpe nan < 0"
  ]
 }

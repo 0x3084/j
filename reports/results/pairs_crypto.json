@@ -7,10 +7,13 @@
  "selections": {
   "2021-01-01": null,
   "2022-01-01": null,
-  "2023-01-01": "z_entry=2.0,zwin=30"
+  "2023-01-01": "z_entry=2.0,zwin=30",
+  "2024-01-01": null,
+  "2025-01-01": null,
+  "2026-01-01": null
  },
- "git": "0d40c16",
- "holdout_unlocked": false,
+ "git": "720b03c",
+ "holdout_unlocked": true,
  "wf_oos": {
   "start": "2021-01-01",
   "end": "2023-12-31",
@@ -39,10 +42,10 @@
   "n_trades": 47,
   "win_rate": 0.46808510638297873,
   "avg_win": 0.017225539982957852,
-  "avg_loss": -0.023791829986850054,
-  "expectancy": -0.004592210000982527,
-  "profit_factor": 0.6371294344899542,
-  "avg_bars": 20.78723404255319,
+  "avg_loss": -0.023803558352430927,
+  "expectancy": -0.004598448493312778,
+  "profit_factor": 0.6368155113857108,
+  "avg_bars": 20.829787234042552,
   "sharpe_lo": -1.445456378275721,
   "sharpe_hi": 0.4331287557524439,
   "ret_lo": -0.21153075094885895,
@@ -105,7 +108,10 @@
  "yearly": {
   "2021": 0.0,
   "2022": 0.0,
-  "2023": -0.21091993733847458
+  "2023": -0.21091993733847458,
+  "2024": -0.00029321513534019683,
+  "2025": 0.0,
+  "2026": 0.0
  },
  "regimes": [
   {
@@ -114,7 +120,7 @@
    "ann_ret": -0.004742955726702498,
    "ann_vol": 0.01979259891672441,
    "sharpe": -0.23963279136095564,
-   "max_dd": -0.02086048729488932
+   "hit_rate": 0.024926686217008796
   },
   {
    "regime": "BTC>200dMA",
@@ -122,7 +128,7 @@
    "ann_ret": -0.1829457588219731,
    "ann_vol": 0.19073576673227208,
    "sharpe": -0.9591581167823993,
-   "max_dd": -0.30285503260776736
+   "hit_rate": 0.3075060532687651
   }
  ],
  "stress": {
@@ -167,6 +173,61 @@
    "corr": null
   }
  },
+ "holdout": {
+  "start": "2024-01-01",
+  "end": "2026-10-31",
+  "n_obs": 1034,
+  "cagr": -0.0001035141951554186,
+  "ann_vol": 0.00017420978591346564,
+  "sharpe": -0.5941364033317793,
+  "sharpe_raw": -0.5941364033317793,
+  "sortino": -0.5941364033317796,
+  "max_dd": 0.0,
+  "max_dd_bars": 0,
+  "var95": 0.0,
+  "es95": -2.835736318570569e-07,
+  "skew": -32.155870381627,
+  "kurt": 1033.999999999999,
+  "hit_rate_bars": 0.0,
+  "calmar": null,
+  "gross_cagr": 6.774926621266886e-06,
+  "cost_ann": 0.0001102772278009642,
+  "cost_pct_gross": 16.277156828432865,
+  "financing_ann": 0.0,
+  "turnover_ann": 0.0878592884828679,
+  "avg_gross_exp": 0.0,
+  "avg_net_exp": 0.0,
+  "time_in_market": 0.0,
+  "n_trades": 0,
+  "win_rate": null,
+  "avg_win": null,
+  "avg_loss": null,
+  "expectancy": null,
+  "profit_factor": null,
+  "avg_bars": null,
+  "sharpe_lo": -1.0300720859403334,
+  "sharpe_hi": 0.0,
+  "ret_lo": -0.0003105131268834773,
+  "ret_hi": 0.0,
+  "p_sharpe": 0.929
+ },
+ "benchmarks_holdout": {
+  "BTC_buy_hold": {
+   "sharpe": 0.6901433324995467,
+   "cagr": 0.2386728672108478,
+   "max_dd": -0.5297176591351058
+  },
+  "equal_weight_top10": {
+   "sharpe": 0.2795941224196745,
+   "cagr": -0.015890629942386325,
+   "max_dd": -0.6881189962806322
+  },
+  "cash_USDT": {
+   "sharpe": null,
+   "cagr": 0.0,
+   "max_dd": 0.0
+  }
+ },
  "dsr": 0.004797098712657357,
  "dsr_xvar": 8.146044590318169e-09,
  "n_trials_market_raw": 78,
@@ -178,6 +239,7 @@
   "Sharpe 95% CI lower bound -1.45 <= 0",
   "Deflated Sharpe 0.00 < 0.9",
   "Sharpe at 2x costs -0.71 < 0.2",
-  "does not beat passive benchmark Sharpe and is not a low-correlation diversifier"
+  "does not beat passive benchmark Sharpe and is not a low-correlation diversifier",
+  "holdout Sharpe -0.59 < 0"
  ]
 }

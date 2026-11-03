@@ -335,3 +335,18 @@ def save(out: ExpOutput) -> None:
     out.oos.to_parquet(RESULTS_DIR / f"{out.name}_returns.parquet")
     pd.DataFrame(out.trials).to_parquet(RESULTS_DIR / f"{out.name}_trials.parquet")
     out.weights_last.to_frame("target_weight").to_json(RESULTS_DIR / f"{out.name}_target.json")
+
+
+def stitched_weights(name: str) -> tuple[pd.DataFrame, Market, dict]:
+    """Rebuild the walk-forward stitched target weights of an experiment from its saved selections."""
+    exp = experiments()["experiments"][name]
+    s = json.loads((RESULTS_DIR / f"{name}.json").read_text())
+    m = get_market(exp["market"], exp["universe"])
+    fn = resolve(exp["fn"])
+    Ws = {}
+    for p in grid_params(exp):
+        k = pkey(p, exp)
+        if k in s["selections"].values():
+            Ws[k] = fn(m, **p)
+    sel = {pd.Timestamp(k): v for k, v in s["selections"].items()}
+    return stitch(Ws, sel, m.close.index, m.symbols), m, exp

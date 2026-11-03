@@ -1,0 +1,446 @@
+{
+ "levels": {
+  "1000": {
+   "rotation_filtered_etf_fees_total_usd": 809.4277222622625,
+   "vix_regime_spy_fees_total_usd": 896.2330059997886,
+   "usd": {
+    "start": "2008-01-02",
+    "end": "2026-10-30",
+    "n_obs": 4738,
+    "cagr": -0.0027619141306657324,
+    "ann_vol": 0.08512405862418682,
+    "sharpe": 0.010112779314846804,
+    "sharpe_raw": 0.010112779314846804,
+    "sortino": 0.013861955571538655,
+    "max_dd": -0.26356141325300986,
+    "max_dd_bars": 3382,
+    "var95": -0.00857158703792924,
+    "es95": -0.013283611434801517,
+    "skew": -0.3062563283124048,
+    "kurt": 3.644836315262913,
+    "hit_rate_bars": 0.5246040126715945,
+    "calmar": -0.010479205193874075
+   },
+   "eur_unhedged": {
+    "start": "2008-01-02",
+    "end": "2026-10-30",
+    "n_obs": 4738,
+    "cagr": 0.01141194113201971,
+    "ann_vol": 0.11181915388891381,
+    "sharpe": 0.15743966068735094,
+    "sharpe_raw": 0.15743966068735094,
+    "sortino": 0.2197471211950598,
+    "max_dd": -0.23238744456459892,
+    "max_dd_bars": 2923,
+    "var95": -0.011570436059537165,
+    "es95": -0.01653332258314662,
+    "skew": -0.21769252481099172,
+    "kurt": 2.6663901596266695,
+    "hit_rate_bars": 0.5132967496834108,
+    "calmar": 0.04910739112175841
+   },
+   "fractional_engine_cagr": 0.09349948266807684,
+   "small_account_drag_cagr": 0.09626139679874257,
+   "fees_pct_of_capital_per_year": 0.08399905092046123
+  },
+  "5000": {
+   "rotation_filtered_etf_fees_total_usd": 2185.375632635297,
+   "vix_regime_spy_fees_total_usd": 2830.0866622709154,
+   "usd": {
+    "start": "2008-01-02",
+    "end": "2026-10-30",
+    "n_obs": 4738,
+    "cagr": 0.07004895611940021,
+    "ann_vol": 0.10952884928023283,
+    "sharpe": 0.6730766465662706,
+    "sharpe_raw": 0.6730766465662706,
+    "sortino": 0.9362034006467127,
+    "max_dd": -0.20110823452231663,
+    "max_dd_bars": 673,
+    "var95": -0.011165899815964336,
+    "es95": -0.016818533312626286,
+    "skew": -0.4286356769799733,
+    "kurt": 2.632176008025018,
+    "hit_rate_bars": 0.5522482583913869,
+    "calmar": 0.34831470867309017
+   },
+   "eur_unhedged": {
+    "start": "2008-01-02",
+    "end": "2026-10-30",
+    "n_obs": 4738,
+    "cagr": 0.08525768033775294,
+    "ann_vol": 0.12780323720819858,
+    "sharpe": 0.7042607368013366,
+    "sharpe_raw": 0.7042607368013366,
+    "sortino": 0.9974742752441621,
+    "max_dd": -0.18092066167775722,
+    "max_dd_bars": 689,
+    "var95": -0.013112410430404797,
+    "es95": -0.018641284974968985,
+    "skew": -0.2884270763934942,
+    "kurt": 2.17539382308463,
+    "hit_rate_bars": 0.5377796538623892,
+    "calmar": 0.4712434696353684
+   },
+   "fractional_engine_cagr": 0.09349948266807684,
+   "small_account_drag_cagr": 0.02345052654867663,
+   "fees_pct_of_capital_per_year": 0.049399516060705626
+  },
+  "10000": {
+   "rotation_filtered_etf_fees_total_usd": 3383.8840190214382,
+   "vix_regime_spy_fees_total_usd": 5047.853010104659,
+   "usd": {
+    "start": "2008-01-02",
+    "end": "2026-10-30",
+    "n_obs": 4738,
+    "cagr": 0.08010673741216223,
+    "ann_vol": 0.11082626551444245,
+    "sharpe": 0.7509270397095504,
+    "sharpe_raw": 0.7509270397095504,
+    "sortino": 1.0484865904921052,
+    "max_dd": -0.20048803589539232,
+    "max_dd_bars": 620,
+    "var95": -0.01132093334200604,
+    "es95": -0.016959764731267826,
+    "skew": -0.42436979539199843,
+    "kurt": 2.5958976184053015,
+    "hit_rate_bars": 0.5543592991344733,
+    "calmar": 0.3995586921404085
+   },
+   "eur_unhedged": {
+    "start": "2008-01-02",
+    "end": "2026-10-30",
+    "n_obs": 4738,
+    "cagr": 0.09545841398896049,
+    "ann_vol": 0.1288414716245041,
+    "sharpe": 0.7722562527801263,
+    "sharpe_raw": 0.7722562527801263,
+    "sortino": 1.0971234664542355,
+    "max_dd": -0.1763671524074849,
+    "max_dd_bars": 646,
+    "var95": -0.013061944909115674,
+    "es95": -0.018749675075146778,
+    "skew": -0.2877140511212107,
+    "kurt": 2.150809795142744,
+    "hit_rate_bars": 0.5388349514563107,
+    "calmar": 0.5412482578865365
+   },
+   "fractional_engine_cagr": 0.09349948266807684,
+   "small_account_drag_cagr": 0.013392745255914607,
+   "fees_pct_of_capital_per_year": 0.04152396173060552,
+   "outcomes_10y_eur": {
+    "years": 10,
+    "cagr_p5": 0.03630907445885988,
+    "cagr_median": 0.09705876315167106,
+    "cagr_p95": 0.1583501083439425,
+    "p_loss": 0.0035,
+    "maxdd_median": -0.18157816393468912,
+    "maxdd_p5": -0.2899267985726986,
+    "terminal_median": 25252.181877291896,
+    "terminal_p5": 14285.419913076254
+   },
+   "withdrawals_20y_eur": [
+    {
+     "withdrawal_rate": 0.0,
+     "monthly_income_start": 0.0,
+     "p_depletion": 0.0,
+     "real_terminal_p5": 19080.736139717945,
+     "real_terminal_median": 42297.40782438562,
+     "real_terminal_p95": 95947.56487357366
+    },
+    {
+     "withdrawal_rate": 0.02,
+     "monthly_income_start": 16.666666666666668,
+     "p_depletion": 0.002,
+     "real_terminal_p5": 12969.822844253082,
+     "real_terminal_median": 33195.59141929147,
+     "real_terminal_p95": 78740.77553043106
+    },
+    {
+     "withdrawal_rate": 0.03,
+     "monthly_income_start": 25.0,
+     "p_depletion": 0.0135,
+     "real_terminal_p5": 10079.10832495096,
+     "real_terminal_median": 28881.450444484566,
+     "real_terminal_p95": 71668.6481767287
+    },
+    {
+     "withdrawal_rate": 0.04,
+     "monthly_income_start": 33.333333333333336,
+     "p_depletion": 0.035,
+     "real_terminal_p5": 7146.501413195968,
+     "real_terminal_median": 24259.32674894952,
+     "real_terminal_p95": 64308.1991082146
+    },
+    {
+     "withdrawal_rate": 0.06,
+     "monthly_income_start": 50.0,
+     "p_depletion": 0.171,
+     "real_terminal_p5": 917.0058847626558,
+     "real_terminal_median": 15193.542718726934,
+     "real_terminal_p95": 49437.068855158686
+    }
+   ]
+  },
+  "25000": {
+   "rotation_filtered_etf_fees_total_usd": 7230.891941776472,
+   "vix_regime_spy_fees_total_usd": 11550.271357472207,
+   "usd": {
+    "start": "2008-01-02",
+    "end": "2026-10-30",
+    "n_obs": 4738,
+    "cagr": 0.08371744407695769,
+    "ann_vol": 0.11178346257536884,
+    "sharpe": 0.7753168848116797,
+    "sharpe_raw": 0.7753168848116797,
+    "sortino": 1.0835823891782215,
+    "max_dd": -0.20160029492357268,
+    "max_dd_bars": 617,
+    "var95": -0.011454645800524743,
+    "es95": -0.017098272177472375,
+    "skew": -0.42577089537741414,
+    "kurt": 2.5981429328582712,
+    "hit_rate_bars": 0.5549926113573992,
+    "calmar": 0.4152644920916175
+   },
+   "eur_unhedged": {
+    "start": "2008-01-02",
+    "end": "2026-10-30",
+    "n_obs": 4738,
+    "cagr": 0.09912044002712173,
+    "ann_vol": 0.12956842107242814,
+    "sharpe": 0.7944167533132563,
+    "sharpe_raw": 0.7944167533132563,
+    "sortino": 1.1293962461806528,
+    "max_dd": -0.17627982200693404,
+    "max_dd_bars": 472,
+    "var95": -0.013112875970853744,
+    "es95": -0.018854538079627867,
+    "skew": -0.2903387645706226,
+    "kurt": 2.1459689377755145,
+    "hit_rate_bars": 0.5396791895314479,
+    "calmar": 0.5622903341893707
+   },
+   "fractional_engine_cagr": 0.09349948266807684,
+   "small_account_drag_cagr": 0.009782038591119147,
+   "fees_pct_of_capital_per_year": 0.03699680402272147
+  },
+  "50000": {
+   "rotation_filtered_etf_fees_total_usd": 13945.590110311325,
+   "vix_regime_spy_fees_total_usd": 22922.33914300699,
+   "usd": {
+    "start": "2008-01-02",
+    "end": "2026-10-30",
+    "n_obs": 4738,
+    "cagr": 0.08415335967860993,
+    "ann_vol": 0.1120687815258145,
+    "sharpe": 0.7772188170285422,
+    "sharpe_raw": 0.7772188170285422,
+    "sortino": 1.0862027871042583,
+    "max_dd": -0.2018755994689383,
+    "max_dd_bars": 617,
+    "var95": -0.011452945952207482,
+    "es95": -0.017142170468877033,
+    "skew": -0.42783337265953786,
+    "kurt": 2.599007841165721,
+    "hit_rate_bars": 0.5549926113573992,
+    "calmar": 0.4168575097732811
+   },
+   "eur_unhedged": {
+    "start": "2008-01-02",
+    "end": "2026-10-30",
+    "n_obs": 4738,
+    "cagr": 0.09956255134545589,
+    "ann_vol": 0.12978043185065283,
+    "sharpe": 0.7964314026956741,
+    "sharpe_raw": 0.7964314026956741,
+    "sortino": 1.132255123588243,
+    "max_dd": -0.17632808858271143,
+    "max_dd_bars": 472,
+    "var95": -0.013125120074119622,
+    "es95": -0.01888841631247917,
+    "skew": -0.2912508385853723,
+    "kurt": 2.143163475186283,
+    "hit_rate_bars": 0.5401013085690165,
+    "calmar": 0.5646437396657504
+   },
+   "fractional_engine_cagr": 0.09349948266807684,
+   "small_account_drag_cagr": 0.00934612298946691,
+   "fees_pct_of_capital_per_year": 0.03631286123163476
+  },
+  "100000": {
+   "rotation_filtered_etf_fees_total_usd": 27629.45860495793,
+   "vix_regime_spy_fees_total_usd": 45855.01811576805,
+   "usd": {
+    "start": "2008-01-02",
+    "end": "2026-10-30",
+    "n_obs": 4738,
+    "cagr": 0.08433253377161765,
+    "ann_vol": 0.11222565242188481,
+    "sharpe": 0.77776228385567,
+    "sharpe_raw": 0.77776228385567,
+    "sortino": 1.0870434887734126,
+    "max_dd": -0.20216162716808495,
+    "max_dd_bars": 617,
+    "var95": -0.011455321600874124,
+    "es95": -0.01716448727408611,
+    "skew": -0.4269163704831307,
+    "kurt": 2.5957970333522176,
+    "hit_rate_bars": 0.5549926113573992,
+    "calmar": 0.41715401163397015
+   },
+   "eur_unhedged": {
+    "start": "2008-01-02",
+    "end": "2026-10-30",
+    "n_obs": 4738,
+    "cagr": 0.09974427205967396,
+    "ann_vol": 0.12989736963764947,
+    "sharpe": 0.7971041198786524,
+    "sharpe_raw": 0.7971041198786524,
+    "sortino": 1.1332415294372693,
+    "max_dd": -0.17661099241649658,
+    "max_dd_bars": 472,
+    "var95": -0.013127145150121927,
+    "es95": -0.01890687711884792,
+    "skew": -0.29112617484457687,
+    "kurt": 2.1409876176871996,
+    "hit_rate_bars": 0.5398902490502322,
+    "calmar": 0.5647681987112667
+   },
+   "fractional_engine_cagr": 0.09349948266807684,
+   "small_account_drag_cagr": 0.009166948896459193,
+   "fees_pct_of_capital_per_year": 0.03618906268784873,
+   "outcomes_10y_eur": {
+    "years": 10,
+    "cagr_p5": 0.04007334176173978,
+    "cagr_median": 0.10133414951880171,
+    "cagr_p95": 0.16351244746861787,
+    "p_loss": 0.0035,
+    "maxdd_median": -0.18014629166396673,
+    "maxdd_p5": -0.2855920465701668,
+    "terminal_median": 262537.3261490754,
+    "terminal_p5": 148128.84982087743
+   },
+   "withdrawals_20y_eur": [
+    {
+     "withdrawal_rate": 0.0,
+     "monthly_income_start": 0.0,
+     "p_depletion": 0.0,
+     "real_terminal_p5": 204445.8100058864,
+     "real_terminal_median": 457828.29963247094,
+     "real_terminal_p95": 1035353.3800828024
+    },
+    {
+     "withdrawal_rate": 0.02,
+     "monthly_income_start": 166.66666666666666,
+     "p_depletion": 0.0015,
+     "real_terminal_p5": 142771.1293341479,
+     "real_terminal_median": 362148.29937095405,
+     "real_terminal_p95": 855285.9027643454
+    },
+    {
+     "withdrawal_rate": 0.03,
+     "monthly_income_start": 250.0,
+     "p_depletion": 0.0115,
+     "real_terminal_p5": 111289.85449503307,
+     "real_terminal_median": 316470.6934951256,
+     "real_terminal_p95": 781584.5884208545
+    },
+    {
+     "withdrawal_rate": 0.04,
+     "monthly_income_start": 333.3333333333333,
+     "p_depletion": 0.026,
+     "real_terminal_p5": 80709.38222670746,
+     "real_terminal_median": 269082.020120971,
+     "real_terminal_p95": 706538.2062863723
+    },
+    {
+     "withdrawal_rate": 0.06,
+     "monthly_income_start": 500.0,
+     "p_depletion": 0.139,
+     "real_terminal_p5": 16920.6484134283,
+     "real_terminal_median": 172081.6925146138,
+     "real_terminal_p95": 556553.1653529165
+    }
+   ]
+  }
+ },
+ "assumptions": {
+  "broker_fees": "USD 0.005/share, min USD 1, max 1% of trade value (IBKR-Pro-fixed-like) + modelled spread/slippage",
+  "fx_conversion_bps": 2.0,
+  "fx_risk": "EUR account holding USD ETFs, unhedged, Fed H.10 EUR/USD",
+  "taxes": "NOT modelled (country specific; e.g. DE 26.375% on gains)",
+  "eu_retail_access": "US-domiciled ETFs are generally not available to EU retail clients (PRIIPs KID); UCITS equivalents (Ireland/Lux) trade on LSE/Xetra with different TER/spreads; results are a proxy",
+  "window": "full walk-forward OOS 2008-01-01..2026-10-30 (includes holdout)"
+ },
+ "benchmarks_withdrawals_20y_eur_100k": {
+  "SPY_buy_hold": [
+   {
+    "withdrawal_rate": 0.02,
+    "monthly_income_start": 166.66666666666666,
+    "p_depletion": 0.023,
+    "real_terminal_p5": 153643.3660530621,
+    "real_terminal_median": 633534.5128222046,
+    "real_terminal_p95": 2258316.80985427
+   },
+   {
+    "withdrawal_rate": 0.03,
+    "monthly_income_start": 250.0,
+    "p_depletion": 0.035,
+    "real_terminal_p5": 118218.7210181933,
+    "real_terminal_median": 562610.4776554075,
+    "real_terminal_p95": 2082877.1246088694
+   },
+   {
+    "withdrawal_rate": 0.04,
+    "monthly_income_start": 333.3333333333333,
+    "p_depletion": 0.061,
+    "real_terminal_p5": 82075.61204122259,
+    "real_terminal_median": 495600.590954049,
+    "real_terminal_p95": 1943309.8024013508
+   },
+   {
+    "withdrawal_rate": 0.06,
+    "monthly_income_start": 500.0,
+    "p_depletion": 0.14,
+    "real_terminal_p5": 12113.343343672357,
+    "real_terminal_median": 360859.7022413268,
+    "real_terminal_p95": 1641692.7902686547
+   }
+  ],
+  "60_40_SPY_IEF": [
+   {
+    "withdrawal_rate": 0.02,
+    "monthly_income_start": 166.66666666666666,
+    "p_depletion": 0.003,
+    "real_terminal_p5": 137219.84793943912,
+    "real_terminal_median": 349464.87587328244,
+    "real_terminal_p95": 826271.8596541166
+   },
+   {
+    "withdrawal_rate": 0.03,
+    "monthly_income_start": 250.0,
+    "p_depletion": 0.008,
+    "real_terminal_p5": 106804.16343864083,
+    "real_terminal_median": 303343.4889588682,
+    "real_terminal_p95": 754440.8782660712
+   },
+   {
+    "withdrawal_rate": 0.04,
+    "monthly_income_start": 333.3333333333333,
+    "p_depletion": 0.0285,
+    "real_terminal_p5": 76429.39969438365,
+    "real_terminal_median": 256420.7072467535,
+    "real_terminal_p95": 679223.5585671639
+   },
+   {
+    "withdrawal_rate": 0.06,
+    "monthly_income_start": 500.0,
+    "p_depletion": 0.1495,
+    "real_terminal_p5": 12873.396457960664,
+    "real_terminal_median": 160256.2494909505,
+    "real_terminal_p95": 527312.2260962946
+   }
+  ]
+ }
+}
