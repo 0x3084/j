@@ -27,6 +27,9 @@ class Config:
     # A company counts as newly registered only if its registration date (when present)
     # is at most this many days before the snapshot date.
     new_max_age_days: int = field(default_factory=lambda: int(_env("NEW_MAX_AGE_DAYS", "60")))
+    # Paying customers only receive companies whose reklamspärr status was checked.
+    require_reklamsparr_check: bool = field(
+        default_factory=lambda: _env("REQUIRE_REKLAMSPARR_CHECK", "1") not in ("0", "false", "no"))
     stale_after_days: int = field(default_factory=lambda: int(_env("STALE_AFTER_DAYS", "9")))
 
     @property

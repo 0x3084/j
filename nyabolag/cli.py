@@ -6,6 +6,7 @@ import json
 import sys
 import traceback
 import urllib.request
+from datetime import date
 from itertools import islice
 from pathlib import Path
 
@@ -15,6 +16,7 @@ from .db import connect, now_iso, tx
 from .delivery import deliver_all, export, normalise_filters
 from .ingest import fetch, ingest
 from .mailer import send_mail
+from .reklamsparr import import_file
 
 
 def _ping(url: str) -> None:
@@ -41,7 +43,13 @@ def cmd_fetch(args, cfg):
 
 def cmd_ingest(args, cfg):
     conn = connect(cfg.db_path)
-    print(json.dumps(ingest(conn, Path(args.file), cfg), default=str, indent=2))
+    as_of = date.fromisoformat(args.as_of) if args.as_of else None
+    print(json.dumps(ingest(conn, Path(args.file), cfg, today=as_of), default=str, indent=2))
+
+
+def cmd_import_reklamsparr(args, cfg):
+    conn = connect(cfg.db_path)
+    print(json.dumps(import_file(conn, Path(args.file))))
 
 
 def cmd_stats(args, cfg):
@@ -50,7 +58,7 @@ def cmd_stats(args, cfg):
         print(dict(s))
     print("\nnew companies in latest snapshot by 3-digit postcode (top 25):")
     rows = conn.execute(
-        "SELECT substr(postcode,1,3) p, COUNT(*) n FROM companies WHERE is_new=1 AND "
+        "SELECT substr(postcode,1,3) p, COUNT(*) n FROM companies WHERE is_new=1 AND is_shelf=0 AND "
         "first_snapshot_id=(SELECT MAX(id) FROM snapshots) GROUP BY p ORDER BY n DESC LIMIT 25").fetchall()
     for r in rows:
         print(f"  {r['p'] or '???'}: {r['n']}")
@@ -122,7 +130,10 @@ def main(argv: list[str] | None = None) -> None:
     s = sub.add_parser("inspect", help="show header and first parsed rows of a bulk file")
     s.add_argument("file"); s.add_argument("-n", type=int, default=5); s.set_defaults(fn=cmd_inspect)
     sub.add_parser("fetch", help="download bulk file").set_defaults(fn=cmd_fetch)
-    s = sub.add_parser("ingest", help="import a bulk file snapshot"); s.add_argument("file"); s.set_defaults(fn=cmd_ingest)
+    s = sub.add_parser("ingest", help="import a bulk file snapshot"); s.add_argument("file")
+    s.add_argument("--as-of", help="file date YYYY-MM-DD (default: today)"); s.set_defaults(fn=cmd_ingest)
+    s = sub.add_parser("import-reklamsparr", help="import saved VDM/SCB API responses with reklamspärr")
+    s.add_argument("file"); s.set_defaults(fn=cmd_import_reklamsparr)
     sub.add_parser("stats", help="snapshot and volume statistics").set_defaults(fn=cmd_stats)
 
     def filter_args(sp):

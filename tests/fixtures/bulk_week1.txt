@@ -1,4 +1,0 @@
-"organisationsidentitet";"namnskyddslopnummer";"registreringsland";"organisationsnamn";"organisationsform";"avregistreringsdatum";"avregistreringsorsak";"registreringsdatum";"verksamhetsbeskrivning";"postadress"
-"5560000001$ORGNR";"";"SE";"Gamla Bygg AB$FORETAGSNAMN$1999-03-01";"AB";"";"";"1999-03-01";"Byggverksamhet";"Storgatan 1$$41101$GÖTEBORG$SE"
-"5590000002$ORGNR";"";"SE";"Avregistrerat AB$FORETAGSNAMN";"AB";"2020-01-01";"LIKV";"2010-01-01";"";"Box 1$$11122$STOCKHOLM$SE"
-"198501011234$PERSONNUMMER";"";"SE";"Kalle Konsult$FORETAGSNAMN";"EF";"";"";"2020-01-01";"Konsult";"Hemvägen 2$$41260$GÖTEBORG$SE"

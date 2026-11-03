@@ -28,7 +28,16 @@ CREATE TABLE IF NOT EXISTS companies (
     description TEXT,
     first_snapshot_id INTEGER NOT NULL REFERENCES snapshots(id),
     last_snapshot_id INTEGER NOT NULL REFERENCES snapshots(id),
-    is_new INTEGER NOT NULL DEFAULT 0
+    is_new INTEGER NOT NULL DEFAULT 0,
+    is_shelf INTEGER NOT NULL DEFAULT 0  -- shelf company (lagerbolag) at a formation agent's address
+);
+-- Advertising opt-out (reklamspärr) as reported by SCB, via SCB's API or Bolagsverket's
+-- värdefulla-datamängder API. blocked: 1 = opted out, 0 = checked and not opted out.
+CREATE TABLE IF NOT EXISTS reklamsparr (
+    orgnr TEXT PRIMARY KEY,
+    blocked INTEGER NOT NULL,
+    source TEXT NOT NULL,
+    checked_at TEXT NOT NULL
 );
 CREATE INDEX IF NOT EXISTS idx_companies_new ON companies(first_snapshot_id) WHERE is_new = 1;
 
@@ -79,6 +88,10 @@ def connect(path: Path) -> sqlite3.Connection:
     conn.execute("PRAGMA journal_mode=WAL")
     conn.execute("PRAGMA foreign_keys=ON")
     conn.executescript(SCHEMA)
+    cols = {r[1] for r in conn.execute("PRAGMA table_info(companies)")}
+    if "is_shelf" not in cols:  # migrate databases created before is_shelf existed
+        conn.execute("ALTER TABLE companies ADD COLUMN is_shelf INTEGER NOT NULL DEFAULT 0")
+        conn.commit()
     return conn
 
 

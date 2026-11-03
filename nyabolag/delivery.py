@@ -13,7 +13,9 @@ from .mailer import send_mail
 
 DEFAULT_FORMS = ["AB"]
 CSV_COLUMNS = ["Organisationsnummer", "Namn", "Bolagsform", "Registreringsdatum",
-               "Adress", "Postnummer", "Ort", "Verksamhet"]
+               "Adress", "Postnummer", "Ort", "Verksamhet", "Reklamspärr"]
+# Data minimisation: no c/o names, no board members, no sole traders. The c/o line is not
+# even stored (it is often a private person's name).
 
 
 def normalise_filters(raw: dict) -> dict:
@@ -52,12 +54,26 @@ def matches(company: sqlite3.Row | dict, f: dict) -> bool:
     return True
 
 
-def new_companies_since(conn: sqlite3.Connection, after_snapshot_id: int, upto_snapshot_id: int) -> list[sqlite3.Row]:
+def new_companies_since(conn: sqlite3.Connection, after_snapshot_id: int, upto_snapshot_id: int,
+                        require_reklamsparr_check: bool = False) -> list[sqlite3.Row]:
+    """New, non-shelf companies without reklamspärr. Optionally only those whose
+    reklamspärr status has actually been checked."""
+    join = "JOIN" if require_reklamsparr_check else "LEFT JOIN"
     return conn.execute(
-        "SELECT * FROM companies WHERE is_new = 1 AND first_snapshot_id > ? AND first_snapshot_id <= ? "
-        "ORDER BY reg_date DESC, name",
+        f"SELECT c.*, r.blocked AS rs_blocked, r.checked_at AS rs_checked_at FROM companies c "
+        f"{join} reklamsparr r ON r.orgnr = c.orgnr "
+        "WHERE c.is_new = 1 AND c.is_shelf = 0 AND COALESCE(r.blocked, 0) = 0 "
+        "AND c.first_snapshot_id > ? AND c.first_snapshot_id <= ? ORDER BY c.reg_date DESC, c.name",
         (after_snapshot_id, upto_snapshot_id),
     ).fetchall()
+
+
+def _rs_label(r) -> str:
+    try:
+        checked = r["rs_checked_at"]
+    except (IndexError, KeyError):
+        checked = None
+    return f"Nej (kontrollerad {checked[:10]})" if checked else "Ej kontrollerad"
 
 
 def to_csv(rows: list) -> bytes:
@@ -69,16 +85,18 @@ def to_csv(rows: list) -> bytes:
         w.writerow([
             f"{r['orgnr'][:6]}-{r['orgnr'][6:]}", r["name"], r["form"], r["reg_date"] or "",
             r["street"] or "", f"{pc[:3]} {pc[3:]}" if len(pc) == 5 else pc, r["city"] or "", r["description"] or "",
+            _rs_label(r),
         ])
     return ("﻿" + buf.getvalue()).encode("utf-8")  # BOM so Excel detects UTF-8
 
 
-def preview(conn: sqlite3.Connection, filters: dict, last_n_snapshots: int = 4) -> list[sqlite3.Row]:
+def preview(conn: sqlite3.Connection, filters: dict, last_n_snapshots: int = 4,
+            require_reklamsparr_check: bool = False) -> list[sqlite3.Row]:
     ids = [r["id"] for r in conn.execute(
         "SELECT id FROM snapshots ORDER BY id DESC LIMIT ?", (last_n_snapshots,)).fetchall()]
     if not ids:
         return []
-    rows = new_companies_since(conn, min(ids) - 1, max(ids))
+    rows = new_companies_since(conn, min(ids) - 1, max(ids), require_reklamsparr_check)
     return [r for r in rows if matches(r, filters)]
 
 
@@ -103,7 +121,8 @@ def deliver_all(conn: sqlite3.Connection, cfg: Config) -> list[dict]:
             # New customer: start from the previous snapshot so the first mail has one week of data.
             last = latest_id - 1
         filters = get_filters(cust)
-        rows = [r for r in new_companies_since(conn, last, latest_id) if matches(r, filters)]
+        rows = [r for r in new_companies_since(conn, last, latest_id, cfg.require_reklamsparr_check)
+                if matches(r, filters)]
         data = to_csv(rows)
         path = cfg.deliveries_dir / f"c{cust['id']}-s{latest_id}.csv"
         path.write_bytes(data)
