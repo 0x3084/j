@@ -82,7 +82,7 @@ The key is read from `RESEND_API_KEY`, or `SMTP_PASSWORD` if that is unset. It i
 ```bash
 cd ~/nyabolag && source .venv/bin/activate
 read -s -p "Resend API key: " K; echo        # typed, not shown, not stored in shell history
-printf 'SMTP_HOST=smtp.resend.com\nSMTP_PORT=587\nSMTP_USER=resend\nSMTP_PASSWORD=%s\nMAIL_TRANSPORT=smtp\nMAIL_FROM=Veckans Nya Bolag <onboarding@resend.dev>\n' "$K" > .env
+printf 'SMTP_HOST=smtp.resend.com\nSMTP_PORT=587\nSMTP_USER=resend\nSMTP_PASSWORD=%s\nMAIL_TRANSPORT=smtp\nMAIL_FROM="Veckans Nya Bolag <onboarding@resend.dev>"\n' "$K" > .env
 unset K; chmod 600 .env
 git check-ignore .env && echo ".env is ignored by git – good"
 set -a; source .env; set +a
