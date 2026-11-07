@@ -34,6 +34,12 @@ CASES = [
     ("momentum:xs_momentum", "crypto_spot", "crypto_all", {"lookback": 30, "k": 3, "skip": 0, "rebalance": "7"}),
     ("ml:ml_regime", "etf", "etf_regime", {}),
     ("ml:ml_xsection", "crypto_spot", "crypto_all", {"model": "ridge", "horizon": 7, "retrain": "QS", "min_train": 540}),
+    # Extension I (opened 2026-11-07)
+    ("seasonality:turn_of_month", "etf", "etf_eq_index", {"days_before": 1, "days_after": 3}),
+    ("factor:low_vol_factor", "etf", "etf_sectors", {"lookback": 60, "k": 3}),
+    ("factor:high_minus_low_vol", "etf", "etf_sectors", {"lookback": 60, "k": 3}),
+    ("rates:duration_momentum", "etf", "etf_regime", {"lookback": 126}),
+    ("rates:curve_steepener_flattener", "etf", "etf_regime", {"lookback": 63}),
 ]
 
 

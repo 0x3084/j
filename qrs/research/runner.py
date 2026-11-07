@@ -56,7 +56,8 @@ def get_market(market: str, universe: str) -> Market:
         m = crypto_market("perp", top_n=10)
     elif market == "crypto_carry":
         from qrs.strategies.vol import carry_market
-        return carry_market()
+        top_n = 18 if universe == "carry_wide" else 10
+        return carry_market(top_n=top_n)
     else:
         raise ValueError(market)
     syms = experiments()["universes"][universe]

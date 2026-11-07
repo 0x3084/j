@@ -180,3 +180,47 @@ python -m scripts.portfolio_capital         # portfolio + capital/withdrawal ana
 python -m scripts.paper replay --strategy vix_regime_spy --start 2025-11-03 --fresh
 pytest                                      # 46 tests incl. look-ahead truncation tests on real data
 ```
+
+---
+
+## Extension I — seriös utökning efter frysning (öppnad 2026-11-07)
+
+*Pre-registrerad utökning. Holdout-perioderna i Phase 5 ovan (ETF 2022+, krypto 2024+) rördes INTE om
+igen — all urval och gate-utvärdering kör bara på walk-forward-fönstret före respektive marknads
+holdout_start. Sju nya experiment i fyra tidigare otestade familjer, spårade separat
+(`reports/leaderboard_ext1.csv`) så att de inte sprutar in nya rättelser i den redan publicerade
+statistiken för de ursprungliga 28 experimenten.*
+
+| Strategi | Familj | WF Sharpe [CI] | WF CAGR | Max DD | DSR | SR@2x cost | Gate |
+|---|---|---|---|---|---|---|---|
+| lowvol_sectors | low-vol-faktor (sektorer) | 0.63 [0.19, —] | 8.9% | −34% | **0.85** | 0.62 | FAIL (endast DSR) |
+| seasonality_tom_etf | turn-of-month | 0.25 [−0.23, —] | 2.6% | −27% | 0.35 | 0.17 | FAIL |
+| lowvol_countries | low-vol-faktor (länder) | 0.22 [−0.19, —] | 2.9% | −52% | 0.32 | 0.22 | FAIL |
+| duration_momentum_etf | räntekurva-momentum | 0.22 [−0.30, —] | 1.7% | −14% | 0.32 | 0.16 | FAIL |
+| funding_carry_wide | krypto funding carry (bredare universum) | 0.27 [−0.90, —] | 0.2% | −2% | 0.68 | −0.57 | FAIL |
+| hml_vol_sectors | low-vol lång/kort | — (0 trades) | 0.4% | −1% | — | — | FAIL |
+| curve_fly_etf | räntekurve-fjäril | — (0 trades) | 0.4% | −1% | — | — | FAIL |
+
+**0 av 7 klarade gaten.** De två sista valde NO TRADE varje år — ingen parameterkombination hade
+någonsin positiv Sharpe i träningsfönstret, inte ett buggfel (kontrollerat mot rådata).
+
+**Närmast gränsen: `lowvol_sectors`** (låg-volatilitetsfaktorn, väldokumenterad akademiskt sedan
+Ang et al. 2006). Positiv CI-undergräns (0.19), överlever 2× kostnader, stabil i båda halvorna
+(0.48 / 0.76), slår SPY:s Sharpe (0.63 mot 0.59) — men föll på det enda kravet **Deflated Sharpe 0.85
+mot gränsen 0.90**, dvs justerat för att sex parameterkombinationer testades i just den här familjen.
+Det är inte ett bevisat edge. Det är den enda kandidaten värd att följa vidare.
+
+**Varför inte fler körningar mot historiken:** holdout-perioden är redan sedd. Att testa fler
+kombinationer mot samma historik tills något klarar gränsen är precis den datasnokning hela
+forskningsprotokollet är byggt för att förhindra. Den enda återstående genuint osedda datan är
+**framtiden**.
+
+**Status på forward-validering:** paper-trading-motorn kan registrera `lowvol_sectors` som en tydligt
+märkt **SHADOW**-körning (den klarade inte gaten, så den får aldrig köras som en godkänd strategi).
+Men all data i systemet slutar redan 2026-10-30/31 — i skrivande stund (2026-11-07) finns ännu ingen
+ny, verkligt osedd data att validera mot. Genuin forward-evidens kräver att `scripts.ingest` körs om
+med flera veckors till månaders mellanrum och att paper-resultaten jämförs mot backtest-antagandena
+över den perioden. Det är inte gjort än, och ska inte påstås vara gjort.
+
+**Slutsats för Extension I:** oförändrad rekommendation från huvudrapporten. Inget nytt ger skäl att
+sätta in riktiga pengar. `lowvol_sectors` är en bevakningsvärd hypotes, inte en validerad strategi.

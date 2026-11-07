@@ -1,0 +1,220 @@
+{
+ "name": "curve_fly_etf",
+ "family": "rates",
+ "market": "etf",
+ "universe": "etf_regime",
+ "n_trials": 3,
+ "selections": {
+  "2008-01-01": null,
+  "2009-01-01": null,
+  "2010-01-01": null,
+  "2011-01-01": null,
+  "2012-01-01": null,
+  "2013-01-01": null,
+  "2014-01-01": null,
+  "2015-01-01": null,
+  "2016-01-01": null,
+  "2017-01-01": null,
+  "2018-01-01": null,
+  "2019-01-01": null,
+  "2020-01-01": null,
+  "2021-01-01": null
+ },
+ "git": "003cb4a",
+ "holdout_unlocked": false,
+ "wf_oos": {
+  "start": "2008-01-02",
+  "end": "2021-12-31",
+  "n_obs": 3526,
+  "cagr": 0.004488131352282432,
+  "ann_vol": 0.005155422497802561,
+  "sharpe": null,
+  "sharpe_raw": 0.8712020242795474,
+  "sortino": 1.262852421830009,
+  "max_dd": -0.007799894878699254,
+  "max_dd_bars": 2315,
+  "var95": -0.00021902238041782152,
+  "es95": -0.0006589694060802922,
+  "skew": 0.07839231694000519,
+  "kurt": 59.15185004634773,
+  "hit_rate_bars": 0.5771777890983188,
+  "calmar": 0.5754092102624456,
+  "gross_cagr": 0.004488131352282432,
+  "cost_ann": 0.0,
+  "cost_pct_gross": 0.0,
+  "financing_ann": 0.004491414516101911,
+  "turnover_ann": 0.0,
+  "avg_gross_exp": 0.0,
+  "avg_net_exp": 0.0,
+  "time_in_market": 0.0,
+  "n_trades": 0,
+  "win_rate": null,
+  "avg_win": null,
+  "avg_loss": null,
+  "expectancy": null,
+  "profit_factor": null,
+  "avg_bars": null,
+  "sharpe_lo": null,
+  "sharpe_hi": null,
+  "ret_lo": null,
+  "ret_hi": null,
+  "p_sharpe": null,
+  "psr0": null
+ },
+ "wf_oos_first_half": {
+  "start": "2008-01-02",
+  "end": "2015-01-02",
+  "n_obs": 1764,
+  "cagr": 0.0022104639904927392,
+  "ann_vol": 0.006896842302864289,
+  "sharpe": null,
+  "sharpe_raw": 0.3235977915464178,
+  "sortino": 0.4638189384187455,
+  "max_dd": -0.0077266222243037586,
+  "max_dd_bars": 1576,
+  "var95": -0.00043646265719574084,
+  "es95": -0.0009620559401962988,
+  "skew": 0.12421803903087156,
+  "kurt": 35.82173332604566,
+  "hit_rate_bars": 0.5217864923747276,
+  "calmar": 0.28608412917352416,
+  "gross_cagr": 0.0022104639904927392,
+  "cost_ann": 0.0,
+  "cost_pct_gross": 0.0,
+  "financing_ann": 0.002231802937850794,
+  "turnover_ann": 0.0,
+  "avg_gross_exp": 0.0,
+  "avg_net_exp": 0.0,
+  "time_in_market": 0.0
+ },
+ "wf_oos_second_half": {
+  "start": "2015-01-02",
+  "end": "2021-12-31",
+  "n_obs": 1763,
+  "cagr": 0.006738209824532104,
+  "ann_vol": 0.002355091200381811,
+  "sharpe": null,
+  "sharpe_raw": 2.852743301706563,
+  "sortino": 4.594151911586644,
+  "max_dd": -0.0018667231681394059,
+  "max_dd_bars": 461,
+  "var95": -0.00021890258374179794,
+  "es95": -0.0002658989068930707,
+  "skew": -0.0989737794594541,
+  "kurt": 0.4732383166810199,
+  "hit_rate_bars": 0.6252390057361377,
+  "calmar": 3.609646004044719,
+  "gross_cagr": 0.006738209824532104,
+  "cost_ann": 0.0,
+  "cost_pct_gross": 0.0,
+  "financing_ann": 0.0067184706467972805,
+  "turnover_ann": 0.0,
+  "avg_gross_exp": 0.0,
+  "avg_net_exp": 0.0,
+  "time_in_market": 0.0
+ },
+ "yearly": {
+  "2008": 0.015889456348064934,
+  "2009": 0.0027079702737995426,
+  "2010": -0.0004361659715929056,
+  "2011": -0.0003920519205471429,
+  "2012": -0.00043652743677868866,
+  "2013": -0.0008729132619978985,
+  "2014": -0.0006552307616007891,
+  "2015": -0.001311634955124208,
+  "2016": 0.0010943772710114708,
+  "2017": 0.0068910730856655,
+  "2018": 0.01737368562497621,
+  "2019": 0.02031896952241441,
+  "2020": 0.003986173780333724,
+  "2021": -0.0009836517930575939
+ },
+ "regimes": [
+  {
+   "regime": "VIX15-25",
+   "n": 1665,
+   "ann_ret": 0.0,
+   "ann_vol": 0.0,
+   "sharpe": null,
+   "hit_rate": 0.0
+  },
+  {
+   "regime": "VIX<15",
+   "n": 1180,
+   "ann_ret": 0.0,
+   "ann_vol": 0.0,
+   "sharpe": null,
+   "hit_rate": 0.0
+  },
+  {
+   "regime": "VIX>25",
+   "n": 681,
+   "ann_ret": 0.0,
+   "ann_vol": 0.0,
+   "sharpe": null,
+   "hit_rate": 0.0
+  }
+ ],
+ "stress": {
+  "cost_x2": {
+   "sharpe": null,
+   "cagr": 0.004488131352282432
+  },
+  "cost_x3": {
+   "sharpe": null,
+   "cagr": 0.004488131352282432
+  },
+  "slip_+5bps": {
+   "sharpe": null,
+   "cagr": 0.004488131352282432
+  },
+  "delay_+1bar": {
+   "sharpe": null,
+   "cagr": 0.004488131352282432
+  },
+  "missing_5pct_bars": {
+   "sharpe": null,
+   "cagr": 0.004488131352282432
+  }
+ },
+ "benchmarks_wf": {
+  "SPY_buy_hold": {
+   "sharpe": 0.5902325392468974,
+   "cagr": 0.11046612935879097,
+   "max_dd": -0.5188157299439431,
+   "corr": -0.13824987739027864
+  },
+  "60_40_SPY_IEF": {
+   "sharpe": 0.7789652324998088,
+   "cagr": 0.08889688017251096,
+   "max_dd": -0.3147351080231543,
+   "corr": -0.12660544217486422
+  },
+  "equal_weight_multi": {
+   "sharpe": 0.4319032403436725,
+   "cagr": 0.04796978187786194,
+   "max_dd": -0.34430187814847213,
+   "corr": -0.11537212151460963
+  },
+  "cash_BIL": {
+   "sharpe": null,
+   "cagr": 0.004488131352282432,
+   "max_dd": -0.007799894878699254,
+   "corr": 1.0
+  }
+ },
+ "dsr": null,
+ "dsr_xvar": null,
+ "n_trials_market_raw": 35,
+ "n_trials_market_effective": 6,
+ "p_sharpe_holm": null,
+ "gate_pass": false,
+ "gate_failures": [
+  "WF-OOS Sharpe nan < 0.4",
+  "Sharpe 95% CI lower bound nan <= 0",
+  "Deflated Sharpe nan < 0.9",
+  "Sharpe at 2x costs -9.00 < 0.2",
+  "only 0 trades",
+  "does not beat passive benchmark Sharpe and is not a low-correlation diversifier"
+ ]
+}

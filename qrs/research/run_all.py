@@ -48,8 +48,13 @@ def effective_trials(trials: pd.DataFrame, cut: float = 0.5) -> tuple[int, float
     return int(len(reps)), var
 
 
-def analyse(holdout: bool) -> pd.DataFrame:
-    exps = experiments()["experiments"]
+def analyse(holdout: bool, names: list[str] | None = None, out_prefix: str = "leaderboard") -> pd.DataFrame:
+    """names: restrict analysis (trial counts, reality check, leaderboard) to this subset of experiment
+    names - use this for a research extension opened after the main registry's holdout was evaluated,
+    so its trials don't retroactively dilute the already-published statistics of the frozen set.
+    out_prefix: leaderboard files are written to reports/{out_prefix}.csv and {out_prefix}_meta.json."""
+    all_exps = experiments()["experiments"]
+    exps = {n: v for n, v in all_exps.items() if names is None or n in names}
     acc = protocol()["acceptance"]
     summaries, oos, trials_by_kind = {}, {}, {"etf": [], "crypto": []}
     for name in exps:
@@ -129,10 +134,10 @@ def analyse(holdout: bool) -> pd.DataFrame:
     lb["robust_score"] = (lb["wf_sharpe_lo"].fillna(-9) + 0.5 * lb[["sharpe_2x_cost", "h1_sharpe", "h2_sharpe"]].min(axis=1).fillna(-9)
                           + lb["dsr"].fillna(0) * 0.5)
     lb = lb.sort_values("robust_score", ascending=False)
-    lb.to_csv(RESULTS_DIR.parent / "leaderboard.csv", index=False)
+    lb.to_csv(RESULTS_DIR.parent / f"{out_prefix}.csv", index=False)
     meta = {"effective_trials": {k: {"n_eff": v[0], "var_sr": v[1], "n_raw": v[2]} for k, v in neff.items()},
-            "reality_check": rc, "holdout_unlocked": holdout}
-    (RESULTS_DIR.parent / "leaderboard_meta.json").write_text(json.dumps(jsonable(meta), indent=1))
+            "reality_check": rc, "holdout_unlocked": holdout, "scope": names or "all"}
+    (RESULTS_DIR.parent / f"{out_prefix}_meta.json").write_text(json.dumps(jsonable(meta), indent=1))
     return lb
 
 
@@ -143,13 +148,17 @@ def main():
     ap.add_argument("--n-boot", type=int, default=1000)
     ap.add_argument("--workers", type=int, default=max(1, (os.cpu_count() or 2) - 0))
     ap.add_argument("--analyse-only", action="store_true")
+    ap.add_argument("--out-prefix", default="leaderboard",
+                    help="leaderboard files go to reports/<prefix>.csv and <prefix>_meta.json; use a "
+                         "distinct prefix (with --only) for a research extension so it doesn't "
+                         "overwrite or dilute the statistics of an already-published leaderboard.")
     a = ap.parse_args()
     names = a.only or list(experiments()["experiments"])
     if not a.analyse_only:
         with ProcessPoolExecutor(a.workers) as ex:
             for name, dt in ex.map(_one, [(n, a.holdout, a.n_boot) for n in names]):
                 print(f"{name:28s} {dt:6.0f}s", flush=True)
-    lb = analyse(a.holdout)
+    lb = analyse(a.holdout, names=a.only, out_prefix=a.out_prefix)
     pd.set_option("display.width", 250)
     print(lb[["experiment", "wf_sharpe", "wf_sharpe_lo", "wf_cagr", "wf_maxdd", "dsr", "sharpe_2x_cost", "gate"]
              + (["ho_sharpe"] if a.holdout else [])].round(3).to_string(index=False))

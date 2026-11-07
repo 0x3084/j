@@ -1,0 +1,50 @@
+{
+ "effective_trials": {
+  "etf": {
+   "n_eff": 6,
+   "var_sr": 0.00021383509371798785,
+   "n_raw": 35
+  },
+  "crypto": {
+   "n_eff": 1,
+   "var_sr": 0.0006844626967830253,
+   "n_raw": 18
+  }
+ },
+ "reality_check": {
+  "etf": {
+   "vs_cash": {
+    "t_obs": 2.3497895328719864,
+    "p_rc": 0.014,
+    "p_spa": 0.014
+   },
+   "vs_benchmark": {
+    "t_obs": -0.9349941673298051,
+    "p_rc": 0.984,
+    "p_spa": 1.0
+   }
+  },
+  "crypto": {
+   "vs_cash": {
+    "t_obs": 0.46583109363258773,
+    "p_rc": 0.285,
+    "p_spa": 0.285
+   },
+   "vs_benchmark": {
+    "t_obs": -0.8942853039640503,
+    "p_rc": 0.809,
+    "p_spa": 1.0
+   }
+  }
+ },
+ "holdout_unlocked": false,
+ "scope": [
+  "seasonality_tom_etf",
+  "lowvol_sectors",
+  "lowvol_countries",
+  "hml_vol_sectors",
+  "duration_momentum_etf",
+  "curve_fly_etf",
+  "funding_carry_wide"
+ ]
+}

@@ -15,6 +15,7 @@ universes:
   etf_regime: [SPY, IEF, HYG, TLT, SHY]
   crypto_all: all
   carry_all: all
+  carry_wide: all     # crypto_carry market built with top_n=18 instead of 10 (see runner.get_market)
 
 experiments:
   # ---------------------------------------------------------------- TREND FOLLOWING
@@ -252,6 +253,74 @@ experiments:
     params: {model: lgbm, horizon: 7, retrain: QS, min_train: 540}
     grid: {k: [3, 5]}
     engine: {band: 0.0, max_gross: 1.0}
+
+  # ================================================================================================
+  # EXTENSION I (opened 2026-11-07, after the holdout in the base registry above was evaluated once).
+  # New strategy families/markets not tried before. Selection and the acceptance gate still run ONLY
+  # on the walk-forward window that precedes each market's holdout_start (configs/research.yaml) -
+  # the already-viewed holdout (ETF 2022+, crypto perp/spot 2024+) is NOT re-touched by this
+  # extension's `run_all.py` (no --holdout flag). Anything that passes the WF-OOS gate here is a
+  # CANDIDATE only; it has no clean unseen holdout left in history, so the only valid confirmation is
+  # genuinely new data - i.e. forward paper trading from 2026-11-07 onward. Trial counts for this
+  # extension are tracked separately (reports/leaderboard_ext1.csv) so they don't silently dilute
+  # the deflated-Sharpe correction of the original 28-experiment registry above.
+  # ================================================================================================
+  seasonality_tom_etf:
+    family: seasonality
+    market: etf
+    universe: etf_eq_index
+    fn: seasonality:turn_of_month
+    params: {}
+    grid: {days_before: [1, 2], days_after: [2, 3, 5]}
+    engine: {band: 0.0, max_gross: 1.0}
+  lowvol_sectors:
+    family: factor
+    market: etf
+    universe: etf_sectors
+    fn: factor:low_vol_factor
+    params: {}
+    grid: {lookback: [20, 60, 120], k: [2, 3], weighting: [equal, inv_vol]}
+    engine: {band: 0.0, max_gross: 1.0}
+  lowvol_countries:
+    family: factor
+    market: etf
+    universe: etf_countries
+    fn: factor:low_vol_factor
+    params: {}
+    grid: {lookback: [60, 120], k: [2, 3]}
+    engine: {band: 0.0, max_gross: 1.0}
+  hml_vol_sectors:
+    family: factor
+    market: etf
+    universe: etf_sectors
+    fn: factor:high_minus_low_vol
+    params: {}
+    grid: {lookback: [60, 120], k: [2, 3]}
+    engine: {band: 0.0, max_gross: 1.0}
+  duration_momentum_etf:
+    family: rates
+    market: etf
+    universe: etf_regime
+    fn: rates:duration_momentum
+    params: {vol_target: 0.08, rebalance: 5}
+    grid: {lookback: [63, 126, 252], threshold: [0.0, 0.5]}
+    engine: {band: 0.01, max_gross: 1.5}
+  curve_fly_etf:
+    family: rates
+    market: etf
+    universe: etf_regime
+    fn: rates:curve_steepener_flattener
+    params: {vol_target: 0.08, rebalance: 5}
+    grid: {lookback: [21, 63, 126]}
+    engine: {band: 0.01, max_gross: 1.5}
+  funding_carry_wide:
+    family: stat_arb
+    market: crypto_carry
+    universe: carry_wide
+    fn: vol:funding_carry
+    params: {max_pairs: 8}
+    grid: {lookback: [3, 7, 14], entry_apr: [0.08, 0.15, 0.25], exit_apr: [0.0, 0.05]}
+    engine: {band: 0.02, max_gross: 1.0}
 
 # Passive benchmarks (evaluated on identical periods, same engine and cost model)
 benchmarks:
